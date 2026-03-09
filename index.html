@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>221st Street Music | Searchable Catalog</title>
+    <style>
+        /* Modern, clean styling for Mac/Sitely compatibility */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 700px; width: 100%; }
+        h1 { text-align: center; margin-bottom: 30px; }
+
+        /* Master Player Section */
+        .master-player { background: #1a1a1a; color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
+        #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
+        audio { width: 100%; outline: none; }
+
+        /* Search and Filter Controls */
+        .controls { display: flex; gap: 10px; margin-bottom: 25px; }
+        input[type="text"] { flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        select { padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
+
+        /* Catalog List Styling */
+        .song-list { list-style: none; padding: 0; margin: 0; }
+        .song-item { background: white; padding: 20px; margin-bottom: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; }
+        .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
+        .song-info h3 { margin: 0; font-size: 1.1em; }
+        .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
+        .play-indicator { font-weight: bold; color: #007bff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>221st Street Music</h1>
+
+    <div class="master-player">
+        <h3 id="now-playing-title">Select a track to listen</h3>
+        <p id="now-playing-writer">Catalog Prototype</p>
+        <audio id="mainAudio" controls>
+            <source id="audioSource" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="searchBar" placeholder="Search by song name or writer..." onkeyup="filterCatalog()">
+        <select id="genreFilter" onchange="filterCatalog()">
+            <option value="All">All Genres</option>
+            <option value="K-Pop">K-Pop</option>
+            <option value="R&B">R&B</option>
+            <option value="Retro Synth">Retro Synth</option>
+        </select>
+    </div>
+
+    <ul class="song-list" id="songList"></ul>
+</div>
+
+<script>
+    let catalogData = [];
+
+    // Fetch the JSON data from the songs.json file
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('songs.json')
+            .then(res => res.json())
+            .then(data => {
+                catalogData = data;
+                displaySongs(catalogData);
+            })
+            .catch(err => console.error("Error loading the catalog:", err));
+    });
+
+    // Function to render the songs in the UI
+    function displaySongs(songs) {
+        const list = document.getElementById('songList');
+        list.innerHTML = '';
+
+        songs.forEach(song => {
+            const writers = song.writers.join(', ');
+            const li = document.createElement('li');
+            li.className = 'song-item';
+            li.onclick = () => playTrack(song.title, writers, song.file);
+            
+            li.innerHTML = `
+                <div class="song-info">
+                    <h3>${song.title}</h3>
+                    <p>Writers: ${writers} | Genre: ${song.genre}</p>
+                </div>
+                <div class="play-indicator">▶ PLAY</div>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    // Function to update and play the Master Player
+    function playTrack(title, writers, fileName) {
+        const audio = document.getElementById('mainAudio');
+        const source = document.getElementById('audioSource');
+        const titleEl = document.getElementById('now-playing-title');
+        const writerEl = document.getElementById('now-playing-writer');
+
+        source.src = "audio/" + fileName;
+        titleEl.innerText = title;
+        writerEl.innerText = "Writers: " + writers;
+
+        audio.load();
+        audio.play();
+    }
+
+    // Logic for filtering the list based on search and genre
+    function filterCatalog() {
+        const searchText = document.getElementById('searchBar').value.toLowerCase();
+        const selectedGenre = document.getElementById('genreFilter').value;
+
+        const filtered = catalogData.filter(song => {
+            const matchesText = song.title.toLowerCase().includes(searchText) || 
+                                song.writers.some(w => w.toLowerCase().includes(searchText));
+            const matchesGenre = (selectedGenre === "All") || (song.genre === selectedGenre);
+            return matchesText && matchesGenre;
+        });
+
+        displaySongs(filtered);
+    }
+</script>
+
+</body>
+</html>
