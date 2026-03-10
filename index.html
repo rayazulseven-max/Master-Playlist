@@ -35,6 +35,26 @@
 <div class="container">
     <h1>221st Street Music</h1>
 
+    <div class="main-content">
+        <div class="list-section">
+            <div class="controls">
+                <input type="text" id="searchBar" placeholder="Search name or writer..." onkeyup="filterCatalog()">
+                <select id="genreFilter" onchange="filterCatalog()">
+                    <option value="All">All Genres</option>
+                    <option value="K-Pop">K-Pop</option>
+                    <option value="R&B">R&B</option>
+                    <option value="Retro Synth">Retro Synth</option>
+                </select>
+            </div>
+            <ul class="song-list" id="songList"></ul>
+        </div>
+
+        <div class="lyrics-section">
+            <h3>Lyrics</h3>
+            <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
+        </div>
+    </div>
+
     <div class="master-player">
         <h3 id="now-playing-title">Select a track to listen</h3>
         <p id="now-playing-writer">Catalog Prototype</p>
@@ -43,18 +63,6 @@
             Your browser does not support the audio element.
         </audio>
     </div>
-
-    <div class="controls">
-        <input type="text" id="searchBar" placeholder="Search by song name or writer..." onkeyup="filterCatalog()">
-        <select id="genreFilter" onchange="filterCatalog()">
-            <option value="All">All Genres</option>
-            <option value="K-Pop">K-Pop</option>
-            <option value="R&B">R&B</option>
-            <option value="Retro Synth">Retro Synth</option>
-        </select>
-    </div>
-
-    <ul class="song-list" id="songList"></ul>
 </div>
 
 <script>
