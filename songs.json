@@ -4,34 +4,34 @@
     "title": "808 Sleigh Ride",
     "writers": ["The Atelier", "V.I. Perez"],
     "genre": "K-Pop",
-    "file": "808_sleigh_ride.mp3"
+    "file": "808 Sleigh Ride.mp3"
   },
   {
     "id": 2,
     "title": "Warm Cocoa Duet",
     "writers": ["The Atelier", "Kenny WayDownLow"],
     "genre": "K-Pop",
-    "file": "warm_cocoa_duet.mp3"
+    "file": "Warm Cocoa Duet.mp3"
   },
   {
     "id": 3,
     "title": "Retro Holiday '97",
     "writers": ["The Atelier"],
     "genre": "Retro Synth",
-    "file": "retro_holiday_97.mp3"
+    "file": "Retro Holiday '97.mp3"
   },
   {
     "id": 4,
     "title": "Frozen Christmas",
     "writers": ["The Atelier"],
     "genre": "R&B",
-    "file": "frozen_christmas.mp3"
+    "file": "Frozen Christmas.mp3"
   },
   {
     "id": 5,
     "title": "Merry-Go-Round Christmas",
     "writers": ["The Atelier"],
     "genre": "K-Pop",
-    "file": "merry_go_round_christmas.mp3"
+    "file": "Merry-Go-Round Christmas.mp3"
   }
 ]
