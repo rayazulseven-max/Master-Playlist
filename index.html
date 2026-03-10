@@ -68,7 +68,7 @@
 <script>
     let catalogData = [];
 
-    // Fetch the JSON data from the songs.json file
+    // 1. Keep your Fetch logic at the top...
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
@@ -79,7 +79,7 @@
             .catch(err => console.error("Error loading the catalog:", err));
     });
 
-    // Function to render the songs in the UI
+    // 2. REPLACE your old displaySongs with this:
     function displaySongs(songs) {
         const list = document.getElementById('songList');
         list.innerHTML = '';
@@ -88,7 +88,9 @@
             const writers = song.writers.join(', ');
             const li = document.createElement('li');
             li.className = 'song-item';
-            li.onclick = () => playTrack(song.title, writers, song.file);
+            
+            // This now sends the lyrics from the JSON to the player
+            li.onclick = () => playTrack(song.title, writers, song.file, song.lyrics || "Lyrics coming soon!");
             
             li.innerHTML = `
                 <div class="song-info">
@@ -101,37 +103,27 @@
         });
     }
 
-    // Function to update and play the Master Player
-    function playTrack(title, writers, fileName) {
-    const audio = document.getElementById('mainAudio');
-    const source = document.getElementById('audioSource');
-    const titleEl = document.getElementById('now-playing-title');
-    const writerEl = document.getElementById('now-playing-writer');
+    // 3. REPLACE your old playTrack with this:
+    function playTrack(title, writers, fileName, lyrics) {
+        const audio = document.getElementById('mainAudio');
+        const source = document.getElementById('audioSource');
+        const titleEl = document.getElementById('now-playing-title');
+        const writerEl = document.getElementById('now-playing-writer');
+        const lyricsEl = document.getElementById('lyrics-pane');
 
-    // 'audio/' tells it the folder, and encodeURI handles the spaces in the names
-    source.src = encodeURI("audio/" + fileName);
-    
-    titleEl.innerText = title;
-    writerEl.innerText = "Writers: " + writers;
+        source.src = encodeURI("audio/" + fileName);
+        titleEl.innerText = title;
+        writerEl.innerText = "Writers: " + writers;
 
-    audio.load();
-    audio.play();
-}
+        // This injects the lyrics into the new side pane
+        lyricsEl.innerText = lyrics; 
+        lyricsEl.scrollTop = 0; 
 
-    // Logic for filtering the list based on search and genre
-    function filterCatalog() {
-        const searchText = document.getElementById('searchBar').value.toLowerCase();
-        const selectedGenre = document.getElementById('genreFilter').value;
-
-        const filtered = catalogData.filter(song => {
-            const matchesText = song.title.toLowerCase().includes(searchText) || 
-                                song.writers.some(w => w.toLowerCase().includes(searchText));
-            const matchesGenre = (selectedGenre === "All") || (song.genre === selectedGenre);
-            return matchesText && matchesGenre;
-        });
-
-        displaySongs(filtered);
+        audio.load();
+        audio.play();
     }
+
+    // 4. Keep your filterCatalog function at the bottom...
 </script>
 
 </body>
