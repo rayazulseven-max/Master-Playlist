@@ -11,7 +11,7 @@
         background-color: #f8f9fa; 
         color: #333; 
         margin: 0; 
-        padding: 40px 20px 150px 20px;
+        padding: 40px 20px; /* Removed massive bottom padding */
         display: flex; 
         flex-direction: column; 
         align-items: center;
@@ -28,17 +28,17 @@
     .list-section { flex: 1.5; } 
     .lyrics-section { flex: 1; position: sticky; top: 20px; }
 
+    /* Updated static player styling */
     .master-player { 
-        position: fixed; bottom: 0; left: 0; width: 100%; box-sizing: border-box;
         background: #1a1a1a; color: white; padding: 20px 25px; text-align: center; 
-        box-shadow: 0 -10px 20px rgba(0,0,0,0.2); z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; margin-bottom: 20px;
     }
 
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
     audio { width: 100%; max-width: 700px; outline: none; }
 
-    .controls { display: flex; gap: 10px; margin-bottom: 25px; }
+    .controls { display: flex; gap: 10px; margin-bottom: 15px; } /* Adjusted margin */
     
     input[type="text"] { 
         flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; 
@@ -85,10 +85,14 @@
     }
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
 
+    /* New Legal Disclaimer Styling */
+    .disclaimer {
+        font-size: 0.75em; color: #888; margin-top: 15px; text-align: justify; line-height: 1.4;
+    }
+
     @media (max-width: 800px) {
         .main-content { flex-direction: column; }
         .lyrics-section { width: 100%; position: static; margin-top: 20px; }
-        body { padding-bottom: 180px; } 
     }
     </style>
 </head>
@@ -98,7 +102,6 @@
     <h1>221st Street Music</h1>
     <div class="main-content">
         <div class="list-section">
-            <div id="tagContainer" class="tag-filters"> </div>
             <div id="resultCount" class="result-count">Loading catalog...</div>
             <div class="controls">
                 <input type="text" id="searchBar" placeholder="Search name or writer..." onkeyup="filterCatalog()">
@@ -110,20 +113,25 @@
                     <option value="Southern Gospel">Southern Gospel</option>
                 </select>
             </div>
+            <div id="tagContainer" class="tag-filters"> </div>
             <ul class="song-list" id="songList"></ul>
         </div>
+        
         <div class="lyrics-section">
+            <div class="master-player">
+                <h3 id="now-playing-title">Select a track to listen</h3>
+                <p id="now-playing-writer">Catalog Prototype</p>
+                <audio id="mainAudio" controls>
+                    <source id="audioSource" src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
             <h3>Lyrics</h3>
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
+            
+            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
         </div>
-    </div>
-    <div class="master-player">
-        <h3 id="now-playing-title">Select a track to listen</h3>
-        <p id="now-playing-writer">Catalog Prototype</p>
-        <audio id="mainAudio" controls>
-            <source id="audioSource" src="" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
     </div>
 </div>
 
