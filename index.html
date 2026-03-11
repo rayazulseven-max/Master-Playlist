@@ -91,8 +91,31 @@
     }
 
     @media (max-width: 800px) {
+        /* 1. Stack the main containers */
         .main-content { flex-direction: column; }
         .lyrics-section { width: 100%; position: static; margin-top: 20px; }
+
+        /* 2. Pin the Player to the top of the mobile screen */
+        .master-player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1100;
+            border-radius: 0; /* Flush with screen edges looks cleaner */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* 3. Push the content down so the fixed player doesn't cover the title */
+        .container {
+            padding-top: 160px; 
+        }
+
+        /* 4. Keep the Lyrics static (non-floating) */
+        /* Note: Floating both on mobile usually hides too much of the screen! */
+        .lyrics-pane {
+            max-height: none; /* Let them expand naturally on mobile */
+        }
     }
     </style>
 </head>
