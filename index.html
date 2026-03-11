@@ -28,7 +28,7 @@
         align-items: flex-start;
     }
 
-    .list-section { flex: 1.5; } /* Makes the list a bit wider */
+    .list-section { flex: 1.5; } 
     .lyrics-section { 
         flex: 1; 
         position: sticky; 
@@ -41,6 +41,7 @@
         bottom: 0; 
         left: 0; 
         width: 100%; 
+        box-sizing: border-box;
         background: #1a1a1a; 
         color: white; 
         padding: 20px 25px; 
@@ -83,7 +84,7 @@
         padding: 25px;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: pre-wrap; /* Keeps line breaks from the JSON */
+        white-space: pre-wrap; 
         max-height: 500px;
         overflow-y: auto;
         font-size: 1em;
@@ -94,9 +95,9 @@
     @media (max-width: 800px) {
         .main-content { flex-direction: column; }
         .lyrics-section { width: 100%; position: static; margin-top: 20px; }
-        body { padding-bottom: 180px; } /* More space for the player on small screens */
+        body { padding-bottom: 180px; } 
     }
-</style>
+    </style>
 </head>
 <body>
 
@@ -136,7 +137,7 @@
 <script>
     let catalogData = [];
 
-    // 1. Keep your Fetch logic at the top...
+    // Fetch the JSON data
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
@@ -147,7 +148,7 @@
             .catch(err => console.error("Error loading the catalog:", err));
     });
 
-    // 2. REPLACE your old displaySongs with this:
+    // Display the songs in the UI
     function displaySongs(songs) {
         const list = document.getElementById('songList');
         list.innerHTML = '';
@@ -157,7 +158,7 @@
             const li = document.createElement('li');
             li.className = 'song-item';
             
-            // This now sends the lyrics from the JSON to the player
+            // Sends the lyrics from the JSON to the player
             li.onclick = () => playTrack(song.title, writers, song.file, song.lyrics || "Lyrics coming soon!");
             
             li.innerHTML = `
@@ -171,7 +172,7 @@
         });
     }
 
-    // 3. REPLACE your old playTrack with this:
+    // Update player and lyrics pane
     function playTrack(title, writers, fileName, lyrics) {
         const audio = document.getElementById('mainAudio');
         const source = document.getElementById('audioSource');
@@ -183,7 +184,7 @@
         titleEl.innerText = title;
         writerEl.innerText = "Writers: " + writers;
 
-        // This injects the lyrics into the new side pane
+        // Injects the lyrics into the new side pane
         lyricsEl.innerText = lyrics; 
         lyricsEl.scrollTop = 0; 
 
@@ -191,7 +192,20 @@
         audio.play();
     }
 
-    // 4. Keep your filterCatalog function at the bottom...
+    // The Missing Search Logic!
+    function filterCatalog() {
+        const searchText = document.getElementById('searchBar').value.toLowerCase();
+        const selectedGenre = document.getElementById('genreFilter').value;
+
+        const filtered = catalogData.filter(song => {
+            const matchesText = song.title.toLowerCase().includes(searchText) || 
+                                song.writers.some(w => w.toLowerCase().includes(searchText));
+            const matchesGenre = (selectedGenre === "All") || (song.genre === selectedGenre);
+            return matchesText && matchesGenre;
+        });
+
+        displaySongs(filtered);
+    }
 </script>
 
 </body>
