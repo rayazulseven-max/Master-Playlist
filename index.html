@@ -5,30 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-        /* Modern, clean styling for Mac/Sitely compatibility */
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { max-width: 700px; width: 100%; }
-        h1 { text-align: center; margin-bottom: 30px; }
+    /* Modern, clean styling for Mac/Sitely compatibility */
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+        background-color: #f8f9fa; 
+        color: #333; 
+        margin: 0; 
+        padding: 40px 20px 150px 20px; /* Extra bottom padding so the list isn't hidden by the player */
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+    }
 
-        /* Master Player Section */
-        .master-player { background: #1a1a1a; color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
-        #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
-        #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
-        audio { width: 100%; outline: none; }
+    .container { max-width: 1000px; width: 100%; }
+    h1 { text-align: center; margin-bottom: 30px; }
 
-        /* Search and Filter Controls */
-        .controls { display: flex; gap: 10px; margin-bottom: 25px; }
-        input[type="text"] { flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
-        select { padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
+    /* Main Layout: List and Lyrics side-by-side */
+    .main-content {
+        display: flex;
+        gap: 30px;
+        width: 100%;
+        align-items: flex-start;
+    }
 
-        /* Catalog List Styling */
-        .song-list { list-style: none; padding: 0; margin: 0; }
-        .song-item { background: white; padding: 20px; margin-bottom: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; }
-        .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
-        .song-info h3 { margin: 0; font-size: 1.1em; }
-        .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
-        .play-indicator { font-weight: bold; color: #007bff; }
-    </style>
+    .list-section { flex: 1.5; } /* Makes the list a bit wider */
+    .lyrics-section { 
+        flex: 1; 
+        position: sticky; 
+        top: 20px; 
+    }
+
+    /* Floating Master Player */
+    .master-player { 
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        width: 100%; 
+        background: #1a1a1a; 
+        color: white; 
+        padding: 20px 25px; 
+        text-align: center; 
+        box-shadow: 0 -10px 20px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+
+    #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
+    #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
+    audio { width: 100%; max-width: 700px; outline: none; }
+
+    /* Search and Filter Controls */
+    .controls { display: flex; gap: 10px; margin-bottom: 25px; }
+    input[type="text"] { flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+    select { padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
+
+    /* Catalog List Styling */
+    .song-list { list-style: none; padding: 0; margin: 0; }
+    .song-item { 
+        background: white; 
+        padding: 20px; 
+        margin-bottom: 12px; 
+        border-radius: 8px; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        cursor: pointer; 
+        transition: transform 0.1s, box-shadow 0.2s; 
+        border-left: 5px solid transparent; 
+    }
+    .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
+    .song-info h3 { margin: 0; font-size: 1.1em; }
+    .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
+    .play-indicator { font-weight: bold; color: #007bff; }
+
+    /* The Lyrics Pane Styling */
+    .lyrics-pane {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        white-space: pre-wrap; /* Keeps line breaks from the JSON */
+        max-height: 500px;
+        overflow-y: auto;
+        font-size: 1em;
+        line-height: 1.6;
+    }
+
+    /* Mobile optimization: stack everything vertically */
+    @media (max-width: 800px) {
+        .main-content { flex-direction: column; }
+        .lyrics-section { width: 100%; position: static; margin-top: 20px; }
+        body { padding-bottom: 180px; } /* More space for the player on small screens */
+    }
+</style>
 </head>
 <body>
 
