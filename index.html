@@ -60,6 +60,14 @@
     select { padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
 
     /* Catalog List Styling */
+    .result-count {
+        font-size: 0.85em;
+        color: #666;
+        margin-bottom: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }    
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
         background: white; 
@@ -91,6 +99,32 @@
         line-height: 1.6;
     }
 
+        /* Tag Filters Styling */
+    .tag-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        justify-content: flex-start;
+    }
+
+    .tag-btn {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .tag-btn:hover { background: #f0f0f0; border-color: #bbb; }
+
+    .tag-btn.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
     /* Mobile optimization: stack everything vertically */
     @media (max-width: 800px) {
         .main-content { flex-direction: column; }
@@ -106,6 +140,8 @@
 
     <div class="main-content">
         <div class="list-section">
+            <div id="tagContainer" class="tag-filters"> </div>
+            <div id="resultCount" class="result-count">Loading catalog...</div>
             <div class="controls">
                 <input type="text" id="searchBar" placeholder="Search name or writer..." onkeyup="filterCatalog()">
                 <select id="genreFilter" onchange="filterCatalog()">
@@ -137,21 +173,29 @@
 <script>
     let catalogData = [];
 
-    // Fetch the JSON data
+   // Fetch the JSON data
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
             .then(data => {
                 catalogData = data;
                 displaySongs(catalogData);
+                renderTagFilters(); // <-- THE TRIGGER GOES HERE
             })
             .catch(err => console.error("Error loading the catalog:", err));
     });
 
-    // Display the songs in the UI
+// Display the songs in the UI
     function displaySongs(songs) {
         const list = document.getElementById('songList');
+        const countDisplay = document.getElementById('resultCount'); // Grab the counter
+        
         list.innerHTML = '';
+        
+        // Update the text to show the current number of songs
+        if (countDisplay) {
+            countDisplay.innerText = `Showing ${songs.length} track${songs.length === 1 ? '' : 's'}`;
+        }
 
         songs.forEach(song => {
             const writers = song.writers.join(', ');
@@ -171,7 +215,6 @@
             list.appendChild(li);
         });
     }
-
     // Update player and lyrics pane
     function playTrack(title, writers, fileName, lyrics) {
         const audio = document.getElementById('mainAudio');
@@ -192,16 +235,61 @@
         audio.play();
     }
 
-    // The Missing Search Logic!
+   
+    function renderTagFilters() {
+        const tagContainer = document.getElementById('tagContainer');
+        
+        // Collect all unique tags from the catalog
+        const allTags = new Set();
+        catalogData.forEach(song => {
+            if (song.tags) {
+                song.tags.forEach(tag => allTags.add(tag));
+            }
+        });
+
+        // Create the "Show All" button
+        tagContainer.innerHTML = `<button class="tag-btn active" onclick="filterByTag('All', this)">All Styles</button>`;
+
+        // Create a button for every unique tag
+        allTags.forEach(tag => {
+            const btn = document.createElement('button');
+            btn.className = 'tag-btn';
+            btn.innerText = tag;
+            btn.onclick = (e) => filterByTag(tag, e.target);
+            tagContainer.appendChild(btn);
+        });
+    }
+function filterByTag(tag, element) {
+        // 1. Update the UI to show which button is active
+        document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+
+        // 2. Tell the Master Filter to run
+        filterCatalog();
+    }
+
+    // The Master Filter!
     function filterCatalog() {
         const searchText = document.getElementById('searchBar').value.toLowerCase();
         const selectedGenre = document.getElementById('genreFilter').value;
+        
+        // Figure out which tag button is currently highlighted
+        const activeTagBtn = document.querySelector('.tag-btn.active');
+        const selectedTag = activeTagBtn ? activeTagBtn.innerText : 'All Styles';
 
         const filtered = catalogData.filter(song => {
+            // Check the text search
             const matchesText = song.title.toLowerCase().includes(searchText) || 
                                 song.writers.some(w => w.toLowerCase().includes(searchText));
-            const matchesGenre = (selectedGenre === "All") || (song.genre === selectedGenre);
-            return matchesText && matchesGenre;
+            
+            // Check the genre dropdown
+            const matchesGenre = (selectedGenre === "All") ? true : (song.genre === selectedGenre);
+            
+            // Check the tag buttons
+            const matchesTag = (selectedTag === 'All Styles' || selectedTag === 'All') ? true : (song.tags && song.tags.includes(selectedTag));
+
+            // Only show the song if it matches ALL active criteria
+            return matchesText && matchesGenre && matchesTag;
         });
 
         displaySongs(filtered);
