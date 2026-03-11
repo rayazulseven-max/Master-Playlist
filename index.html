@@ -11,121 +11,80 @@
         background-color: #f8f9fa; 
         color: #333; 
         margin: 0; 
-        padding: 40px 20px 150px 20px; /* Extra bottom padding so the list isn't hidden by the player */
+        padding: 40px 20px 150px 20px;
         display: flex; 
         flex-direction: column; 
-        align-items: center; 
+        align-items: center;
+        /* IP PROTECTION: Prevent selection */
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .container { max-width: 1000px; width: 100%; }
     h1 { text-align: center; margin-bottom: 30px; }
 
-    /* Main Layout: List and Lyrics side-by-side */
-    .main-content {
-        display: flex;
-        gap: 30px;
-        width: 100%;
-        align-items: flex-start;
-    }
-
+    .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
     .list-section { flex: 1.5; } 
-    .lyrics-section { 
-        flex: 1; 
-        position: sticky; 
-        top: 20px; 
-    }
+    .lyrics-section { flex: 1; position: sticky; top: 20px; }
 
-    /* Floating Master Player */
     .master-player { 
-        position: fixed; 
-        bottom: 0; 
-        left: 0; 
-        width: 100%; 
-        box-sizing: border-box;
-        background: #1a1a1a; 
-        color: white; 
-        padding: 20px 25px; 
-        text-align: center; 
-        box-shadow: 0 -10px 20px rgba(0,0,0,0.2);
-        z-index: 1000;
+        position: fixed; bottom: 0; left: 0; width: 100%; box-sizing: border-box;
+        background: #1a1a1a; color: white; padding: 20px 25px; text-align: center; 
+        box-shadow: 0 -10px 20px rgba(0,0,0,0.2); z-index: 1000;
     }
 
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
     audio { width: 100%; max-width: 700px; outline: none; }
 
-    /* Search and Filter Controls */
     .controls { display: flex; gap: 10px; margin-bottom: 25px; }
-    input[type="text"] { flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+    
+    input[type="text"] { 
+        flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; 
+        /* Re-enable selection for the search bar so it stays usable */
+        user-select: text; -webkit-user-select: text;
+    }
+
     select { padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
 
-    /* Catalog List Styling */
     .result-count {
-        font-size: 0.85em;
-        color: #666;
-        margin-bottom: 15px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        font-size: 0.85em; color: #666; margin-bottom: 15px;
+        font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
     }    
+
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
-        background: white; 
-        padding: 20px; 
-        margin-bottom: 12px; 
-        border-radius: 8px; 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        cursor: pointer; 
-        transition: transform 0.1s, box-shadow 0.2s; 
-        border-left: 5px solid transparent; 
+        background: white; padding: 20px; margin-bottom: 12px; border-radius: 8px; 
+        display: flex; justify-content: space-between; align-items: center; 
+        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; 
     }
     .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
     .song-info h3 { margin: 0; font-size: 1.1em; }
     .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
     .play-indicator { font-weight: bold; color: #007bff; }
 
-    /* The Lyrics Pane Styling */
     .lyrics-pane {
-        background: white;
-        padding: 25px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: pre-wrap; 
-        max-height: 500px;
-        overflow-y: auto;
-        font-size: 1em;
-        line-height: 1.6;
+        background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        white-space: pre-wrap; max-height: 500px; overflow-y: auto; font-size: 1em; line-height: 1.6;
+        position: relative; /* Container for the watermark */
     }
 
-        /* Tag Filters Styling */
-    .tag-filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 20px;
-        justify-content: flex-start;
+    /* WATERMARK: Property Protection */
+    .lyrics-pane::before {
+        content: "221st STREET MUSIC - PROPRIETARY";
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 2rem; font-weight: bold; color: rgba(0, 0, 0, 0.04);
+        pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
     }
 
+    .tag-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: flex-start; }
     .tag-btn {
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 20px;
-        padding: 8px 16px;
-        font-size: 0.9em;
-        cursor: pointer;
-        transition: all 0.2s;
+        background: #fff; border: 1px solid #ddd; border-radius: 20px; padding: 8px 16px;
+        font-size: 0.9em; cursor: pointer; transition: all 0.2s;
     }
+    .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
 
-    .tag-btn:hover { background: #f0f0f0; border-color: #bbb; }
-
-    .tag-btn.active {
-        background: #007bff;
-        color: white;
-        border-color: #007bff;
-    }
-    /* Mobile optimization: stack everything vertically */
     @media (max-width: 800px) {
         .main-content { flex-direction: column; }
         .lyrics-section { width: 100%; position: static; margin-top: 20px; }
@@ -137,7 +96,6 @@
 
 <div class="container">
     <h1>221st Street Music</h1>
-
     <div class="main-content">
         <div class="list-section">
             <div id="tagContainer" class="tag-filters"> </div>
@@ -149,17 +107,16 @@
                     <option value="K-Pop">K-Pop</option>
                     <option value="R&B">R&B</option>
                     <option value="Retro Synth">Retro Synth</option>
+                    <option value="Southern Gospel">Southern Gospel</option>
                 </select>
             </div>
             <ul class="song-list" id="songList"></ul>
         </div>
-
         <div class="lyrics-section">
             <h3>Lyrics</h3>
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
         </div>
     </div>
-
     <div class="master-player">
         <h3 id="now-playing-title">Select a track to listen</h3>
         <p id="now-playing-writer">Catalog Prototype</p>
@@ -173,38 +130,29 @@
 <script>
     let catalogData = [];
 
-   // Fetch the JSON data
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
             .then(data => {
                 catalogData = data;
                 displaySongs(catalogData);
-                renderTagFilters(); // <-- THE TRIGGER GOES HERE
+                renderTagFilters();
             })
             .catch(err => console.error("Error loading the catalog:", err));
     });
 
-// Display the songs in the UI
     function displaySongs(songs) {
         const list = document.getElementById('songList');
-        const countDisplay = document.getElementById('resultCount'); // Grab the counter
-        
+        const countDisplay = document.getElementById('resultCount');
         list.innerHTML = '';
-        
-        // Update the text to show the current number of songs
         if (countDisplay) {
             countDisplay.innerText = `Showing ${songs.length} track${songs.length === 1 ? '' : 's'}`;
         }
-
         songs.forEach(song => {
             const writers = song.writers.join(', ');
             const li = document.createElement('li');
             li.className = 'song-item';
-            
-            // Sends the lyrics from the JSON to the player
             li.onclick = () => playTrack(song.title, writers, song.file, song.lyrics || "Lyrics coming soon!");
-            
             li.innerHTML = `
                 <div class="song-info">
                     <h3>${song.title}</h3>
@@ -215,7 +163,7 @@
             list.appendChild(li);
         });
     }
-    // Update player and lyrics pane
+
     function playTrack(title, writers, fileName, lyrics) {
         const audio = document.getElementById('mainAudio');
         const source = document.getElementById('audioSource');
@@ -226,8 +174,6 @@
         source.src = encodeURI("audio/" + fileName);
         titleEl.innerText = title;
         writerEl.innerText = "Writers: " + writers;
-
-        // Injects the lyrics into the new side pane
         lyricsEl.innerText = lyrics; 
         lyricsEl.scrollTop = 0; 
 
@@ -235,22 +181,13 @@
         audio.play();
     }
 
-   
     function renderTagFilters() {
         const tagContainer = document.getElementById('tagContainer');
-        
-        // Collect all unique tags from the catalog
         const allTags = new Set();
         catalogData.forEach(song => {
-            if (song.tags) {
-                song.tags.forEach(tag => allTags.add(tag));
-            }
+            if (song.tags) { song.tags.forEach(tag => allTags.add(tag)); }
         });
-
-        // Create the "Show All" button
         tagContainer.innerHTML = `<button class="tag-btn active" onclick="filterByTag('All', this)">All Styles</button>`;
-
-        // Create a button for every unique tag
         allTags.forEach(tag => {
             const btn = document.createElement('button');
             btn.className = 'tag-btn';
@@ -259,42 +196,31 @@
             tagContainer.appendChild(btn);
         });
     }
-function filterByTag(tag, element) {
-        // 1. Update the UI to show which button is active
+
+    function filterByTag(tag, element) {
         document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
-
-        // 2. Tell the Master Filter to run
         filterCatalog();
     }
 
-    // The Master Filter!
     function filterCatalog() {
         const searchText = document.getElementById('searchBar').value.toLowerCase();
         const selectedGenre = document.getElementById('genreFilter').value;
-        
-        // Figure out which tag button is currently highlighted
         const activeTagBtn = document.querySelector('.tag-btn.active');
         const selectedTag = activeTagBtn ? activeTagBtn.innerText : 'All Styles';
 
         const filtered = catalogData.filter(song => {
-            // Check the text search
             const matchesText = song.title.toLowerCase().includes(searchText) || 
                                 song.writers.some(w => w.toLowerCase().includes(searchText));
-            
-            // Check the genre dropdown
             const matchesGenre = (selectedGenre === "All") ? true : (song.genre === selectedGenre);
-            
-            // Check the tag buttons
             const matchesTag = (selectedTag === 'All Styles' || selectedTag === 'All') ? true : (song.tags && song.tags.includes(selectedTag));
-
-            // Only show the song if it matches ALL active criteria
             return matchesText && matchesGenre && matchesTag;
         });
-
         displaySongs(filtered);
     }
-</script>
 
+    // IP PROTECTION: Disable Right-Click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
 </body>
 </html>
