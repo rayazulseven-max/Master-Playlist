@@ -1,5 +1,14 @@
 [
   {
+    "id": 1,
+    "title": "The God That Never Changes",
+    "writers": ["Mike McKelvin"],
+    "genre": "Southern Gospel",
+    "tags": ["Up Beat", "New Life", "Amazing God"],
+    "file": "TheGodThatNeverChanges.mp3",
+    "lyrics": "The God That Never Changes\n\nVERSE 1\nElijah stood alone against 400 prophets of Baal\nThe people vowed that they would serve the God that would prevail\nThey jumped and they shouted ‘Oh Baal, where can you be?’\nThen God showed up, the fire came down,\nand He claimed the victory.\n\nCHORUS\nThe God that never changes changes everything\nHe changed the way I walk, the way I talk He changed the song I sing\nyesterday, today, forever, His promises stay the same\nThe God that never changes changes everything\n\nVERSE 2\nThe blind man sat a beggin’ as Jesus passed His way\nHe laid His hands upon him with just a little clay\nHis eyes were open; the chains were broken. They asked, ‘how can this be?’\nHe said, ‘I don’t know how, but one thing I know, I was blind but now I see!’\n\nCHORUS\nThe God that never changes changes everything\nHe changed the way I walk, the way I talk He changed the song I sing\nyesterday, today, forever, His promises stay the same\nThe God that never changes changes everything\n\nBRIDGE\nI was headed down the wrong road\nI was headed for defeat\nThen He changed my heart, He changed my mind\nHe made a new man out of me\n\nCHORUS\nThe God that never changes changes everything\nHe changed the way I walk, the way I talk He changed the song I sing\nYesterday, today, forever, His promises stay the same\nThe God that never changes changes everything"
+  },
+  {
     "id": 2,
     "title": "I Am The Cross",
     "writers": ["William Carroll Cook", "Angela Cook", "Pattie Martin Mock", "Kenny Mock"],
