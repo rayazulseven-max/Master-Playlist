@@ -123,6 +123,7 @@
         .master-player {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1100; border-radius: 0; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 160px; padding: 12px 20px; overflow: hidden; 
+            box-sizing: border-box; /* <--- ADD THIS LINE TO FIX THE OVERFLOW! */
         }
         #now-playing-writer { white-space: normal; display: block; width: 100%; max-height: 50px; overflow-y: auto; margin-top: 5px; font-size: 0.8em; color: #aaa; padding-right: 5px; }
         .list-section { margin-top: 170px; }
