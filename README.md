@@ -1,26 +1,38 @@
-# 221st Street Music - Searchable Catalog Prototype
+# 221st Street Music - Searchable Catalog v1.0
 
-This is a custom, lightweight music catalog prototype built for **221st Street Music**. It features a searchable database of tracks with a centralized "Master Player" to provide a clean, professional user experience.
+A high-performance, standalone web application built for **221st Street Publishing**. This catalog features a dynamic search system, integrated media player, and proprietary IP protection.
 
-## Key Features
-- **Centralized Master Player**: A single audio interface at the top of the page to prevent UI clutter.
-- **Dynamic Search**: Live-filtering of tracks by Title, Writer, or Multiple Collaborators.
-- **Genre Filtering**: A dropdown menu to quickly categorize and find tracks by mood or style.
-- **JSON-Powered**: The catalog is managed via a simple `songs.json` file, making it easy to update without touching the core HTML/JS code.
+## 🚀 Live Demo
+View the production site here: [https://rayazulseven-max.github.io/Master-Playlist/](https://rayazulseven-max.github.io/Master-Playlist/)
 
-## Tech Stack
-- **HTML5/CSS3**: Clean, responsive layout.
-- **JavaScript (Vanilla)**: For live search logic and dynamic DOM manipulation.
-- **JSON**: Used as a lightweight data store for the music catalog.
-- **Suno AI**: Source for high-quality, commercially-licensed audio tracks used in this prototype.
+## ✨ Key Features
+* **Dynamic Data Fetching:** Utilizes a centralized JSON database for effortless catalog management.
+* **Sticky UI Framework:** Features a fixed brand header and a sticky desktop sidebar to keep player controls and lyrics in view at all times.
+* **Mobile-Optimized:** Fully responsive design that swaps to a top-pinned mobile player for on-the-go access.
+* **IP Protection:** Integrated right-click disabling and dynamic watermarking on lyrics to protect creative assets.
+* **Custom Branding:** High-end "Dark Mode" aesthetic with a bespoke sticky footer and overlapping logo design.
 
-## How to Run Locally
-Because this project uses the `fetch()` API to load the JSON catalog, it must be run on a local server for the search to function:
-1. Open your terminal in the project directory.
-2. Run `python -m http.server 8000`.
-3. Visit `http://localhost:8000` in your browser.
+## 📁 File Structure & Purpose
 
-## Project Credits
-- **Developer**: Victor Perez (V.I. Perez)
-- **Audio Content**: Generated via Suno AI (The Atelier)
+| File/Folder | Purpose |
+| :--- | :--- |
+| `index.html` | The core application (Structure, CSS, and JavaScript logic). |
+| `songs.json` | The database containing all track metadata and lyrics. |
+| `logo.png` | Optimized brand asset (600x246px). |
+| `/audio/` | Directory for all hosted MP3 assets. |
 
+
+
+## 🛠 Maintenance Guide
+To add new music to the catalog:
+
+1.  **Add Audio:** Place the `.mp3` file into the `/audio/` folder.
+2.  **Update Database:** Add a new entry to `songs.json`.
+    > **Note:** Ensure the `"file"` name in the JSON matches your MP3 filename exactly.
+3.  **Deploy:** Commit and Push via GitHub Desktop.
+
+## 🛡 Intellectual Property
+All compositions and brand assets are the intellectual property of **221st Street Music LLC**. No part of these compositions may be used in any form without expressed written permission.
+
+---
+*Developed by Victor Perez in collaboration with Gemini.*
