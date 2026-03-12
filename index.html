@@ -34,8 +34,7 @@
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
     h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
     .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
-    .list-section { flex: 1.5; } 
-    .lyrics-section { flex: 1; position: sticky; top: 20px; }
+    .lyrics-section { flex: 1; position: sticky; top: 120px; }
 
     /* 4. Controls & Inputs */
     .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
@@ -102,10 +101,11 @@
         position: relative; /* Allows the logo to break out of the box */
     }
     .footer-logo { 
-        height: 75px; width: auto; 
+        height: 120px; /* Increased from 75px to make it huge */
+        width: auto; 
         position: absolute; left: 50%; transform: translateX(-50%);
-        top: -45px; /* Pushes the logo up to overlap the white line! */
-        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); /* Adds a 3D drop shadow */
+        top: -70px; /* Pushed higher up to account for the bigger size */
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); 
     }
     .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
