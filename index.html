@@ -11,6 +11,7 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
+        /* Added 100px bottom padding so songs don't get trapped under the fixed footer */
         padding: 0 20px 100px 20px; 
         display: flex; 
         flex-direction: column; 
@@ -20,18 +21,19 @@
         user-select: none;
     }
 
-    /* 2. Dark Header & Home Link */
+    /* 2. Dark Header */
     .brand-header {
         position: fixed; top: 0; left: 0; width: 100%;
         background-color: rgba(18, 18, 18, 0.95);
         z-index: 1200; padding: 15px 0; text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-    .brand-logo { max-width: 250px; height: auto; display: inline-block; vertical-align: middle; }
-    
+    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
+
+    /* Header Home Link Styling */
     .home-link {
         position: absolute;
-        left: 15px;
+        left: 15px; /* Changed from 30px to move it further left */
         top: 50%;
         transform: translateY(-50%);
         color: #ffffff;
@@ -40,12 +42,20 @@
         font-weight: bold;
         transition: opacity 0.2s;
     }
-    .home-link:hover { opacity: 0.7; }
+    .home-link:hover {
+        opacity: 0.7;
+    }
 
+    /* Ensure footer logo link doesn't break positioning */
+    .footer-logo-link {
+        display: contents; /* Keeps the logo behaving like it's still a direct child of the footer */
+    }
+        
     /* 3. Layout Spacing */
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
+    h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
     .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
-    .list-section { flex: 1.5; }
+    .list-section { flex: 1.5; } 
     .lyrics-section { flex: 1; position: sticky; top: 120px; }
 
     /* 4. Controls & Inputs */
@@ -80,8 +90,8 @@
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
     audio { width: 100%; max-width: 700px; outline: none; }
-    
-    /* Autoplay Toggle Styling */
+
+    /* V2.0 Autoplay Toggle Styling */
     .autoplay-toggle { 
         margin-top: 15px; font-size: 0.95em; color: #ccc; 
         display: flex; align-items: center; justify-content: center; gap: 8px; 
@@ -107,10 +117,11 @@
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
     .disclaimer { font-size: 0.75em; color: #aaaaaa; margin-top: 15px; text-align: justify; line-height: 1.4; }
 
-    /* 8. Custom Footer */
+    /* 8. Custom Footer (Kenny's Bottom Frame Update) */
     .app-footer {
-        position: fixed; bottom: 0; left: 0; width: 100%; 
-        background: linear-gradient(to bottom, #5a0000, #2a0000); 
+        position: fixed; 
+        bottom: 0; left: 0; width: 100%; 
+        background: linear-gradient(to bottom, #450F0C, #7C1716); 
         color: white; padding: 15px 20px; 
         border-top: 3px solid #ffffff; 
         box-sizing: border-box; font-size: 0.85em;
@@ -121,12 +132,12 @@
         position: relative; 
     }
     .footer-logo { 
-        height: 120px; width: auto; 
+        height: 120px; 
+        width: auto; 
         position: absolute; left: 50%; transform: translateX(-50%);
-        top: -70px; 
+        top: -53px; 
         filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); 
     }
-    .footer-logo-link { display: contents; }
     .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
@@ -141,8 +152,8 @@
         
         .master-player {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1100; border-radius: 0; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 200px; padding: 12px 20px; 
-            overflow: hidden; box-sizing: border-box; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 200px; padding: 12px 20px; overflow: hidden; 
+            box-sizing: border-box; 
         }
         #now-playing-writer { white-space: normal; display: block; width: 100%; max-height: 50px; overflow-y: auto; margin-top: 5px; font-size: 0.8em; color: #aaa; padding-right: 5px; }
         .autoplay-toggle { margin-top: 10px; }
@@ -159,10 +170,8 @@
 
 <div class="container">
     <div class="brand-header">
-        <a href="https://221street.com" class="home-link">&lt; Home</a>
-        <a href="https://221street.com" style="text-decoration: none; display: inline-block;">
-            <img src="logo.png" alt="221st Street Publishing" class="brand-logo">
-        </a>
+        <a href="https://221street.com/" class="home-link">&lt; Home</a>
+        <img src="logo.png" alt="221st Street Publishing" class="brand-logo">
     </div>
     
     <div class="main-content">
@@ -172,9 +181,9 @@
                 <input type="text" id="searchBar" placeholder="Search name or writer..." onkeyup="filterCatalog()">
                 <select id="genreFilter" onchange="filterCatalog()">
                     <option value="All">All Genres</option>
-                    <option value="K-Pop">K-Pop</option>
-                    <option value="R&B">R&B</option>
-                    <option value="Retro Synth">Retro Synth</option>
+                    <option value="Bluegrass Gospel">Bluegrass Gospel</option>
+                    <option value="Contemporary Gospel">Contemporary Gospel</option>
+                    <option value="Country Gospel">Country Gospel</option>
                     <option value="Southern Gospel">Southern Gospel</option>
                 </select>
             </div>
@@ -185,7 +194,7 @@
         <div class="lyrics-section">
             <div class="master-player">
                 <h3 id="now-playing-title">Select a track to listen</h3>
-                <p id="now-playing-writer">Catalog Prototype</p>
+                <p id="now-playing-writer">Writer Information</p>
                 <audio id="mainAudio" controls>
                     <source id="audioSource" src="" type="audio/mpeg">
                     Your browser does not support the audio element.
@@ -206,9 +215,10 @@
     <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-copyright">
-                &copy;2026 221st Street Music LLC. All rights reserved.
+                &copy;2026 - 221st Street Music LLC.<br>
+                All rights reserved.
             </div>
-            <a href="https://221street.com" class="footer-logo-link">
+            <a href="https://221street.com/" class="footer-logo-link">
                 <img src="logo.png" alt="221st Street Publishing" class="footer-logo">
             </a>
             <div class="footer-contact">
@@ -218,7 +228,6 @@
             </div>
         </div>
     </footer>
-
 <script>
     let catalogData = [];
     let currentPlaylist = []; // V2.0: Tracks the currently filtered list
@@ -345,6 +354,7 @@
         displaySongs(currentPlaylist);
     }
 
+    // IP PROTECTION: Disable Right-Click
     document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 </body>
