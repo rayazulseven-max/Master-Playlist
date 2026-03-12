@@ -30,6 +30,27 @@
     }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
 
+    /* Header Home Link Styling /
+    .home-link {
+        position: absolute;
+        left: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 16px; / 16 point equivalent /
+        font-weight: bold;
+        transition: opacity 0.2s;
+    }
+    .home-link:hover {
+        opacity: 0.7;
+    }
+
+    / Ensure footer logo link doesn't break positioning /
+    .footer-logo-link {
+        display: contents; / Keeps the logo behaving like it's still a direct child of the footer */
+    }
+        
     /* 3. Layout Spacing */
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
     h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
@@ -140,6 +161,7 @@
 
 <div class="container">
     <div class="brand-header">
+        <a href="https://221street.com/" class="home-link">&lt; Home</a>
         <img src="logo.png" alt="221st Street Publishing" class="brand-logo">
     </div>
     
@@ -182,7 +204,7 @@
             <div class="footer-copyright">
                 &copy;2026 221st Street Music LLC. All rights reserved.
             </div>
-            <a href="https://221street.com">
+            <a href="index.html" class="footer-logo-link">
                 <img src="logo.png" alt="221st Street Publishing" class="footer-logo">
             </a>
             <div class="footer-contact">
