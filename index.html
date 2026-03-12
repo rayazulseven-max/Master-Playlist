@@ -5,34 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-        /* Branded Header Styling */
+    /* 1. Pin the Logo to the very top of the screen */
     .brand-header {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
+        background-color: #f8f9fa; /* Matches the body background */
+        z-index: 1200; /* Higher than the player to stay on top */
+        padding: 15px 0;
         text-align: center;
-        margin-bottom: 20px;
-        padding-top: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .brand-logo {
-        max-width: 300px; /* Desktop size */
+        max-width: 250px; 
         height: auto;
         display: inline-block;
     }
 
-    /* Mobile Logo Sizing */
-    @media (max-width: 800px) {
-        .brand-logo {
-            max-width: 200px; /* Shrinks the logo for phones */
-            /* No extra margin-top needed here since .container already handles it! */
-        }
-    }
     /* Modern, clean styling for Mac/Sitely compatibility */
     body { 
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
         background-color: #f8f9fa; 
         color: #333; 
         margin: 0; 
-        padding: 40px 20px; /* Removed massive bottom padding */
+        padding: 0 20px 40px 20px; 
         display: flex; 
         flex-direction: column; 
         align-items: center;
@@ -42,7 +40,13 @@
         user-select: none;
     }
 
-    .container { max-width: 1000px; width: 100%; }
+    /* 2. Push the rest of the site down so it starts below the logo */
+    .container { 
+        max-width: 1000px; 
+        width: 100%; 
+        padding-top: 120px; /* Creates space for the fixed logo */
+    }
+
     h1 { text-align: center; margin-bottom: 30px; }
 
     .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
@@ -59,11 +63,10 @@
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
     audio { width: 100%; max-width: 700px; outline: none; }
 
-    .controls { display: flex; gap: 10px; margin-bottom: 15px; } /* Adjusted margin */
+    .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
     
     input[type="text"] { 
         flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; 
-        /* Re-enable selection for the search bar so it stays usable */
         user-select: text; -webkit-user-select: text;
     }
 
@@ -88,7 +91,7 @@
     .lyrics-pane {
         background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         white-space: pre-wrap; max-height: 500px; overflow-y: auto; font-size: 1em; line-height: 1.6;
-        position: relative; /* Container for the watermark */
+        position: relative;
     }
 
     /* WATERMARK: Property Protection */
@@ -106,36 +109,49 @@
     }
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
 
-    /* New Legal Disclaimer Styling */
+    /* Legal Disclaimer Styling */
     .disclaimer {
         font-size: 0.75em; color: #888; margin-top: 15px; text-align: justify; line-height: 1.4;
     }
 
+    /* 3. Mobile Adjustments (All consolidated here) */
     @media (max-width: 800px) {
-        /* 1. Stack the main containers */
         .main-content { flex-direction: column; }
         .lyrics-section { width: 100%; position: static; margin-top: 20px; }
-
-        /* 2. Pin the Player to the top of the mobile screen */
+        .brand-header { display: none; } /* Hide logo on mobile so it doesn't crowd the player */
+        .container { padding-top: 180px; } /* Space for the mobile fixed player */
+        .lyrics-pane { max-height: none; }
+        
+        /* Pin the Player to the top of the mobile screen */
         .master-player {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1100;
-            border-radius: 0; /* Flush with screen edges looks cleaner */
+            border-radius: 0; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            height: auto;
+            max-height: 160px;
+            padding: 12px 20px;
+            overflow: hidden; 
         }
 
-        /* 3. Push the content down so the fixed player doesn't cover the title */
-        .container {
-            padding-top: 160px; 
+        /* The Internal Scroll for long names */
+        #now-playing-writer {
+            white-space: normal; 
+            display: block;
+            width: 100%;
+            max-height: 50px; 
+            overflow-y: auto; 
+            margin-top: 5px;
+            font-size: 0.8em;
+            color: #aaa;
+            padding-right: 5px; 
         }
 
-        /* 4. Keep the Lyrics static (non-floating) */
-        /* Note: Floating both on mobile usually hides too much of the screen! */
-        .lyrics-pane {
-            max-height: none; /* Let them expand naturally on mobile */
+        .list-section {
+            margin-top: 170px; 
         }
     }
     </style>
