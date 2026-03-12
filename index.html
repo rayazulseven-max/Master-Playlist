@@ -5,31 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-    /* 2. Update Header to match the dark background */
-    .brand-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(18, 18, 18, 0.95); /* Slightly transparent dark header */
-        z-index: 1200; 
-        padding: 15px 0;
-        text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Stronger shadow for the dark background */
-    }
-    .brand-logo {
-        max-width: 250px; 
-        height: auto;
-        display: inline-block;
-    }
-
-    /* 1. Dark Mode Background for the Standalone App */
+    /* 1. Dark Mode Background */
     body { 
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-        background-color: #121212; /* Sleek dark background matching his site's vibe */
-        color: #ffffff; /* White text for the main body */
+        background-color: #121212; 
+        color: #ffffff; 
         margin: 0; 
-        padding: 0 20px 0 20px; /* Removed bottom padding so the footer sits flush */
+        padding: 0 20px 0 20px; 
         display: flex; 
         flex-direction: column; 
         align-items: center;
@@ -39,51 +21,64 @@
         user-select: none;
     }
 
-    /* 2. Push the rest of the site down so it starts below the logo */
-    .container { 
-        max-width: 1000px; 
-        width: 100%; 
-        padding-top: 120px; /* Creates space for the fixed logo */
+    /* 2. Dark Header */
+    .brand-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(18, 18, 18, 0.95);
+        z-index: 1200; 
+        padding: 15px 0;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
+    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
 
-    h1 { text-align: center; margin-bottom: 30px; }
-
+    /* 3. Layout Spacing */
+    .container { max-width: 1000px; width: 100%; padding-top: 120px; }
+    h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
     .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
     .list-section { flex: 1.5; } 
     .lyrics-section { flex: 1; position: sticky; top: 20px; }
 
-    /* Updated static player styling */
+    /* 4. Controls & Inputs */
+    .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
+    input[type="text"], select { 
+        padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; 
+        background: white; color: #333; outline: none; 
+    }
+    input[type="text"] { flex-grow: 1; user-select: text; -webkit-user-select: text; }
+    select { cursor: pointer; }
+
+    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }    
+
+    /* 5. Song Cards (Restored White Backgrounds!) */
+    .song-list { list-style: none; padding: 0; margin: 0; }
+    .song-item { 
+        background: white; color: #333; padding: 20px; margin-bottom: 12px; border-radius: 8px; 
+        display: flex; justify-content: space-between; align-items: center; 
+        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; 
+    }
+    .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
+    .song-info h3 { margin: 0; font-size: 1.1em; color: #333; }
+    .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
+    .play-indicator { font-weight: bold; color: #007bff; }
+
+    /* 6. Player & Lyrics Pane (Restored White Background!) */
     .master-player { 
         background: #1a1a1a; color: white; padding: 20px 25px; text-align: center; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; margin-bottom: 20px;
     }
-
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
     audio { width: 100%; max-width: 700px; outline: none; }
 
-    .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
-    
-    input[type="text"] { 
-        flex-grow: 1; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; outline: none; 
-        user-select: text; -webkit-user-select: text;
+    .lyrics-pane {
+        background: white; color: #333; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        white-space: pre-wrap; max-height: 500px; overflow-y: auto; font-size: 1em; line-height: 1.6;
+        position: relative;
     }
-
-    select { padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; }
-
-    .result-count {
-        font-size: 0.85em; color: #666; margin-bottom: 15px;
-        font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-    }    
-
-    /* Keep the cards, inputs, and lyrics pane white with dark text */
-    .song-item, .lyrics-pane, select, input[type="text"] {
-        color: #333;
-    }
-
-    h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
-    .result-count, .disclaimer { color: #aaaaaa; } /* Softer gray for secondary text */
-    /* WATERMARK: Property Protection */
     .lyrics-pane::before {
         content: "221st STREET MUSIC - PROPRIETARY";
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
@@ -91,91 +86,39 @@
         pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
     }
 
+    /* 7. Tags & Disclaimer */
     .tag-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: flex-start; }
-    .tag-btn {
-        background: #fff; border: 1px solid #ddd; border-radius: 20px; padding: 8px 16px;
-        font-size: 0.9em; cursor: pointer; transition: all 0.2s;
-    }
+    .tag-btn { background: #fff; color: #333; border: 1px solid #ddd; border-radius: 20px; padding: 8px 16px; font-size: 0.9em; cursor: pointer; transition: all 0.2s; }
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
+    .disclaimer { font-size: 0.75em; color: #aaaaaa; margin-top: 15px; text-align: justify; line-height: 1.4; }
 
-    /* Legal Disclaimer Styling */
-    .disclaimer {
-        font-size: 0.75em; color: #888; margin-top: 15px; text-align: justify; line-height: 1.4;
-    }
-
-    /* 3. Mobile Adjustments (All consolidated here) */
-    @media (max-width: 800px) {
-        .main-content { flex-direction: column; }
-        .lyrics-section { width: 100%; position: static; margin-top: 20px; }
-        .brand-header { display: none; } /* Hide logo on mobile so it doesn't crowd the player */
-        .container { padding-top: 180px; } /* Space for the mobile fixed player */
-        .lyrics-pane { max-height: none; }
-        
-        /* Pin the Player to the top of the mobile screen */
-        .master-player {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1100;
-            border-radius: 0; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            height: auto;
-            max-height: 160px;
-            padding: 12px 20px;
-            overflow: hidden; 
-        }
-
-        /* The Internal Scroll for long names */
-        #now-playing-writer {
-            white-space: normal; 
-            display: block;
-            width: 100%;
-            max-height: 50px; 
-            overflow-y: auto; 
-            margin-top: 5px;
-            font-size: 0.8em;
-            color: #aaa;
-            padding-right: 5px; 
-        }
-
-        .list-section {
-            margin-top: 170px; 
-        }
-    }
-        /* 3. The Custom Footer Styling */
+    /* 8. Custom Footer */
     .app-footer {
-        width: 100vw; /* Forces it to span the entire screen width */
-        margin-left: -20px; /* Offsets the body padding */
-        background: linear-gradient(to bottom, #5a0000, #2a0000); /* Dark red gradient */
-        color: white;
-        padding: 30px 20px;
-        margin-top: 50px;
-        border-top: 2px solid #ffffff;
-        box-sizing: border-box;
-        font-size: 0.85em;
+        width: 100vw; margin-left: -20px; background: linear-gradient(to bottom, #5a0000, #2a0000); 
+        color: white; padding: 30px 20px; margin-top: 50px; border-top: 2px solid #ffffff; 
+        box-sizing: border-box; font-size: 0.85em;
     }
-
-    .footer-content {
-        max-width: 1000px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .footer-logo {
-        height: 60px;
-        width: auto;
-    }
-
+    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { height: 60px; width: auto; }
     .footer-copyright { flex: 1; text-align: left; }
-    
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
 
-    /* Footer Mobile Adjustments */
+    /* 9. Mobile Adjustments */
     @media (max-width: 800px) {
+        .main-content { flex-direction: column; }
+        .lyrics-section { width: 100%; position: static; margin-top: 20px; }
+        .brand-header { display: none; } 
+        .container { padding-top: 180px; } 
+        .lyrics-pane { max-height: none; }
+        
+        .master-player {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1100; border-radius: 0; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 160px; padding: 12px 20px; overflow: hidden; 
+        }
+        #now-playing-writer { white-space: normal; display: block; width: 100%; max-height: 50px; overflow-y: auto; margin-top: 5px; font-size: 0.8em; color: #aaa; padding-right: 5px; }
+        
+        .list-section { margin-top: 170px; }
         .footer-content { flex-direction: column; text-align: center; gap: 20px; }
         .footer-copyright, .footer-contact { text-align: center; }
     }
