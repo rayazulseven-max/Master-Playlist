@@ -1,38 +1,10 @@
-# 221st Street Music - Searchable Catalog v1.0
-
-A high-performance, standalone web application built for **221st Street Publishing**. This catalog features a dynamic search system, integrated media player, and proprietary IP protection.
-
-## 🚀 Live Demo
-View the production site here: [https://rayazulseven-max.github.io/Master-Playlist/](https://rayazulseven-max.github.io/Master-Playlist/)
-
-## ✨ Key Features
-* **Dynamic Data Fetching:** Utilizes a centralized JSON database for effortless catalog management.
-* **Sticky UI Framework:** Features a fixed brand header and a sticky desktop sidebar to keep player controls and lyrics in view at all times.
-* **Mobile-Optimized:** Fully responsive design that swaps to a top-pinned mobile player for on-the-go access.
-* **IP Protection:** Integrated right-click disabling and dynamic watermarking on lyrics to protect creative assets.
-* **Custom Branding:** High-end "Dark Mode" aesthetic with a bespoke sticky footer and overlapping logo design.
-
-## 📁 File Structure & Purpose
-
-| File/Folder | Purpose |
-| :--- | :--- |
-| `index.html` | The core application (Structure, CSS, and JavaScript logic). |
-| `songs.json` | The database containing all track metadata and lyrics. |
-| `logo.png` | Optimized brand asset (600x246px). |
-| `/audio/` | Directory for all hosted MP3 assets. |
-
-
-
-## 🛠 Maintenance Guide
-To add new music to the catalog:
-
-1.  **Add Audio:** Place the `.mp3` file into the `/audio/` folder.
-2.  **Update Database:** Add a new entry to `songs.json`.
-    > **Note:** Ensure the `"file"` name in the JSON matches your MP3 filename exactly.
-3.  **Deploy:** Commit and Push via GitHub Desktop.
-
-## 🛡 Intellectual Property
-All compositions and brand assets are the intellectual property of **221st Street Music LLC**. No part of these compositions may be used in any form without expressed written permission.
-
----
-*Developed by Victor Perez in collaboration with Gemini.*
+🎵 221st Street Music: Catalog Manager’s GuideWelcome to your music catalog! This site is designed to be high-performance, mobile-friendly, and easy to update without needing to write complex code.📂 What’s in this Folder?File/FolderWhat it doesindex.htmlThe Engine. This is the actual website code. You usually won't need to touch this unless changing links or colors.songs.jsonThe Database. This is where you add song titles, writers, and lyrics.audio/The Vault. This folder is where you upload your .mp3 files.logo.pngThe Brand. Your optimized logo used in the header and footer.🛠 How to Add a New SongUpdating the site is a simple 3-step process.Step 1: Upload the AudioTake your song file (e.g., Sleigh_Ride.mp3).Drop it into the audio folder.Crucial: Make sure the filename has no spaces (use underscores _ or dashes -) and ends in .mp3.Step 2: Update the JSON DatabaseOpen songs.json in a text editor (like Notepad or VS Code). You will see a list of songs. To add a new one, copy a previous "block" of code and change the details.Example of a song block:JSON{
+  "id": "track-08",
+  "title": "Your New Hit",
+  "writers": ["Kenny WayDownLow", "The Atelier"],
+  "genre": "K-Pop",
+  "file": "your_filename.mp3",
+  "lyrics": "Verse 1:\nLyrics go here...",
+  "tags": ["Upbeat", "Retro"]
+}
+The Comma Rule: Every song block needs a comma after the } except for the very last song in the list.The File Name: The file entry must match your MP3 filename in the audio folder exactly.Step 3: Save and SyncSave your changes to songs.json.Open GitHub Desktop.You will see your changes highlighted in green.In the bottom left, type a summary like "Added New Hit."Click Commit to main.Click Push origin at the top.⚠️ Troubleshooting "The Oopsies""The site is totally blank!"Cause: You likely missed a comma or a quote in the songs.json file.Fix: Check the very last song you added. Ensure there is a comma after the } of the song above it."The song won't play!"Cause: Filename mismatch.Fix: Make sure the name in the file section of your JSON matches the filename in the audio folder exactly (e.g., Song.mp3 is not the same as song.mp3)."The lyrics are all on one line!"Cause: Missing line-break commands.Fix: Use \n wherever you want a new line to start (e.g., Verse 1:\nThis is line two).🔒 Built-in ProtectionYour site has IP Protection enabled:Right-Click is Disabled: Users cannot easily "Save As" your images or music.Watermarking: A "PROPRIETARY" watermark is automatically placed over all lyrics.Legal Footer: International copyright notices are locked at the bottom of the screen.Developed with ❤️ by Victor Perez
