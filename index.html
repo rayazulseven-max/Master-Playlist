@@ -79,8 +79,20 @@
     .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
     .song-item.active-playing { border-left: 5px solid #007bff; background: #f0f8ff; }
     .song-info h3 { margin: 0; font-size: 1.1em; color: #333; }
-    .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
-    .play-indicator { font-weight: bold; color: #007bff; }
+/* 1. Ensure the info takes up the left side and doesn't push the button out */
+    .song-info { 
+        flex: 1; 
+        padding-right: 20px; 
+    }
+
+    /* 2. Keep the Play button locked in place and perfectly centered */
+    .play-indicator { 
+        font-weight: bold; 
+        color: #007bff; 
+        flex-shrink: 0; 
+        white-space: nowrap;
+        text-align: right;
+    }
 
     /* 6. Player & Lyrics Pane */
     .master-player { 
