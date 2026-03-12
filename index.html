@@ -11,7 +11,6 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        /* Added 100px bottom padding so songs don't get trapped under the fixed footer */
         padding: 0 20px 100px 20px; 
         display: flex; 
         flex-direction: column; 
@@ -21,19 +20,18 @@
         user-select: none;
     }
 
-    /* 2. Dark Header */
+    /* 2. Dark Header & Home Link */
     .brand-header {
         position: fixed; top: 0; left: 0; width: 100%;
         background-color: rgba(18, 18, 18, 0.95);
         z-index: 1200; padding: 15px 0; text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
-
-    /* Header Home Link Styling /
+    .brand-logo { max-width: 250px; height: auto; display: inline-block; vertical-align: middle; }
+    
     .home-link {
         position: absolute;
-        left: 15px; /* Changed from 30px to move it further left */
+        left: 15px;
         top: 50%;
         transform: translateY(-50%);
         color: #ffffff;
@@ -42,20 +40,12 @@
         font-weight: bold;
         transition: opacity 0.2s;
     }
-    .home-link:hover {
-        opacity: 0.7;
-    }
+    .home-link:hover { opacity: 0.7; }
 
-    / Ensure footer logo link doesn't break positioning /
-    .footer-logo-link {
-        display: contents; / Keeps the logo behaving like it's still a direct child of the footer */
-    }
-        
     /* 3. Layout Spacing */
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
-    h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
     .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
-    .list-section { flex: 1.5; } /* <--- ADD THIS LINE BACK IN! */
+    .list-section { flex: 1.5; }
     .lyrics-section { flex: 1; position: sticky; top: 120px; }
 
     /* 4. Controls & Inputs */
@@ -77,6 +67,7 @@
         cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; 
     }
     .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
+    .song-item.active-playing { border-left: 5px solid #007bff; background: #f0f8ff; }
     .song-info h3 { margin: 0; font-size: 1.1em; color: #333; }
     .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
     .play-indicator { font-weight: bold; color: #007bff; }
@@ -89,6 +80,14 @@
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.2em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.9em; color: #aaa; }
     audio { width: 100%; max-width: 700px; outline: none; }
+    
+    /* Autoplay Toggle Styling */
+    .autoplay-toggle { 
+        margin-top: 15px; font-size: 0.95em; color: #ccc; 
+        display: flex; align-items: center; justify-content: center; gap: 8px; 
+    }
+    .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #007bff; width: 16px; height: 16px; margin: 0; }
+    .autoplay-toggle label { cursor: pointer; user-select: none; }
 
     .lyrics-pane {
         background: white; color: #333; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -108,27 +107,26 @@
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
     .disclaimer { font-size: 0.75em; color: #aaaaaa; margin-top: 15px; text-align: justify; line-height: 1.4; }
 
-    /* 8. Custom Footer (The Bottom Frame Update) */
+    /* 8. Custom Footer */
     .app-footer {
-        position: fixed; /* Locks it to the bottom of the window */
-        bottom: 0; left: 0; width: 100%; 
-        background: linear-gradient(to bottom, #450F0C, #7C1716); 
+        position: fixed; bottom: 0; left: 0; width: 100%; 
+        background: linear-gradient(to bottom, #5a0000, #2a0000); 
         color: white; padding: 15px 20px; 
         border-top: 3px solid #ffffff; 
         box-sizing: border-box; font-size: 0.85em;
-        z-index: 1300; /* Stays above the scrolling songs */
+        z-index: 1300; 
     }
     .footer-content { 
         max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; 
-        position: relative; /* Allows the logo to break out of the box */
+        position: relative; 
     }
     .footer-logo { 
-        height: 120px; /* Increased from 75px to make it huge */
-        width: auto; 
+        height: 120px; width: auto; 
         position: absolute; left: 50%; transform: translateX(-50%);
-        top: -53px; /* Pushed higher up to account for the bigger size — lowered it down a little to center it on the bar */
+        top: -70px; 
         filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); 
     }
+    .footer-logo-link { display: contents; }
     .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
@@ -143,13 +141,13 @@
         
         .master-player {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1100; border-radius: 0; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 160px; padding: 12px 20px; overflow: hidden; 
-            box-sizing: border-box; /* <--- ADD THIS LINE TO FIX THE OVERFLOW! */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 200px; padding: 12px 20px; 
+            overflow: hidden; box-sizing: border-box; 
         }
         #now-playing-writer { white-space: normal; display: block; width: 100%; max-height: 50px; overflow-y: auto; margin-top: 5px; font-size: 0.8em; color: #aaa; padding-right: 5px; }
-        .list-section { margin-top: 170px; }
+        .autoplay-toggle { margin-top: 10px; }
+        .list-section { margin-top: 210px; } /* Adjusted to fit the autoplay toggle on mobile */
 
-        /* SENIOR DEV DECISION: Un-fix the footer on mobile so we don't crush the screen space! */
         .app-footer { position: static; margin-top: 30px; margin-left: -20px; width: 100vw; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
@@ -161,8 +159,10 @@
 
 <div class="container">
     <div class="brand-header">
-        <a href="https://221street.com/" class="home-link">&lt; Home</a>
-        <img src="logo.png" alt="221st Street Publishing" class="brand-logo">
+        <a href="https://221street.com" class="home-link">&lt; Home</a>
+        <a href="https://221street.com" style="text-decoration: none; display: inline-block;">
+            <img src="logo.png" alt="221st Street Publishing" class="brand-logo">
+        </a>
     </div>
     
     <div class="main-content">
@@ -185,11 +185,15 @@
         <div class="lyrics-section">
             <div class="master-player">
                 <h3 id="now-playing-title">Select a track to listen</h3>
-                <p id="now-playing-writer">Writer Information</p>
+                <p id="now-playing-writer">Catalog Prototype</p>
                 <audio id="mainAudio" controls>
                     <source id="audioSource" src="" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
+                <div class="autoplay-toggle">
+                    <input type="checkbox" id="autoplayCheck">
+                    <label for="autoplayCheck">Auto-play next in list</label>
+                </div>
             </div>
 
             <h3>Lyrics</h3>
@@ -202,10 +206,9 @@
     <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-copyright">
-                &copy;2026 - 221st Street Music LLC.<br>
-                All rights reserved.
+                &copy;2026 221st Street Music LLC. All rights reserved.
             </div>
-            <a href="https://221street.com/" class="footer-logo-link">
+            <a href="https://221street.com" class="footer-logo-link">
                 <img src="logo.png" alt="221st Street Publishing" class="footer-logo">
             </a>
             <div class="footer-contact">
@@ -215,18 +218,35 @@
             </div>
         </div>
     </footer>
+
 <script>
     let catalogData = [];
+    let currentPlaylist = []; // V2.0: Tracks the currently filtered list
+    let currentSongIndex = -1; // V2.0: Tracks which song is playing right now
 
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
             .then(data => {
                 catalogData = data;
+                currentPlaylist = data; // Initialize the playlist with all songs
                 displaySongs(catalogData);
                 renderTagFilters();
             })
             .catch(err => console.error("Error loading the catalog:", err));
+
+        // V2.0 Autoplay Event Listener
+        const audio = document.getElementById('mainAudio');
+        audio.addEventListener('ended', () => {
+            const autoplayEnabled = document.getElementById('autoplayCheck').checked;
+            
+            // If autoplay is checked and we aren't at the end of the filtered list
+            if (autoplayEnabled && currentSongIndex !== -1 && currentSongIndex < currentPlaylist.length - 1) {
+                const nextSong = currentPlaylist[currentSongIndex + 1];
+                const writers = nextSong.writers.join(', ');
+                playTrack(nextSong.title, writers, nextSong.file, nextSong.lyrics || "Lyrics coming soon!");
+            }
+        });
     });
 
     function displaySongs(songs) {
@@ -236,10 +256,16 @@
         if (countDisplay) {
             countDisplay.innerText = `Showing ${songs.length} track${songs.length === 1 ? '' : 's'}`;
         }
-        songs.forEach(song => {
+        songs.forEach((song, index) => {
             const writers = song.writers.join(', ');
             const li = document.createElement('li');
             li.className = 'song-item';
+            
+            // Highlight the song if it's currently playing
+            if (currentSongIndex === index) {
+                li.classList.add('active-playing');
+            }
+
             li.onclick = () => playTrack(song.title, writers, song.file, song.lyrics || "Lyrics coming soon!");
             li.innerHTML = `
                 <div class="song-info">
@@ -264,6 +290,12 @@
         writerEl.innerText = "Writers: " + writers;
         lyricsEl.innerText = lyrics; 
         lyricsEl.scrollTop = 0; 
+
+        // V2.0: Figure out what number this song is in the currently displayed list
+        currentSongIndex = currentPlaylist.findIndex(s => s.file === fileName);
+        
+        // Re-render the song list to show the blue highlight on the active track
+        displaySongs(currentPlaylist);
 
         audio.load();
         audio.play();
@@ -304,10 +336,15 @@
             const matchesTag = (selectedTag === 'All Styles' || selectedTag === 'All') ? true : (song.tags && song.tags.includes(selectedTag));
             return matchesText && matchesGenre && matchesTag;
         });
-        displaySongs(filtered);
+        
+        // V2.0: Update the active playlist so autoplay knows what list we are using
+        currentPlaylist = filtered;
+        // Reset the current song index since the list changed
+        currentSongIndex = -1;
+        
+        displaySongs(currentPlaylist);
     }
 
-    // IP PROTECTION: Disable Right-Click
     document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 </body>
