@@ -11,11 +11,11 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        padding: 0 20px 0 20px; 
+        /* Added 100px bottom padding so songs don't get trapped under the fixed footer */
+        padding: 0 20px 100px 20px; 
         display: flex; 
         flex-direction: column; 
         align-items: center;
-        /* IP PROTECTION */
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
@@ -23,14 +23,9 @@
 
     /* 2. Dark Header */
     .brand-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
+        position: fixed; top: 0; left: 0; width: 100%;
         background-color: rgba(18, 18, 18, 0.95);
-        z-index: 1200; 
-        padding: 15px 0;
-        text-align: center;
+        z-index: 1200; padding: 15px 0; text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
@@ -53,7 +48,7 @@
 
     .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }    
 
-    /* 5. Song Cards (Restored White Backgrounds!) */
+    /* 5. Song Cards */
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
         background: white; color: #333; padding: 20px; margin-bottom: 12px; border-radius: 8px; 
@@ -65,7 +60,7 @@
     .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
     .play-indicator { font-weight: bold; color: #007bff; }
 
-    /* 6. Player & Lyrics Pane (Restored White Background!) */
+    /* 6. Player & Lyrics Pane */
     .master-player { 
         background: #1a1a1a; color: white; padding: 20px 25px; text-align: center; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; margin-bottom: 20px;
@@ -92,16 +87,28 @@
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
     .disclaimer { font-size: 0.75em; color: #aaaaaa; margin-top: 15px; text-align: justify; line-height: 1.4; }
 
-    /* 8. Custom Footer */
+    /* 8. Custom Footer (The Bottom Frame Update) */
     .app-footer {
-        width: 100vw; margin-left: -20px; background: linear-gradient(to bottom, #5a0000, #2a0000); 
-        color: white; padding: 30px 20px; margin-top: 50px; border-top: 2px solid #ffffff; 
+        position: fixed; /* Locks it to the bottom of the window */
+        bottom: 0; left: 0; width: 100%; 
+        background: linear-gradient(to bottom, #5a0000, #2a0000); 
+        color: white; padding: 15px 20px; 
+        border-top: 3px solid #ffffff; 
         box-sizing: border-box; font-size: 0.85em;
+        z-index: 1300; /* Stays above the scrolling songs */
     }
-    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .footer-logo { height: 60px; width: auto; }
-    .footer-copyright { flex: 1; text-align: left; }
-    .footer-contact { flex: 1; text-align: right; line-height: 1.5; }
+    .footer-content { 
+        max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; 
+        position: relative; /* Allows the logo to break out of the box */
+    }
+    .footer-logo { 
+        height: 75px; width: auto; 
+        position: absolute; left: 50%; transform: translateX(-50%);
+        top: -45px; /* Pushes the logo up to overlap the white line! */
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); /* Adds a 3D drop shadow */
+    }
+    .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
+    .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
 
     /* 9. Mobile Adjustments */
@@ -117,10 +124,13 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); height: auto; max-height: 160px; padding: 12px 20px; overflow: hidden; 
         }
         #now-playing-writer { white-space: normal; display: block; width: 100%; max-height: 50px; overflow-y: auto; margin-top: 5px; font-size: 0.8em; color: #aaa; padding-right: 5px; }
-        
         .list-section { margin-top: 170px; }
-        .footer-content { flex-direction: column; text-align: center; gap: 20px; }
-        .footer-copyright, .footer-contact { text-align: center; }
+
+        /* SENIOR DEV DECISION: Un-fix the footer on mobile so we don't crush the screen space! */
+        .app-footer { position: static; margin-top: 30px; margin-left: -20px; width: 100vw; }
+        .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
+        .footer-content { flex-direction: column; text-align: center; gap: 10px; }
+        .footer-copyright, .footer-contact { text-align: center; padding: 0; }
     }
     </style>
 </head>
