@@ -5,36 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-    /* 1. Pin the Logo to the very top of the screen */
+    /* 2. Update Header to match the dark background */
     .brand-header {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #f8f9fa; /* Matches the body background */
-        z-index: 1200; /* Higher than the player to stay on top */
+        background-color: rgba(18, 18, 18, 0.95); /* Slightly transparent dark header */
+        z-index: 1200; 
         padding: 15px 0;
         text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Stronger shadow for the dark background */
     }
-
     .brand-logo {
         max-width: 250px; 
         height: auto;
         display: inline-block;
     }
 
-    /* Modern, clean styling for Mac/Sitely compatibility */
+    /* 1. Dark Mode Background for the Standalone App */
     body { 
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-        background-color: #f8f9fa; 
-        color: #333; 
+        background-color: #121212; /* Sleek dark background matching his site's vibe */
+        color: #ffffff; /* White text for the main body */
         margin: 0; 
-        padding: 0 20px 40px 20px; 
+        padding: 0 20px 0 20px; /* Removed bottom padding so the footer sits flush */
         display: flex; 
         flex-direction: column; 
         align-items: center;
-        /* IP PROTECTION: Prevent selection */
+        /* IP PROTECTION */
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
@@ -77,23 +76,13 @@
         font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
     }    
 
-    .song-list { list-style: none; padding: 0; margin: 0; }
-    .song-item { 
-        background: white; padding: 20px; margin-bottom: 12px; border-radius: 8px; 
-        display: flex; justify-content: space-between; align-items: center; 
-        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; 
-    }
-    .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
-    .song-info h3 { margin: 0; font-size: 1.1em; }
-    .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
-    .play-indicator { font-weight: bold; color: #007bff; }
-
-    .lyrics-pane {
-        background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: pre-wrap; max-height: 500px; overflow-y: auto; font-size: 1em; line-height: 1.6;
-        position: relative;
+    /* Keep the cards, inputs, and lyrics pane white with dark text */
+    .song-item, .lyrics-pane, select, input[type="text"] {
+        color: #333;
     }
 
+    h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
+    .result-count, .disclaimer { color: #aaaaaa; } /* Softer gray for secondary text */
     /* WATERMARK: Property Protection */
     .lyrics-pane::before {
         content: "221st STREET MUSIC - PROPRIETARY";
@@ -154,6 +143,42 @@
             margin-top: 170px; 
         }
     }
+        /* 3. The Custom Footer Styling */
+    .app-footer {
+        width: 100vw; /* Forces it to span the entire screen width */
+        margin-left: -20px; /* Offsets the body padding */
+        background: linear-gradient(to bottom, #5a0000, #2a0000); /* Dark red gradient */
+        color: white;
+        padding: 30px 20px;
+        margin-top: 50px;
+        border-top: 2px solid #ffffff;
+        box-sizing: border-box;
+        font-size: 0.85em;
+    }
+
+    .footer-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .footer-logo {
+        height: 60px;
+        width: auto;
+    }
+
+    .footer-copyright { flex: 1; text-align: left; }
+    
+    .footer-contact { flex: 1; text-align: right; line-height: 1.5; }
+    .footer-contact a { color: #ffcccc; text-decoration: none; }
+
+    /* Footer Mobile Adjustments */
+    @media (max-width: 800px) {
+        .footer-content { flex-direction: column; text-align: center; gap: 20px; }
+        .footer-copyright, .footer-contact { text-align: center; }
+    }
     </style>
 </head>
 <body>
@@ -196,8 +221,20 @@
             <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
         </div>
     </div>
-</div>
-
+</div> 
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                &copy;2026 221st Street Music LLC. All rights reserved.
+            </div>
+            <img src="logo.png" alt="221st Street Publishing" class="footer-logo">
+            <div class="footer-contact">
+                <strong>Contact us:</strong><br>
+                918.607.3046<br>
+                <a href="mailto:info@221street.com">info@221street.com</a>
+            </div>
+        </div>
+    </footer>
 <script>
     let catalogData = [];
 
