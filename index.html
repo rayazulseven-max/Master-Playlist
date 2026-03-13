@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
+        html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
     /* 1. Dark Mode Background */
     body { 
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
@@ -156,10 +160,11 @@
 
     /* 9. Mobile Adjustments */
     @media (max-width: 800px) {
+        .controls { flex-direction: column; }
+        .container { width: 100%; padding-top: 180px; box-sizing: border-box; } 
         .main-content { flex-direction: column; }
         .lyrics-section { width: 100%; position: static; margin-top: 20px; }
         .brand-header { display: none; } 
-        .container { padding-top: 180px; width: 92%; margin: 0 auto; }
         .lyrics-pane { max-height: none; }
         
         .master-player {
@@ -169,7 +174,7 @@
         }
         #now-playing-writer { white-space: normal; display: block; width: 100%; max-height: 50px; overflow-y: auto; margin-top: 5px; font-size: 0.8em; color: #aaa; padding-right: 5px; }
         .autoplay-toggle { margin-top: 10px; }
-        .list-section { margin-top: 210px; } /* Adjusted to fit the autoplay toggle on mobile */
+        .list-section { margin-top: 210px; }
 
         .app-footer { position: static; margin-top: 30px; margin-left: -20px; width: 100vw; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
