@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-        html, body {
+    html, body {
         overflow-x: hidden;
         max-width: 100%;
     }
@@ -15,7 +15,6 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        /* Added 100px bottom padding so songs don't get trapped under the fixed footer */
         padding: 0 20px 100px 20px; 
         display: flex; 
         flex-direction: column; 
@@ -37,7 +36,7 @@
     /* Header Home Link Styling */
     .home-link {
         position: absolute;
-        left: 15px; /* Changed from 30px to move it further left */
+        left: 15px;
         top: 50%;
         transform: translateY(-50%);
         color: #ffffff;
@@ -46,14 +45,9 @@
         font-weight: bold;
         transition: opacity 0.2s;
     }
-    .home-link:hover {
-        opacity: 0.7;
-    }
+    .home-link:hover { opacity: 0.7; }
 
-    /* Ensure footer logo link doesn't break positioning */
-    .footer-logo-link {
-        display: contents; /* Keeps the logo behaving like it's still a direct child of the footer */
-    }
+    .footer-logo-link { display: contents; }
         
     /* 3. Layout Spacing */
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
@@ -79,24 +73,19 @@
         background: white; color: #333; padding: 20px; margin-bottom: 12px; border-radius: 8px; 
         display: flex; justify-content: space-between; align-items: center; 
         cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 5px solid transparent; 
+        -webkit-tap-highlight-color: transparent;
     }
     .song-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left-color: #007bff; }
+    
+    /* The Custom Victor Perez Tap Flash */
+    .song-item:active { background-color: #e6f2ff; transform: scale(0.98); }
     .song-item.active-playing { border-left: 5px solid #007bff; background: #f0f8ff; }
+    
+    .song-info { flex: 1; padding-right: 20px; }
     .song-info h3 { margin: 0; font-size: 1.1em; color: #333; }
-/* 1. Ensure the info takes up the left side and doesn't push the button out */
-    .song-info { 
-        flex: 1; 
-        padding-right: 20px; 
-    }
-
-    /* 2. Keep the Play button locked in place and perfectly centered */
-    .play-indicator { 
-        font-weight: bold; 
-        color: #007bff; 
-        flex-shrink: 0; 
-        white-space: nowrap;
-        text-align: right;
-    }
+    .song-info p { margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
+    
+    .play-indicator { font-weight: bold; color: #007bff; flex-shrink: 0; white-space: nowrap; text-align: right; }
 
     /* 6. Player & Lyrics Pane */
     .master-player { 
@@ -117,7 +106,7 @@
 
     .lyrics-pane {
         background: white; color: #333; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: pre-wrap; max-height: 500px; overflow-y: auto; font-size: 1em; line-height: 1.6;
+        white-space: pre-wrap; max-height: 500px; overflow-y: auto; overflow-x: hidden; font-size: 1em; line-height: 1.6;
         position: relative;
     }
     .lyrics-pane::before {
@@ -133,27 +122,17 @@
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; }
     .disclaimer { font-size: 0.75em; color: #aaaaaa; margin-top: 15px; text-align: justify; line-height: 1.4; }
 
-    /* 8. Custom Footer (Kenny's Bottom Frame Update) */
+    /* 8. Custom Footer */
     .app-footer {
-        position: fixed; 
-        bottom: 0; left: 0; width: 100%; 
+        position: fixed; bottom: 0; left: 0; width: 100%; 
         background: linear-gradient(to bottom, #450F0C, #7C1716); 
-        color: white; padding: 15px 20px; 
+        color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); 
         border-top: 3px solid #ffffff; 
         box-sizing: border-box; font-size: 0.85em;
         z-index: 1300; 
     }
-    .footer-content { 
-        max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; 
-        position: relative; 
-    }
-    .footer-logo { 
-        height: 120px; 
-        width: auto; 
-        position: absolute; left: 50%; transform: translateX(-50%);
-        top: -53px; 
-        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); 
-    }
+    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
+    .footer-logo { height: 120px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -53px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
     .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
@@ -181,6 +160,12 @@
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
         .footer-copyright, .footer-contact { text-align: center; padding: 0; }
     }
+
+    /* Custom Scrollbar for Lyrics Pane */
+    .lyrics-pane::-webkit-scrollbar { width: 6px; }
+    .lyrics-pane::-webkit-scrollbar-track { background: transparent; }
+    .lyrics-pane::-webkit-scrollbar-thumb { background: #cccccc; border-radius: 10px; }
+    .lyrics-pane::-webkit-scrollbar-thumb:hover { background: #999999; }
     </style>
 </head>
 <body>
@@ -247,26 +232,24 @@
     </footer>
 <script>
     let catalogData = [];
-    let currentPlaylist = []; // V2.0: Tracks the currently filtered list
-    let currentSongIndex = -1; // V2.0: Tracks which song is playing right now
+    let currentPlaylist = []; 
+    let currentSongIndex = -1; 
 
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
             .then(data => {
                 catalogData = data;
-                currentPlaylist = data; // Initialize the playlist with all songs
+                currentPlaylist = data; 
                 displaySongs(catalogData);
                 renderTagFilters();
             })
             .catch(err => console.error("Error loading the catalog:", err));
 
-        // V2.0 Autoplay Event Listener
         const audio = document.getElementById('mainAudio');
         audio.addEventListener('ended', () => {
             const autoplayEnabled = document.getElementById('autoplayCheck').checked;
             
-            // If autoplay is checked and we aren't at the end of the filtered list
             if (autoplayEnabled && currentSongIndex !== -1 && currentSongIndex < currentPlaylist.length - 1) {
                 const nextSong = currentPlaylist[currentSongIndex + 1];
                 const writers = nextSong.writers.join(', ');
@@ -287,7 +270,6 @@
             const li = document.createElement('li');
             li.className = 'song-item';
             
-            // Highlight the song if it's currently playing
             if (currentSongIndex === index) {
                 li.classList.add('active-playing');
             }
@@ -317,10 +299,8 @@
         lyricsEl.innerText = lyrics; 
         lyricsEl.scrollTop = 0; 
 
-        // V2.0: Figure out what number this song is in the currently displayed list
         currentSongIndex = currentPlaylist.findIndex(s => s.file === fileName);
         
-        // Re-render the song list to show the blue highlight on the active track
         displaySongs(currentPlaylist);
 
         audio.load();
@@ -363,9 +343,7 @@
             return matchesText && matchesGenre && matchesTag;
         });
         
-        // V2.0: Update the active playlist so autoplay knows what list we are using
         currentPlaylist = filtered;
-        // Reset the current song index since the list changed
         currentSongIndex = -1;
         
         displaySongs(currentPlaylist);
