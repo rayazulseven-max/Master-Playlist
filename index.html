@@ -113,15 +113,17 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     white-space: pre-wrap; 
     
-    /* Set this to whatever height feels best for the screen */
-    height: 300px; 
+    /* Keeps the vertical scroll but kills the side scroll */
+    height: 350px; 
     overflow-y: auto; 
+    overflow-x: hidden; 
     
     font-size: 1em; 
     line-height: 1.6;
     position: relative;
     margin-bottom: 15px;
 }
+
     .lyrics-pane::before {
         content: "221st STREET MUSIC - PROPRIETARY";
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
