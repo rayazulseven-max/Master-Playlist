@@ -50,7 +50,12 @@
     h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
     .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
     .list-section { flex: 1.5; } 
-    .lyrics-section { flex: 1; position: sticky; top: 120px; }
+    .lyrics-section { 
+    flex: 1; 
+    position: sticky; 
+    top: 120px; 
+    align-self: flex-start; /* CRITICAL: This allows the stickiness to work */
+}
 
     /* 4. Controls & Inputs */
     .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
@@ -101,10 +106,22 @@
     .autoplay-toggle label { cursor: pointer; user-select: none; }
 
     .lyrics-pane {
-        background: white; color: #333; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: pre-wrap; max-height: 500px; overflow-y: auto; overflow-x: hidden; font-size: 1em; line-height: 1.6;
-        position: relative;
-    }
+    background: white; 
+    color: #333; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    white-space: pre-wrap; 
+    
+    /* Set this to whatever height feels best for the screen */
+    height: 300px; 
+    overflow-y: auto; 
+    
+    font-size: 1em; 
+    line-height: 1.6;
+    position: relative;
+    margin-bottom: 15px;
+}
     .lyrics-pane::before {
         content: "221st STREET MUSIC - PROPRIETARY";
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
