@@ -212,10 +212,11 @@
             <div class="master-player">
                 <h3 id="now-playing-title">Select a track to listen</h3>
                 <p id="now-playing-writer">Writer Information</p>
-                <audio id="mainAudio" controls>
-                    <source id="audioSource" src="" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <audio id="mainAudio" controls controlsList="nodownload">
+    <source id="audioSource" src="" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
                 <div class="autoplay-toggle">
                     <input type="checkbox" id="autoplayCheck">
                     <label for="autoplayCheck">Auto-play next in list</label>
