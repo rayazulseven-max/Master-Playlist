@@ -48,9 +48,28 @@
     /* 3. Layout Spacing */
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
     h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
-    .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
-    .list-section { flex: 1.5; } 
-    .lyrics-section { flex: 1; position: sticky; top: 120px; }
+    .main-content { 
+    display: flex; 
+    gap: 30px; 
+    width: 100%; 
+    align-items: flex-start; 
+    /* Adds a buffer at the bottom of the track */
+    padding-bottom: 100px; 
+}
+
+.list-section { 
+    flex: 1.5; 
+    /* Forces the left side to act as a long track, even with few songs */
+    min-height: 100vh; 
+}
+
+.lyrics-section { 
+    flex: 1; 
+    position: sticky; 
+    top: 120px; 
+    /* Keeps the sticky player above the list items */
+    z-index: 10; 
+}
 
     /* 4. Controls & Inputs */
     .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
