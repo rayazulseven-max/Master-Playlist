@@ -101,10 +101,38 @@
     .autoplay-toggle label { cursor: pointer; user-select: none; }
 
     .lyrics-pane {
-        background: white; color: #333; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: pre-wrap; max-height: 500px; overflow-y: auto; overflow-x: hidden; font-size: 1em; line-height: 1.6;
-        position: relative;
-    }
+    background: white; 
+    color: #333; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    white-space: pre-wrap; 
+    
+    /* We are locking the height here so the player and disclaimer fit */
+    height: 350px; 
+    overflow-y: auto; 
+    
+    font-size: 1em; 
+    line-height: 1.6;
+    position: relative;
+    margin-bottom: 15px; /* Adds space before the disclaimer */
+}.lyrics-pane {
+    background: white; 
+    color: #333; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    white-space: pre-wrap; 
+    
+    /* We are locking the height here so the player and disclaimer fit */
+    height: 350px; 
+    overflow-y: auto; 
+    
+    font-size: 1em; 
+    line-height: 1.6;
+    position: relative;
+    margin-bottom: 15px; /* Adds space before the disclaimer */
+}
     .lyrics-pane::before {
         content: "221st STREET MUSIC - PROPRIETARY";
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
