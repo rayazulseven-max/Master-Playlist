@@ -48,27 +48,9 @@
     /* 3. Layout Spacing */
     .container { max-width: 1000px; width: 100%; padding-top: 150px; }
     h1 { text-align: center; margin-bottom: 30px; color: #ffffff; }
-    .main-content { 
-    display: flex; 
-    gap: 30px; 
-    width: 100%; 
-    align-items: flex-start; 
-    /* Adds a buffer at the bottom of the track */
-    padding-bottom: 100px; 
-}
-
-.list-section { 
-    flex: 1.5; 
-    /* Forces the left side to act as a long track, even with few songs */
-    min-height: 100vh; 
-}
-
-.lyrics-section { 
-    flex: 1; 
-    position: sticky; 
-    top: 120px; /* This ensures it stays below the header */
-    align-self: flex-start; /* CRITICAL: This keeps it from stretching to match the height of the left column */
-}
+    .main-content { display: flex; gap: 30px; width: 100%; align-items: flex-start; }
+    .list-section { flex: 1.5; } 
+    .lyrics-section { flex: 1; position: sticky; top: 120px; }
 
     /* 4. Controls & Inputs */
     .controls { display: flex; gap: 10px; margin-bottom: 15px; } 
@@ -119,22 +101,10 @@
     .autoplay-toggle label { cursor: pointer; user-select: none; }
 
     .lyrics-pane {
-    background: white; 
-    color: #333; 
-    padding: 20px; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    white-space: pre-wrap; 
-    
-    /* This is the 350px height that keeps everything visible */
-    height: 350px; 
-    overflow-y: auto; 
-    
-    font-size: 1em; 
-    line-height: 1.6;
-    position: relative;
-    margin-bottom: 15px;
-}
+        background: white; color: #333; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        white-space: pre-wrap; max-height: 500px; overflow-y: auto; overflow-x: hidden; font-size: 1em; line-height: 1.6;
+        position: relative;
+    }
     .lyrics-pane::before {
         content: "221st STREET MUSIC - PROPRIETARY";
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
@@ -223,10 +193,10 @@
             <div class="master-player">
                 <h3 id="now-playing-title">Select a track to listen</h3>
                 <p id="now-playing-writer">Writer Information</p>
-                <audio id="mainAudio" controls controlsList="nodownload">
-    <source id="audioSource" src="" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
+                <audio id="mainAudio" controls>
+                    <source id="audioSource" src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
                 <div class="autoplay-toggle">
                     <input type="checkbox" id="autoplayCheck">
                     <label for="autoplayCheck">Auto-play next in list</label>
