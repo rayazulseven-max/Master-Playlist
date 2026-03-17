@@ -66,9 +66,8 @@
 .lyrics-section { 
     flex: 1; 
     position: sticky; 
-    top: 120px; 
-    /* Keeps the sticky player above the list items */
-    z-index: 10; 
+    top: 120px; /* This ensures it stays below the header */
+    align-self: flex-start; /* CRITICAL: This keeps it from stretching to match the height of the left column */
 }
 
     /* 4. Controls & Inputs */
