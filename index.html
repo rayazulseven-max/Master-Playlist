@@ -5,27 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-    /* 1. SPA Body Setup - Locked to viewport height */
+    /* 1. Base Styles & Scrolling Body */
     body { 
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        padding: 0; 
-        height: 100vh; /* Locks body to exact window height */
+        padding: 0 20px 150px 20px; /* 150px bottom padding ensures the list clears the footer! */
         display: flex; 
-        flex-direction: column; /* Stacks header, main, footer */
-        overflow: hidden; /* Prevents whole-page scrolling */
+        flex-direction: column; 
+        align-items: center;
         user-select: none;
     }
 
-    /* 2. Header (Static height) */
+    /* 2. Dark Header (Fixed) */
     .brand-header {
-        position: relative; /* Removed fixed */
+        position: fixed; top: 0; left: 0; width: 100%;
         background-color: rgba(18, 18, 18, 0.98);
-        padding: 15px 0; text-align: center;
+        z-index: 1200; padding: 15px 0; text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        z-index: 100; flex-shrink: 0;
     }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
     .home-link {
@@ -34,24 +32,19 @@
     }
     .home-link:hover { opacity: 0.7; }
 
-    /* 3. Main Container (Flexes to fill remaining space) */
-    .container { 
-        flex: 1; /* Takes all space between header and footer */
-        width: 100%; max-width: 1400px; margin: 0 auto; 
-        padding: 20px; box-sizing: border-box; 
-        overflow: hidden; /* Keeps grid inside */
-    }
+    /* 3. 3-Column Desktop Grid */
+    .container { max-width: 1400px; width: 100%; padding-top: 100px; }
     .main-content { 
         display: grid; 
         grid-template-columns: 280px 1fr 350px; 
         gap: 30px; 
-        height: 100%; /* Fills the container */
+        align-items: start; /* Critical for sticky to work */
     }
 
-    /* Column 1: Filters (Internally scrollable) */
+    /* Column 1: Filters (Sticky) */
     .filter-section {
+        position: sticky; top: 100px;
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        height: 100%; overflow-y: auto; box-sizing: border-box;
     }
     .filter-group { margin-bottom: 20px; }
     .filter-group h4 { margin: 0 0 10px 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -69,17 +62,10 @@
     }
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; font-weight: bold; }
 
-    /* Column 2: Song List (Internally scrollable) */
-    .list-section { 
-        min-width: 0; 
-        height: 100%; 
-        display: flex; flex-direction: column;
-    } 
-    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }    
+    /* Column 2: Song List (Scrolls Naturally) */
+    .list-section { min-width: 0; } 
+    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }    
 
-    .song-list-wrapper {
-        flex: 1; overflow-y: auto; padding-right: 5px; /* Creates internal scroll */
-    }
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
         background: #1a1a1a; color: #ddd; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
@@ -95,10 +81,11 @@
     .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #aaa; }
     .play-indicator { font-weight: bold; color: #007bff; font-size: 1.2em; }
 
-    /* Column 3: Player & Lyrics */
+    /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
+        position: sticky; top: 100px;
+        height: calc(100vh - 220px); /* Locks height between header and footer so disclaimer shows */
         display: flex; flex-direction: column; gap: 15px;
-        height: 100%; overflow: hidden;
     }
     .master-player { 
         background: #1a1a1a; color: white; padding: 20px; text-align: center; 
@@ -114,7 +101,7 @@
 
     .lyrics-pane {
         background: #1a1a1a; color: #ddd; padding: 20px; border-radius: 8px; 
-        white-space: pre-wrap; flex: 1; /* Takes remaining height dynamically */
+        white-space: pre-wrap; flex: 1; /* Fills remaining space */
         overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
         box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
@@ -132,25 +119,30 @@
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #666; }
 
-    /* Footer (Static height at bottom) */
+    /* Footer (Restored Kenny's Original) */
     .app-footer {
-        position: relative; /* Removed fixed */
+        position: fixed; bottom: 0; left: 0; width: 100%; 
         background: linear-gradient(to bottom, #450F0C, #7C1716); 
-        color: white; padding: 15px 20px; border-top: 3px solid #ffffff; 
-        box-sizing: border-box; font-size: 0.85em; z-index: 100; flex-shrink: 0;
+        color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); 
+        border-top: 3px solid #ffffff; 
+        box-sizing: border-box; font-size: 0.85em;
+        z-index: 1300; 
     }
     .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
-    .footer-logo { height: 100px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -50px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); z-index: 101; }
+    .footer-logo { height: 120px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -53px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
+    .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
+    .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
+    .footer-contact a { color: #ffcccc; text-decoration: none; }
 
     /* Mobile Fallback */
     @media (max-width: 1000px) {
-        body { height: auto; overflow: auto; }
-        .main-content { grid-template-columns: 1fr; height: auto; }
-        .list-section, .filter-section, .player-section { height: auto; overflow: visible; }
-        .song-list-wrapper { overflow: visible; }
-        .lyrics-pane { min-height: 400px; flex: none; }
+        .main-content { grid-template-columns: 1fr; }
+        .filter-section, .player-section { position: static; height: auto; }
+        .lyrics-pane { height: 350px; flex: none; }
+        .app-footer { position: static; margin-top: 40px; margin-left: -20px; width: 100vw; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
+        .footer-copyright, .footer-contact { text-align: center; padding: 0; }
     }
     </style>
 </head>
@@ -194,9 +186,7 @@
         
         <div class="list-section">
             <div id="resultCount" class="result-count">Loading catalog...</div>
-            <div class="song-list-wrapper">
-                <ul class="song-list" id="songList"></ul>
-            </div>
+            <ul class="song-list" id="songList"></ul>
         </div>
         
         <div class="player-section">
@@ -213,7 +203,7 @@
             </div>
 
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
-            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law.</p>
+            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
         </div>
         
     </div>
@@ -221,9 +211,18 @@
 
 <footer class="app-footer">
     <div class="footer-content">
-        <div>&copy;2026 - 221st Street Music LLC.</div>
-        <img src="logo.png" alt="221st Street Publishing" class="footer-logo" onerror="this.style.display='none';">
-        <div>918.607.3046 | info@221street.com</div>
+        <div class="footer-copyright">
+            &copy;2026 - 221st Street Music LLC.<br>
+            All rights reserved.
+        </div>
+        <a href="https://221street.com/" style="display: contents;">
+            <img src="logo.png" alt="221st Street Publishing" class="footer-logo" onerror="this.style.display='none';">
+        </a>
+        <div class="footer-contact">
+            <strong>Contact us:</strong><br>
+            918.607.3046<br>
+            <a href="mailto:info@221street.com">info@221street.com</a>
+        </div>
     </div>
 </footer>
 
