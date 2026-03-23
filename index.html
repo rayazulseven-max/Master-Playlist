@@ -11,7 +11,7 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        padding: 0 20px 150px 20px; /* 150px bottom padding ensures the list clears the footer! */
+        padding: 0 20px; 
         display: flex; 
         flex-direction: column; 
         align-items: center;
@@ -33,18 +33,25 @@
     .home-link:hover { opacity: 0.7; }
 
     /* 3. 3-Column Desktop Grid */
-    .container { max-width: 1400px; width: 100%; padding-top: 100px; }
+    .container { 
+        max-width: 1400px; width: 100%; 
+        padding-top: 140px; /* Clears the header entirely */
+        padding-bottom: 160px; /* Clears the footer entirely */
+    }
     .main-content { 
         display: grid; 
         grid-template-columns: 280px 1fr 350px; 
         gap: 30px; 
-        align-items: start; /* Critical for sticky to work */
+        align-items: start; 
     }
 
     /* Column 1: Filters (Sticky) */
     .filter-section {
-        position: sticky; top: 100px;
+        position: sticky; top: 140px; /* Locks below header */
+        max-height: calc(100vh - 300px); /* Prevents overlapping the footer */
+        overflow-y: auto; /* Adds scrollbar inside filters if screen is small */
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        box-sizing: border-box;
     }
     .filter-group { margin-bottom: 20px; }
     .filter-group h4 { margin: 0 0 10px 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -83,8 +90,8 @@
 
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
-        position: sticky; top: 100px;
-        height: calc(100vh - 220px); /* Locks height between header and footer so disclaimer shows */
+        position: sticky; top: 140px; /* Locks below header */
+        height: calc(100vh - 300px); /* Exact height limit to force disclaimer into view */
         display: flex; flex-direction: column; gap: 15px;
     }
     .master-player { 
@@ -101,7 +108,7 @@
 
     .lyrics-pane {
         background: #1a1a1a; color: #ddd; padding: 20px; border-radius: 8px; 
-        white-space: pre-wrap; flex: 1; /* Fills remaining space */
+        white-space: pre-wrap; flex: 1; /* Automatically shrinks/grows to fit remaining space */
         overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
         box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
@@ -136,8 +143,9 @@
 
     /* Mobile Fallback */
     @media (max-width: 1000px) {
+        .container { padding-top: 100px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
-        .filter-section, .player-section { position: static; height: auto; }
+        .filter-section, .player-section { position: static; height: auto; max-height: none; }
         .lyrics-pane { height: 350px; flex: none; }
         .app-footer { position: static; margin-top: 40px; margin-left: -20px; width: 100vw; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
