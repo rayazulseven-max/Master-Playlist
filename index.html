@@ -5,25 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-    /* 1. Base Styles & Dark Background */
+    /* 1. SPA Body Setup - Locked to viewport height */
     body { 
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        padding: 0 20px 150px 20px; 
+        padding: 0; 
+        height: 100vh; /* Locks body to exact window height */
         display: flex; 
-        flex-direction: column; 
-        align-items: center;
+        flex-direction: column; /* Stacks header, main, footer */
+        overflow: hidden; /* Prevents whole-page scrolling */
         user-select: none;
     }
 
-    /* 2. Dark Header */
+    /* 2. Header (Static height) */
     .brand-header {
-        position: fixed; top: 0; left: 0; width: 100%;
+        position: relative; /* Removed fixed */
         background-color: rgba(18, 18, 18, 0.98);
-        z-index: 1200; padding: 15px 0; text-align: center;
+        padding: 15px 0; text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        z-index: 100; flex-shrink: 0;
     }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
     .home-link {
@@ -32,20 +34,24 @@
     }
     .home-link:hover { opacity: 0.7; }
 
-    /* 3. 3-Column Desktop Grid Architecture */
-    .container { max-width: 1400px; width: 100%; padding-top: 100px; }
+    /* 3. Main Container (Flexes to fill remaining space) */
+    .container { 
+        flex: 1; /* Takes all space between header and footer */
+        width: 100%; max-width: 1400px; margin: 0 auto; 
+        padding: 20px; box-sizing: border-box; 
+        overflow: hidden; /* Keeps grid inside */
+    }
     .main-content { 
         display: grid; 
-        grid-template-columns: 280px 1fr 350px; /* 3 Columns: Filters, List, Player */
+        grid-template-columns: 280px 1fr 350px; 
         gap: 30px; 
-        align-items: start; 
+        height: 100%; /* Fills the container */
     }
 
-    /* Column 1: Filters (Sticky) */
+    /* Column 1: Filters (Internally scrollable) */
     .filter-section {
-        position: sticky; top: 100px;
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        height: max-content;
+        height: 100%; overflow-y: auto; box-sizing: border-box;
     }
     .filter-group { margin-bottom: 20px; }
     .filter-group h4 { margin: 0 0 10px 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -63,10 +69,17 @@
     }
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; font-weight: bold; }
 
-    /* Column 2: Song List */
-    .list-section { min-width: 0; } /* Prevents grid blowout */
-    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }    
+    /* Column 2: Song List (Internally scrollable) */
+    .list-section { 
+        min-width: 0; 
+        height: 100%; 
+        display: flex; flex-direction: column;
+    } 
+    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }    
 
+    .song-list-wrapper {
+        flex: 1; overflow-y: auto; padding-right: 5px; /* Creates internal scroll */
+    }
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
         background: #1a1a1a; color: #ddd; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
@@ -82,14 +95,14 @@
     .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #aaa; }
     .play-indicator { font-weight: bold; color: #007bff; font-size: 1.2em; }
 
-    /* Column 3: Player & Lyrics (Sticky) */
+    /* Column 3: Player & Lyrics */
     .player-section {
-        position: sticky; top: 100px;
         display: flex; flex-direction: column; gap: 15px;
+        height: 100%; overflow: hidden;
     }
     .master-player { 
         background: #1a1a1a; color: white; padding: 20px; text-align: center; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; flex-shrink: 0;
     }
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.1em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.85em; color: #aaa; }
@@ -101,7 +114,7 @@
 
     .lyrics-pane {
         background: #1a1a1a; color: #ddd; padding: 20px; border-radius: 8px; 
-        white-space: pre-wrap; height: calc(100vh - 400px); min-height: 300px; 
+        white-space: pre-wrap; flex: 1; /* Takes remaining height dynamically */
         overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
         box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
@@ -111,7 +124,7 @@
         font-size: 1.8rem; font-weight: bold; color: rgba(255, 255, 255, 0.03);
         pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
     }
-    .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; }
+    .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; flex-shrink: 0; }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
@@ -119,22 +132,23 @@
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #666; }
 
-    /* Footer */
+    /* Footer (Static height at bottom) */
     .app-footer {
-        position: fixed; bottom: 0; left: 0; width: 100%; 
+        position: relative; /* Removed fixed */
         background: linear-gradient(to bottom, #450F0C, #7C1716); 
         color: white; padding: 15px 20px; border-top: 3px solid #ffffff; 
-        box-sizing: border-box; font-size: 0.85em; z-index: 1300; 
+        box-sizing: border-box; font-size: 0.85em; z-index: 100; flex-shrink: 0;
     }
     .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
-    .footer-logo { height: 100px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -45px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
+    .footer-logo { height: 100px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -50px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); z-index: 101; }
 
     /* Mobile Fallback */
     @media (max-width: 1000px) {
-        .main-content { grid-template-columns: 1fr; }
-        .filter-section, .player-section { position: static; height: auto; }
-        .lyrics-pane { height: 350px; }
-        .app-footer { position: static; margin-top: 40px; margin-left: -20px; width: 100vw; }
+        body { height: auto; overflow: auto; }
+        .main-content { grid-template-columns: 1fr; height: auto; }
+        .list-section, .filter-section, .player-section { height: auto; overflow: visible; }
+        .song-list-wrapper { overflow: visible; }
+        .lyrics-pane { min-height: 400px; flex: none; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
     }
@@ -180,7 +194,9 @@
         
         <div class="list-section">
             <div id="resultCount" class="result-count">Loading catalog...</div>
-            <ul class="song-list" id="songList"></ul>
+            <div class="song-list-wrapper">
+                <ul class="song-list" id="songList"></ul>
+            </div>
         </div>
         
         <div class="player-section">
@@ -238,7 +254,6 @@
         });
     });
 
-    // Dynamically builds the Tempo and Theme buttons from the JSON
     function renderDynamicFilters() {
         const themeContainer = document.getElementById('themeContainer');
         const tempoContainer = document.getElementById('tempoContainer');
@@ -251,7 +266,6 @@
             if (song.tempo) allTempos.add(song.tempo);
         });
 
-        // Build Tempo Buttons
         tempoContainer.innerHTML = `<button class="tag-btn active" onclick="setTempo('All', this)">All</button>`;
         Array.from(allTempos).sort().forEach(tempo => {
             const btn = document.createElement('button');
@@ -261,7 +275,6 @@
             tempoContainer.appendChild(btn);
         });
 
-        // Build Theme Buttons (Alphabetized)
         themeContainer.innerHTML = `<button class="tag-btn active" onclick="setTheme('All', this)">All</button>`;
         Array.from(allThemes).sort().forEach(theme => {
             const btn = document.createElement('button');
@@ -318,7 +331,6 @@
 
             li.onclick = () => playTrack(song);
             
-            // Added Tempo badge to the UI so he can see it working
             li.innerHTML = `
                 <div class="song-info">
                     <h3>${song.title}</h3>
@@ -341,7 +353,7 @@
         lyricsEl.scrollTop = 0; 
 
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
-        displaySongs(currentPlaylist); // Re-render to highlight active track
+        displaySongs(currentPlaylist); 
 
         audio.load();
         audio.play();
