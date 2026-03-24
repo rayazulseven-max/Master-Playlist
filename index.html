@@ -33,7 +33,7 @@
     .home-link:hover { opacity: 0.7; }
 
     /* 3. 3-Column Desktop Grid */
-    .container { max-width: 1400px; width: 100%; padding-top: 100px; }
+    .container { max-width: 1400px; width: 100%; padding-top: 140px; /* FIXED: Restored 140px header clearance */ }
     .main-content { 
         display: grid; 
         grid-template-columns: 280px 1fr 350px; 
@@ -43,7 +43,7 @@
 
     /* Column 1: Filters (Sticky) */
     .filter-section {
-        position: sticky; top: 100px;
+        position: sticky; top: 140px; /* FIXED: Restored 140px header clearance */
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .filter-group { margin-bottom: 20px; }
@@ -83,7 +83,7 @@
 
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
-        position: sticky; top: 100px;
+        position: sticky; top: 140px; /* FIXED: Restored 140px header clearance */
         height: calc(100vh - 220px); 
         display: flex; flex-direction: column; gap: 15px;
         transition: all 0.3s ease;
@@ -142,27 +142,30 @@
        MOBILE SPOTIFY UI OVERRIDE
        ========================================================= */
     @media (max-width: 1000px) {
-        body { padding-bottom: 180px; } /* Ensures song list clears the mini-player */
+        body { padding-bottom: 180px; } 
         .container { padding-top: 100px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
         .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; }
         
         /* 1. The Collapsed Mini-Player */
         .player-section {
-            position: fixed; bottom: 0; left: 0; width: 100%;
+            position: fixed; 
+            top: auto !important; /* FIXED: Forces the desktop top: 140px to break */
+            bottom: 0 !important; /* FIXED: Snaps it to the bottom of the screen */
+            left: 0; width: 100%;
             background: #181818; 
             border-top: 1px solid #282828; z-index: 2000;
-            height: 175px; /* Safely fits Handle, Title, Audio, AND Autoplay Toggle */
+            height: 175px; 
             overflow: hidden; 
             transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
             border-radius: 20px 20px 0 0;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
-            gap: 0; /* Remove desktop gap to control internal spacing */
+            gap: 0; 
         }
 
         /* 2. The Expanded Full-Screen Player */
         .player-section.spotify-expanded {
-            height: 95vh; /* Expands to almost full screen */
+            height: 95vh; 
             overflow-y: auto; 
         }
 
@@ -175,7 +178,7 @@
             flex-shrink: 0; border-bottom: 1px solid #333;
         }
 
-        /* Flatten internal boxes for native app feel */
+        /* Flatten internal boxes */
         .master-player { box-shadow: none; border-radius: 0; padding: 15px 20px; background: transparent; }
         #now-playing-writer { margin: 0 0 10px 0; }
         .autoplay-toggle { margin-top: 10px; }
@@ -408,7 +411,6 @@
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
         displaySongs(currentPlaylist); 
 
-        // Auto-expand the player on mobile when a song is clicked (Optional UX boost!)
         if (window.innerWidth <= 1000) {
             const player = document.querySelector('.player-section');
             if (!player.classList.contains('spotify-expanded')) {
@@ -420,7 +422,6 @@
         audio.play();
     }
 
-    // Mobile Spotify Toggle Function
     function toggleSpotifyPlayer() {
         const player = document.querySelector('.player-section');
         const handle = document.getElementById('spotifyHandle');
@@ -431,7 +432,6 @@
             handle.innerText = '▼ Tap to Collapse ▼';
         } else {
             handle.innerText = '▲ Now Playing & Lyrics ▲';
-            // Scroll back to top of lyrics when collapsed
             document.querySelector('.player-section').scrollTop = 0; 
         }
     }
