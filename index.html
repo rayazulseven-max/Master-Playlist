@@ -36,7 +36,8 @@
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
     .main-content { 
         display: grid; 
-        grid-template-columns: 280px 1fr 350px; 
+        /* WIDENED THE RIGHT COLUMN TO 420px */
+        grid-template-columns: 280px 1fr 420px; 
         gap: 30px; 
         align-items: start; 
     }
@@ -142,6 +143,12 @@
     .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #007bff; width: 16px; height: 16px; margin: 0; }
     .autoplay-toggle label { cursor: pointer; }
 
+    /* NEW: Lyrics Header Styling */
+    .lyrics-heading {
+        margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; 
+        letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px;
+    }
+
     .lyrics-pane {
         background-image: url('marble.jpg'); /* The Magic Marble */
         background-size: cover; background-position: center;
@@ -231,6 +238,9 @@
         #now-playing-writer { margin: 0 0 10px 0; color: #444444; font-weight: 500; }
         .autoplay-toggle { margin-top: 10px; color: #333; }
         
+        /* Hides the new lyrics heading on mobile since the handle says "LYRICS" */
+        .lyrics-heading { display: none; }
+
         .lyrics-pane { 
             box-shadow: none; height: auto; flex: 1; 
             margin: 10px 20px 20px; 
@@ -337,6 +347,7 @@
                 </div>
             </div>
 
+            <h4 class="lyrics-heading">Lyrics</h4>
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
             <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
         </div>
