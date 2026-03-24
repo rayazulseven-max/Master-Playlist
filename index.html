@@ -64,14 +64,18 @@
     input:checked + .slider:before { transform: translateX(16px); }
     
     input[type="text"], select { 
-        width: 100%; padding: 12px; font-size: 14px; border: 1px solid #333; border-radius: 6px; 
-        background: #222; color: #fff; outline: none; box-sizing: border-box; margin-bottom: 10px;
+        width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 6px; 
+        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-size: cover; background-position: center;
+        color: #333; outline: none; box-sizing: border-box; margin-bottom: 10px;
     }
     input[type="text"] { user-select: text; }
 
     .tag-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag-btn { 
-        background: #222; color: #aaa; border: 1px solid #333; border-radius: 15px; 
+   .tag-btn { 
+        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-size: cover; background-position: center;
+        color: #333; border: 1px solid #ddd; border-radius: 15px; 
         padding: 6px 12px; font-size: 0.8em; cursor: pointer; transition: all 0.2s; 
     }
     .tag-btn.active { background: #007bff; color: white; border-color: #007bff; font-weight: bold; }
@@ -82,9 +86,11 @@
 
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
-        background: #1a1a1a; color: #ddd; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
+        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-size: cover; background-position: center;
+        color: #333; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
         display: flex; justify-content: space-between; align-items: center; 
-        cursor: pointer; transition: transform 0.1s, background 0.2s; border-left: 4px solid transparent; 
+        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 4px solid transparent; 
     }
     .song-item:hover { background: #222; transform: translateY(-2px); border-left-color: #555; }
     .song-item:active { transform: scale(0.98); }
@@ -119,19 +125,22 @@
     .autoplay-toggle label { cursor: pointer; }
 
     .lyrics-pane {
-        background: #1a1a1a; color: #ddd; padding: 20px; border-radius: 8px; 
+        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-size: cover; background-position: center;
+        color: #333; padding: 20px; border-radius: 8px; 
         white-space: pre-wrap; flex: 1; 
         overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         overflow-x: hidden;
         overflow-wrap: break-word; 
     }
     .lyrics-pane::before {
-        content: "©221st STREET MUSIC";
-        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
-        font-size: 1.8rem; font-weight: bold; color: rgba(255, 255, 255, 0.03);
-        pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
-    }
+    content: "©221st STREET MUSIC";
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 1.8rem; font-weight: bold; 
+    color: rgba(0, 0, 0, 0.04); /* Switched to black so it shows on the marble! */
+    pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
+}
     .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; flex-shrink: 0; }
 
     /* Custom Scrollbar */
