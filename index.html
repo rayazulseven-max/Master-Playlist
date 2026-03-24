@@ -143,6 +143,27 @@
     .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #007bff; width: 16px; height: 16px; margin: 0; }
     .autoplay-toggle label { cursor: pointer; }
 
+    /* --- NEW: License Button Styling --- */
+    .license-btn {
+        display: block; /* Will be set via JS when active */
+        background-color: #7C1716;
+        color: #ffffff;
+        border: 1px solid #5a0f0e;
+        padding: 12px 20px;
+        margin-top: 20px;
+        border-radius: 6px;
+        font-size: 0.9em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .license-btn:hover { background-color: #9c1d1b; }
+    .license-btn:active { transform: scale(0.98); }
+
     /* NEW: Lyrics Header Styling */
     .lyrics-heading {
         margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; 
@@ -345,9 +366,10 @@
                     <input type="checkbox" id="autoplayCheck">
                     <label for="autoplayCheck">Auto-play next song</label>
                 </div>
+                
                 <button id="licenseBtn" class="license-btn" onclick="requestLicense()" style="display: none;">
-    ✉️ Inquire About This Track
-</button>
+                    ✉️ Inquire About This Track
+                </button>
             </div>
 
             <h4 class="lyrics-heading">Lyrics</h4>
@@ -401,14 +423,16 @@
             }
         });
     });
+    
+    // --- LICENSING INQUIRY TRIGGER ---
     function requestLicense() {
-    const currentSong = currentPlaylist[currentSongIndex];
-    if (currentSong) {
-        const subject = encodeURIComponent(`Licensing Inquiry: ${currentSong.title}`);
-        const body = encodeURIComponent(`Hello 221st Street Publishing,\n\nI am interested in licensing the track "${currentSong.title}" written by ${currentSong.writers.join(', ')}.\n\nPlease send me more information regarding pricing and terms.\n\nThank you.`);
-        window.location.href = `mailto:info@221street.com?subject=${subject}&body=${body}`;
+        const currentSong = currentPlaylist[currentSongIndex];
+        if (currentSong) {
+            const subject = encodeURIComponent(`Licensing Inquiry: ${currentSong.title}`);
+            const body = encodeURIComponent(`Hello 221st Street Publishing,\n\nI am interested in licensing a track "${currentSong.title}" written by ${currentSong.writers.join(', ')}.\n\nPlease send me more information regarding pricing and terms.\n\nThank you.`);
+            window.location.href = `mailto:info@221street.com?subject=${subject}&body=${body}`;
+        }
     }
-}
 
     function renderDynamicFilters() {
         const themeContainer = document.getElementById('themeContainer');
@@ -578,6 +602,10 @@
         lyricsEl.scrollTop = 0; 
 
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
+        
+        // --- THIS MAKES THE BUTTON VISIBLE! ---
+        document.getElementById('licenseBtn').style.display = 'block';
+
         displaySongs(currentPlaylist); 
 
         if (window.innerWidth <= 1000) {
