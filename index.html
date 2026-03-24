@@ -92,24 +92,30 @@
         background-size: cover; background-position: center;
         color: #333; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
         display: flex; justify-content: space-between; align-items: center; 
-        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; border-left: 4px solid transparent; 
+        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s, background 0.2s; border-left: 4px solid transparent; 
     }
-    .song-item:hover { background: #222; transform: translateY(-2px); border-left-color: #555; }
+    .song-item:hover { background: #222; transform: translateY(-2px); border-left-color: #7C1716; }
     .song-item:active { transform: scale(0.98); }
+    
     /* The Stark White Highlight */
     .song-item.active-playing { 
         background: #ffffff !important; /* Pure white, overrides the marble */
-        border-left: 5px solid #7C1716; /* 221st Street Red instead of blue */
+        border-left: 10px solid #7C1716 !important; /* DOUBLE WIDTH BAND */
         box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Adds a shadow to make it pop */
     }
     
     /* Ensure the text stays dark on the stark white background */
-    .song-item.active-playing .song-info h3 { color: #000000; }
-    .song-item.active-playing .song-info p { color: #333333; }
+    .song-item.active-playing .song-info h3 { color: #000000 !important; }
+    .song-item.active-playing .song-info p { color: #333333 !important; }
     
     .song-info { flex: 1; padding-right: 15px; }
-    .song-info h3 { margin: 0; font-size: 1.1em; color: #111111; font-weight: bold; }
-    .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #444444; font-weight: 500; }
+    .song-info h3 { margin: 0; font-size: 1.1em; color: #111111; font-weight: bold; transition: color 0.2s; }
+    .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #444444; font-weight: 500; transition: color 0.2s; }
+    
+    /* Hover state colors for dark background */
+    .song-item:hover .song-info h3 { color: #ffffff; }
+    .song-item:hover .song-info p { color: #cccccc; }
+
     /* Changes the little ▶ icon to Brand Red */
     .play-indicator { font-weight: bold; color: #7C1716; font-size: 1.2em; }
 
@@ -147,12 +153,12 @@
         overflow-wrap: break-word; 
     }
     .lyrics-pane::before {
-    content: "©221st STREET MUSIC";
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
-    font-size: 1.8rem; font-weight: bold; 
-    color: rgba(0, 0, 0, 0.04); /* Switched to black so it shows on the marble! */
-    pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
-}
+        content: "©221st STREET MUSIC";
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 1.8rem; font-weight: bold; 
+        color: rgba(0, 0, 0, 0.04); /* Switched to black so it shows on the marble! */
+        pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
+    }
     .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; flex-shrink: 0; }
 
     /* Custom Scrollbar */
