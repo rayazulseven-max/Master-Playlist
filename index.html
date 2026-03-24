@@ -94,12 +94,22 @@
     }
     .song-item:hover { background: #222; transform: translateY(-2px); border-left-color: #555; }
     .song-item:active { transform: scale(0.98); }
-    .song-item.active-playing { border-left: 4px solid #007bff; background: #1f2937; color: #fff; }
+    /* The Stark White Highlight */
+    .song-item.active-playing { 
+        background: #ffffff !important; /* Pure white, overrides the marble */
+        border-left: 5px solid #7C1716; /* 221st Street Red instead of blue */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Adds a shadow to make it pop */
+    }
+    
+    /* Ensure the text stays dark on the stark white background */
+    .song-item.active-playing .song-info h3 { color: #000000; }
+    .song-item.active-playing .song-info p { color: #333333; }
     
     .song-info { flex: 1; padding-right: 15px; }
     .song-info h3 { margin: 0; font-size: 1.1em; color: #111111; font-weight: bold; }
     .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #444444; font-weight: 500; }
-    .play-indicator { font-weight: bold; color: #007bff; font-size: 1.2em; }
+    /* Changes the little ▶ icon to Brand Red */
+    .play-indicator { font-weight: bold; color: #7C1716; font-size: 1.2em; }
 
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
