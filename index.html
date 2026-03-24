@@ -11,7 +11,7 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        padding: 0 20px; 
+        padding: 0 20px 150px 20px; 
         display: flex; 
         flex-direction: column; 
         align-items: center;
@@ -33,11 +33,7 @@
     .home-link:hover { opacity: 0.7; }
 
     /* 3. 3-Column Desktop Grid */
-    .container { 
-        max-width: 1400px; width: 100%; 
-        padding-top: 140px; /* Clears the header entirely */
-        padding-bottom: 160px; /* Clears the footer entirely */
-    }
+    .container { max-width: 1400px; width: 100%; padding-top: 100px; }
     .main-content { 
         display: grid; 
         grid-template-columns: 280px 1fr 350px; 
@@ -47,11 +43,8 @@
 
     /* Column 1: Filters (Sticky) */
     .filter-section {
-        position: sticky; top: 140px; /* Locks below header */
-        max-height: calc(100vh - 300px); /* Prevents overlapping the footer */
-        overflow-y: auto; /* Adds scrollbar inside filters if screen is small */
+        position: sticky; top: 100px;
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        box-sizing: border-box;
     }
     .filter-group { margin-bottom: 20px; }
     .filter-group h4 { margin: 0 0 10px 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -90,10 +83,14 @@
 
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
-        position: sticky; top: 140px; /* Locks below header */
-        height: calc(100vh - 300px); /* Exact height limit to force disclaimer into view */
+        position: sticky; top: 100px;
+        height: calc(100vh - 220px); 
         display: flex; flex-direction: column; gap: 15px;
+        transition: all 0.3s ease;
     }
+    
+    .spotify-handle { display: none; } /* Hidden on Desktop */
+
     .master-player { 
         background: #1a1a1a; color: white; padding: 20px; text-align: center; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; flex-shrink: 0;
@@ -108,7 +105,7 @@
 
     .lyrics-pane {
         background: #1a1a1a; color: #ddd; padding: 20px; border-radius: 8px; 
-        white-space: pre-wrap; flex: 1; /* Automatically shrinks/grows to fit remaining space */
+        white-space: pre-wrap; flex: 1; 
         overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
         box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
@@ -126,7 +123,7 @@
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #666; }
 
-    /* Footer (Restored Kenny's Original) */
+    /* Footer */
     .app-footer {
         position: fixed; bottom: 0; left: 0; width: 100%; 
         background: linear-gradient(to bottom, #450F0C, #7C1716); 
@@ -141,13 +138,57 @@
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
 
-    /* Mobile Fallback */
+    /* =========================================================
+       MOBILE SPOTIFY UI OVERRIDE
+       ========================================================= */
     @media (max-width: 1000px) {
+        body { padding-bottom: 180px; } /* Ensures song list clears the mini-player */
         .container { padding-top: 100px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
-        .filter-section, .player-section { position: static; height: auto; max-height: none; }
-        .lyrics-pane { height: 350px; flex: none; }
-        .app-footer { position: static; margin-top: 40px; margin-left: -20px; width: 100vw; }
+        .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; }
+        
+        /* 1. The Collapsed Mini-Player */
+        .player-section {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: #181818; 
+            border-top: 1px solid #282828; z-index: 2000;
+            height: 175px; /* Safely fits Handle, Title, Audio, AND Autoplay Toggle */
+            overflow: hidden; 
+            transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
+            gap: 0; /* Remove desktop gap to control internal spacing */
+        }
+
+        /* 2. The Expanded Full-Screen Player */
+        .player-section.spotify-expanded {
+            height: 95vh; /* Expands to almost full screen */
+            overflow-y: auto; 
+        }
+
+        /* 3. The Interactive Handle */
+        .spotify-handle {
+            display: flex !important; justify-content: center; align-items: center;
+            height: 35px; cursor: pointer; background: #222;
+            color: #b3b3b3; font-size: 0.75em; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 2px;
+            flex-shrink: 0; border-bottom: 1px solid #333;
+        }
+
+        /* Flatten internal boxes for native app feel */
+        .master-player { box-shadow: none; border-radius: 0; padding: 15px 20px; background: transparent; }
+        #now-playing-writer { margin: 0 0 10px 0; }
+        .autoplay-toggle { margin-top: 10px; }
+        
+        .lyrics-pane { 
+            box-shadow: none; height: auto; flex: 1; 
+            margin: 10px 20px 20px; background: #242424; 
+            border-radius: 12px; border: 1px solid #333;
+        }
+        .disclaimer { margin: 0 20px 40px 20px; }
+
+        /* Normalizing the Footer */
+        .app-footer { position: static; margin-top: 40px; margin-left: -20px; width: 100vw; margin-bottom: 180px; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
         .footer-copyright, .footer-contact { text-align: center; padding: 0; }
@@ -198,6 +239,11 @@
         </div>
         
         <div class="player-section">
+            
+            <div class="spotify-handle" id="spotifyHandle" onclick="toggleSpotifyPlayer()">
+                ▲ Now Playing & Lyrics ▲
+            </div>
+
             <div class="master-player">
                 <h3 id="now-playing-title">Select a song</h3>
                 <p id="now-playing-writer">Waiting for selection...</p>
@@ -362,8 +408,32 @@
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
         displaySongs(currentPlaylist); 
 
+        // Auto-expand the player on mobile when a song is clicked (Optional UX boost!)
+        if (window.innerWidth <= 1000) {
+            const player = document.querySelector('.player-section');
+            if (!player.classList.contains('spotify-expanded')) {
+                toggleSpotifyPlayer();
+            }
+        }
+
         audio.load();
         audio.play();
+    }
+
+    // Mobile Spotify Toggle Function
+    function toggleSpotifyPlayer() {
+        const player = document.querySelector('.player-section');
+        const handle = document.getElementById('spotifyHandle');
+        
+        player.classList.toggle('spotify-expanded');
+        
+        if (player.classList.contains('spotify-expanded')) {
+            handle.innerText = '▼ Tap to Collapse ▼';
+        } else {
+            handle.innerText = '▲ Now Playing & Lyrics ▲';
+            // Scroll back to top of lyrics when collapsed
+            document.querySelector('.player-section').scrollTop = 0; 
+        }
     }
 
     document.addEventListener('contextmenu', event => event.preventDefault());
