@@ -44,13 +44,24 @@
     /* Column 1: Filters (Sticky) */
     .filter-section {
         position: sticky; top: 140px;
-        max-height: calc(100vh - 320px); /* Prevents left column from breaking if tags are added */
-        overflow-y: auto; /* Adds a scrollbar just to the filters if they get too tall */
+        max-height: calc(100vh - 320px); 
+        overflow-y: auto; 
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         box-sizing: border-box;
     }
     .filter-group { margin-bottom: 20px; }
-    .filter-group h4 { margin: 0 0 10px 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    
+    /* NEW: Multi-Select Toggle Styles */
+    .switch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    .switch-header h4 { margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+    .switch-container { display: flex; align-items: center; gap: 8px; }
+    .switch-label { font-size: 0.7em; color: #aaa; text-transform: uppercase; font-weight: bold; }
+    .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 20px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #007bff; }
+    input:checked + .slider:before { transform: translateX(16px); }
     
     input[type="text"], select { 
         width: 100%; padding: 12px; font-size: 14px; border: 1px solid #333; border-radius: 6px; 
@@ -87,13 +98,13 @@
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
         position: sticky; top: 140px; 
-        height: calc(100vh - 320px); /* Slightly smaller so it never collides with the footer */
+        height: calc(100vh - 320px); 
         display: flex; flex-direction: column; gap: 15px;
         transition: all 0.3s ease;
     }
     
     .spotify-handle { display: none; } 
-    .expanded-only-logo { display: none; } /* Hidden entirely on desktop */
+    .expanded-only-logo { display: none; } 
 
     .master-player { 
         background: #1a1a1a; color: white; padding: 20px; text-align: center; 
@@ -112,7 +123,6 @@
         white-space: pre-wrap; flex: 1; 
         overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
         box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        /* FIXED: Prevent horizontal scrolling */
         overflow-x: hidden;
         overflow-wrap: break-word; 
     }
@@ -150,7 +160,6 @@
        ========================================================= */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
-        /* FIXED: Increased mobile top padding to 160px so it clears the logo */
         .container { padding-top: 160px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
         .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; }
@@ -174,7 +183,6 @@
             flex-shrink: 0; border-bottom: 1px solid #333;
         }
 
-        /* FIXED: Expose the Logo when expanded */
         .spotify-expanded .expanded-only-logo {
             display: block;
             max-width: 180px;
@@ -219,13 +227,17 @@
         
         <div class="filter-section">
             <div class="filter-group">
-                <h4>Search</h4>
+                <div class="switch-header" style="border-bottom: none;">
+                    <h4>Search</h4>
+                </div>
                 <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
             </div>
             
             <div class="filter-group">
-                <h4>Genre</h4>
-                <select id="genreFilter" onchange="filterCatalog()">
+                <div class="switch-header">
+                    <h4>Genre</h4>
+                </div>
+                <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
                     <option value="All">All Genres</option>
                     <option value="Bluegrass Gospel">Bluegrass Gospel</option>
                     <option value="Contemporary Gospel">Contemporary Gospel</option>
@@ -235,12 +247,30 @@
             </div>
 
             <div class="filter-group">
-                <h4>Tempo</h4>
+                <div class="switch-header">
+                    <h4>Tempo</h4>
+                    <div class="switch-container">
+                        <span class="switch-label">Multi</span>
+                        <label class="switch">
+                            <input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
                 <div id="tempoContainer" class="tag-filters"></div>
             </div>
 
             <div class="filter-group">
-                <h4>Themes</h4>
+                <div class="switch-header">
+                    <h4>Themes</h4>
+                    <div class="switch-container">
+                        <span class="switch-label">Multi</span>
+                        <label class="switch">
+                            <input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
                 <div id="themeContainer" class="tag-filters"></div>
             </div>
         </div>
@@ -298,8 +328,8 @@
     let catalogData = [];
     let currentPlaylist = []; 
     let currentSongIndex = -1; 
-    let activeTheme = 'All';
-    let activeTempo = 'All';
+    let isTempoMulti = false;
+    let isThemeMulti = false;
 
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
@@ -352,30 +382,99 @@
         });
     }
 
+    function toggleTempoMulti() {
+        isTempoMulti = document.getElementById('tempoMultiToggle').checked;
+        if (!isTempoMulti) {
+            document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
+            const allBtn = document.querySelector('#tempoContainer .tag-btn');
+            if(allBtn) allBtn.classList.add('active');
+            filterCatalog();
+        }
+    }
+
+    function toggleThemeMulti() {
+        isThemeMulti = document.getElementById('themeMultiToggle').checked;
+        if (!isThemeMulti) {
+            document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
+            const allBtn = document.querySelector('#themeContainer .tag-btn');
+            if(allBtn) allBtn.classList.add('active');
+            filterCatalog();
+        }
+    }
+
     function setTempo(tempo, element) {
-        document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-        element.classList.add('active');
-        activeTempo = tempo;
+        const isAll = (tempo === 'All');
+        const allBtn = document.querySelector('#tempoContainer .tag-btn');
+
+        if (!isTempoMulti) {
+            document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        } else {
+            if (isAll) {
+                document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
+                element.classList.add('active');
+            } else {
+                if (allBtn) allBtn.classList.remove('active');
+                element.classList.toggle('active');
+                if (document.querySelectorAll('#tempoContainer .tag-btn.active').length === 0) {
+                    if (allBtn) allBtn.classList.add('active');
+                }
+            }
+        }
         filterCatalog();
     }
 
     function setTheme(theme, element) {
-        document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-        element.classList.add('active');
-        activeTheme = theme;
+        const isAll = (theme === 'All');
+        const allBtn = document.querySelector('#themeContainer .tag-btn');
+
+        if (!isThemeMulti) {
+            document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        } else {
+            if (isAll) {
+                document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
+                element.classList.add('active');
+            } else {
+                if (allBtn) allBtn.classList.remove('active');
+                element.classList.toggle('active');
+                if (document.querySelectorAll('#themeContainer .tag-btn.active').length === 0) {
+                    if (allBtn) allBtn.classList.add('active');
+                }
+            }
+        }
         filterCatalog();
     }
 
     function filterCatalog() {
         const searchText = document.getElementById('searchBar').value.toLowerCase();
         const selectedGenre = document.getElementById('genreFilter').value;
+        
+        const activeTempoElements = document.querySelectorAll('#tempoContainer .tag-btn.active');
+        const activeTempos = Array.from(activeTempoElements).map(el => el.innerText);
+        
+        const activeThemeElements = document.querySelectorAll('#themeContainer .tag-btn.active');
+        const activeThemes = Array.from(activeThemeElements).map(el => el.innerText);
 
         const filtered = catalogData.filter(song => {
             const matchesText = song.title.toLowerCase().includes(searchText) || 
                                 song.writers.some(w => w.toLowerCase().includes(searchText));
+            
             const matchesGenre = (selectedGenre === "All") ? true : (song.genre === selectedGenre);
-            const matchesTempo = (activeTempo === "All") ? true : (song.tempo === activeTempo);
-            const matchesTheme = (activeTheme === "All") ? true : (song.tags && song.tags.includes(activeTheme));
+            
+            let matchesTempo = false;
+            if (activeTempos.includes('All')) {
+                matchesTempo = true;
+            } else {
+                matchesTempo = activeTempos.includes(song.tempo);
+            }
+
+            let matchesTheme = false;
+            if (activeThemes.includes('All')) {
+                matchesTheme = true;
+            } else {
+                matchesTheme = activeThemes.some(t => song.tags && song.tags.includes(t));
+            }
             
             return matchesText && matchesGenre && matchesTempo && matchesTheme;
         });
