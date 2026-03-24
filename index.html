@@ -345,6 +345,9 @@
                     <input type="checkbox" id="autoplayCheck">
                     <label for="autoplayCheck">Auto-play next song</label>
                 </div>
+                <button id="licenseBtn" class="license-btn" onclick="requestLicense()" style="display: none;">
+    ✉️ Inquire About This Track
+</button>
             </div>
 
             <h4 class="lyrics-heading">Lyrics</h4>
@@ -398,6 +401,14 @@
             }
         });
     });
+    function requestLicense() {
+    const currentSong = currentPlaylist[currentSongIndex];
+    if (currentSong) {
+        const subject = encodeURIComponent(`Licensing Inquiry: ${currentSong.title}`);
+        const body = encodeURIComponent(`Hello 221st Street Publishing,\n\nI am interested in licensing the track "${currentSong.title}" written by ${currentSong.writers.join(', ')}.\n\nPlease send me more information regarding pricing and terms.\n\nThank you.`);
+        window.location.href = `mailto:info@221street.com?subject=${subject}&body=${body}`;
+    }
+}
 
     function renderDynamicFilters() {
         const themeContainer = document.getElementById('themeContainer');
