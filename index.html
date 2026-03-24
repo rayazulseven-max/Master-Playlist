@@ -44,7 +44,10 @@
     /* Column 1: Filters (Sticky) */
     .filter-section {
         position: sticky; top: 140px;
+        max-height: calc(100vh - 320px); /* Prevents left column from breaking if tags are added */
+        overflow-y: auto; /* Adds a scrollbar just to the filters if they get too tall */
         background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        box-sizing: border-box;
     }
     .filter-group { margin-bottom: 20px; }
     .filter-group h4 { margin: 0 0 10px 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -84,7 +87,7 @@
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
         position: sticky; top: 140px; 
-        height: calc(100vh - 220px); 
+        height: calc(100vh - 320px); /* Slightly smaller so it never collides with the footer */
         display: flex; flex-direction: column; gap: 15px;
         transition: all 0.3s ease;
     }
