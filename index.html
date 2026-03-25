@@ -143,27 +143,6 @@
     .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #007bff; width: 16px; height: 16px; margin: 0; }
     .autoplay-toggle label { cursor: pointer; }
 
-    /* --- NEW: License Button Styling --- */
-    .license-btn {
-        display: block; /* Will be set via JS when active */
-        background-color: #7C1716;
-        color: #ffffff;
-        border: 1px solid #5a0f0e;
-        padding: 12px 20px;
-        margin-top: 20px;
-        border-radius: 6px;
-        font-size: 0.9em;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.2s, transform 0.1s;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    .license-btn:hover { background-color: #9c1d1b; }
-    .license-btn:active { transform: scale(0.98); }
-
     /* NEW: Lyrics Header Styling */
     .lyrics-heading {
         margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; 
@@ -366,10 +345,6 @@
                     <input type="checkbox" id="autoplayCheck">
                     <label for="autoplayCheck">Auto-play next song</label>
                 </div>
-                
-                <button id="licenseBtn" class="license-btn" onclick="requestLicense()" style="display: none;">
-                    ✉️ Inquire About This Track
-                </button>
             </div>
 
             <h4 class="lyrics-heading">Lyrics</h4>
@@ -423,36 +398,6 @@
             }
         });
     });
-    
-    // --- UPGRADED LICENSING INQUIRY TRIGGER ---
-    function requestLicense() {
-        const currentSong = currentPlaylist[currentSongIndex];
-        if (currentSong) {
-            const email = "info@221street.com";
-            const subject = `Licensing Inquiry: ${currentSong.title}`;
-            const bodyText = `Hello 221st Street Publishing,\n\nI am interested in licensing while listening to the track "${currentSong.title}" written by ${currentSong.writers.join(', ')}.\n\nPlease send me more information regarding pricing and terms.\n\nThank you.`;
-
-            // 1. Copy the draft to the user's clipboard as a fallback
-            const fullDraft = `To: ${email}\nSubject: ${subject}\n\n${bodyText}`;
-            navigator.clipboard.writeText(fullDraft).then(() => {
-                // Temporarily change the button text to show success
-                const btn = document.getElementById('licenseBtn');
-                btn.innerText = "📋 Draft Copied to Clipboard!";
-                btn.style.backgroundColor = "#222222"; // Turns dark grey to show it clicked
-                
-                // Change it back to normal after 3 seconds
-                setTimeout(() => {
-                    btn.innerText = "✉️ Inquire About This Track";
-                    btn.style.backgroundColor = "#7C1716"; // Back to brand red
-                }, 3000);
-            });
-
-            // 2. Attempt to open the default mail app
-            const encodedSubject = encodeURIComponent(subject);
-            const encodedBody = encodeURIComponent(bodyText);
-            window.location.href = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
-        }
-    }
 
     function renderDynamicFilters() {
         const themeContainer = document.getElementById('themeContainer');
@@ -622,10 +567,6 @@
         lyricsEl.scrollTop = 0; 
 
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
-        
-        // --- THIS MAKES THE BUTTON VISIBLE! ---
-        document.getElementById('licenseBtn').style.display = 'block';
-
         displaySongs(currentPlaylist); 
 
         if (window.innerWidth <= 1000) {
