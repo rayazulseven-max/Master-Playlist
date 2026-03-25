@@ -48,6 +48,7 @@
         overflow-y: auto; 
         background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         box-sizing: border-box;
+        transition: all 0.3s ease;
     }
     .filter-group { margin-bottom: 20px; }
     
@@ -119,7 +120,7 @@
         transition: all 0.3s ease;
     }
     
-    .spotify-handle { display: none; } 
+    .spotify-handle, .filter-handle { display: none; } 
     .expanded-only-logo { display: none; } 
 
     .master-player { 
@@ -251,12 +252,37 @@
 
     @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
-    /* Mobile Adjustments for Player */
+    /* =========================================================
+       MOBILE SPOTIFY UI OVERRIDE & COLLAPSIBLE FILTERS
+       ========================================================= */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
         .container { padding-top: 160px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
-        .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; }
+        
+        /* Filter Drawer Styling */
+        .filter-section { 
+            position: static; height: auto; max-height: none; margin-bottom: 20px; 
+            padding: 0; background: transparent; box-shadow: none;
+        }
+        
+        .filter-handle {
+            display: flex !important; justify-content: center; align-items: center;
+            height: 45px; cursor: pointer; 
+            background: #1e1e1e; color: #fff; font-size: 0.85em; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 2px;
+            border-radius: 8px; border: 1px solid #333; margin-bottom: 10px;
+        }
+        
+        .filter-content {
+            display: none; /* Hidden by default on mobile */
+            background: #1e1e1e; padding: 20px; border-radius: 8px; 
+            border: 1px solid #333; margin-bottom: 20px;
+        }
+        
+        .filter-section.filters-expanded .filter-content {
+            display: block;
+        }
         
         .player-section {
             position: fixed; top: auto !important; bottom: 0 !important; left: 0; width: 100%;
@@ -292,6 +318,11 @@
         
         .license-icon-btn { margin: 10px auto 10px auto; width: 45px; height: 45px; font-size: 1.4em; }
     }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
     </style>
 </head>
 <body>
@@ -304,42 +335,48 @@
 <div class="container">
     <div class="main-content">
         
-        <div class="filter-section">
-            <div class="filter-group">
-                <div class="switch-header" style="border-bottom: none;">
-                    <h4>Search</h4>
-                </div>
-                <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
+        <div class="filter-section" id="mobileFilterSection">
+            <div class="filter-handle" id="filterHandle" onclick="toggleMobileFilters()">
+                ▼ Show Search & Filters ▼
             </div>
-            <div class="filter-group">
-                <div class="switch-header"><h4>Genre</h4></div>
-                <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
-                    <option value="All">All Genres</option>
-                    <option value="Bluegrass Gospel">Bluegrass Gospel</option>
-                    <option value="Contemporary Gospel">Contemporary Gospel</option>
-                    <option value="Country Gospel">Country Gospel</option>
-                    <option value="Southern Gospel">Southern Gospel</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <div class="switch-header">
-                    <h4>Tempo</h4>
-                    <div class="switch-container">
-                        <span class="switch-label">Multi</span>
-                        <label class="switch"><input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()"><span class="slider"></span></label>
+            
+            <div class="filter-content">
+                <div class="filter-group">
+                    <div class="switch-header" style="border-bottom: none;">
+                        <h4>Search</h4>
                     </div>
+                    <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
                 </div>
-                <div id="tempoContainer" class="tag-filters"></div>
-            </div>
-            <div class="filter-group">
-                <div class="switch-header">
-                    <h4>Themes</h4>
-                    <div class="switch-container">
-                        <span class="switch-label">Multi</span>
-                        <label class="switch"><input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()"><span class="slider"></span></label>
+                <div class="filter-group">
+                    <div class="switch-header"><h4>Genre</h4></div>
+                    <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
+                        <option value="All">All Genres</option>
+                        <option value="Bluegrass Gospel">Bluegrass Gospel</option>
+                        <option value="Contemporary Gospel">Contemporary Gospel</option>
+                        <option value="Country Gospel">Country Gospel</option>
+                        <option value="Southern Gospel">Southern Gospel</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <div class="switch-header">
+                        <h4>Tempo</h4>
+                        <div class="switch-container">
+                            <span class="switch-label">Multi</span>
+                            <label class="switch"><input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()"><span class="slider"></span></label>
+                        </div>
                     </div>
+                    <div id="tempoContainer" class="tag-filters"></div>
                 </div>
-                <div id="themeContainer" class="tag-filters"></div>
+                <div class="filter-group">
+                    <div class="switch-header">
+                        <h4>Themes</h4>
+                        <div class="switch-container">
+                            <span class="switch-label">Multi</span>
+                            <label class="switch"><input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                    <div id="themeContainer" class="tag-filters"></div>
+                </div>
             </div>
         </div>
         
@@ -534,26 +571,21 @@
             }
         });
     });
-    // --- SMART FORM LOGIC ---
-    function toggleSmartFields() {
-        const isMechanical = document.querySelector('input[value="Mechanical"]').checked;
-        const isMaster = document.querySelector('input[value="Master Use"]').checked;
+
+    // --- NEW: Mobile Filter Drawer Logic ---
+    function toggleMobileFilters() {
+        const filterSection = document.getElementById('mobileFilterSection');
+        const handle = document.getElementById('filterHandle');
         
-        const smartWrapper = document.getElementById('smart-fields');
-        const mechFields = document.getElementById('mechanical-fields');
-        const masterFields = document.getElementById('master-fields');
-
-        // Show the wrapper if either specific license is checked
-        if (isMechanical || isMaster) {
-            smartWrapper.style.display = 'block';
+        filterSection.classList.toggle('filters-expanded');
+        
+        if (filterSection.classList.contains('filters-expanded')) {
+            handle.innerText = '▲ Hide Search & Filters ▲';
         } else {
-            smartWrapper.style.display = 'none';
+            handle.innerText = '▼ Show Search & Filters ▼';
         }
-
-        // Toggle the specific questions
-        mechFields.style.display = isMechanical ? 'block' : 'none';
-        masterFields.style.display = isMaster ? 'block' : 'none';
     }
+
     // --- MODAL WIZARD LOGIC ---
     function openLicenseModal() {
         document.getElementById('licenseModal').style.display = 'flex';
@@ -659,6 +691,27 @@
             closeLicenseModal();
         }
     });
+
+    // --- SMART FORM LOGIC ---
+    function toggleSmartFields() {
+        const isMechanical = document.querySelector('input[value="Mechanical"]').checked;
+        const isMaster = document.querySelector('input[value="Master Use"]').checked;
+        
+        const smartWrapper = document.getElementById('smart-fields');
+        const mechFields = document.getElementById('mechanical-fields');
+        const masterFields = document.getElementById('master-fields');
+
+        // Show the wrapper if either specific license is checked
+        if (isMechanical || isMaster) {
+            smartWrapper.style.display = 'block';
+        } else {
+            smartWrapper.style.display = 'none';
+        }
+
+        // Toggle the specific questions
+        mechFields.style.display = isMechanical ? 'block' : 'none';
+        masterFields.style.display = isMaster ? 'block' : 'none';
+    }
 
     // --- EXISTING CATALOG LOGIC ---
     function renderDynamicFilters() {
