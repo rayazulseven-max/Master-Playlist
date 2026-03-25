@@ -404,16 +404,16 @@
                 <label>What type of license do you need?</label>
                 <div class="license-options">
                     <label class="license-option">
-                        <input type="checkbox" name="license_type" value="Mechanical">
+                        <input type="checkbox" name="license_type" value="Mechanical" onchange="toggleSmartFields()">
                         <div><strong>Mechanical License</strong><span>I want to record my own version of a song and sell copies.</span></div>
                     </label>
                     <label class="license-option">
-                        <input type="checkbox" name="license_type" value="Master Use">
+                        <input type="checkbox" name="license_type" value="Master Use" onchange="toggleSmartFields()">
                         <div><strong>Master Use License</strong><span>I want to lease an existing studio soundtrack for a project.</span></div>
                     </label>
                     <label class="license-option">
-                        <input type="checkbox" name="license_type" value="Other">
-                        <div><strong>Other / Inquiry</strong><span>General publishing, synchronization, or custom requests.</span></div>
+                        <input type="checkbox" name="license_type" value="Publishing">
+                        <div><strong>Publishing / Other</strong><span>General publishing, synchronization, or custom requests.</span></div>
                     </label>
                 </div>
 
@@ -422,8 +422,31 @@
                     <option value="">-- Select from Catalog --</option>
                     </select>
                 
-                <label>Or enter a custom track / project details</label>
-                <textarea name="project_details" placeholder="Album name, number of copies, streaming plans, or custom song title..."></textarea>
+                <div id="smart-fields" style="display: none; background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; animation: fadeIn 0.3s ease-out;">
+                    <p style="margin: 0 0 10px 0; font-size: 0.8rem; color: #7C1716; font-weight: bold; text-transform: uppercase;">License Requirements</p>
+                    
+                    <label>Legal Business Name (or Artist Name)</label>
+                    <input type="text" name="business_name" placeholder="For the contract..." style="margin-bottom: 10px;">
+                    
+                    <label>Mailing Address (City, State, Zip)</label>
+                    <input type="text" name="address" placeholder="For the contract..." style="margin-bottom: 10px;">
+                    
+                    <div id="mechanical-fields" style="display: none;">
+                        <label>Expected Album Name & Number of Copies</label>
+                        <input type="text" name="album_details" placeholder="e.g., 'My Worship Album' - 500 Physical Copies">
+                    </div>
+                    
+                    <div id="master-fields" style="display: none;">
+                        <label>Streaming Intent</label>
+                        <select name="streaming_intent">
+                            <option value="Yes">Yes, will be uploaded to streaming (Spotify, Apple)</option>
+                            <option value="No">No, physical copies or local sync only</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label>Additional Notes / Project Details</label>
+                <textarea name="project_details" placeholder="Any other details we should know?"></textarea>
 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="prevStep(2)">&larr; Back</button>
@@ -511,7 +534,26 @@
             }
         });
     });
+    // --- SMART FORM LOGIC ---
+    function toggleSmartFields() {
+        const isMechanical = document.querySelector('input[value="Mechanical"]').checked;
+        const isMaster = document.querySelector('input[value="Master Use"]').checked;
+        
+        const smartWrapper = document.getElementById('smart-fields');
+        const mechFields = document.getElementById('mechanical-fields');
+        const masterFields = document.getElementById('master-fields');
 
+        // Show the wrapper if either specific license is checked
+        if (isMechanical || isMaster) {
+            smartWrapper.style.display = 'block';
+        } else {
+            smartWrapper.style.display = 'none';
+        }
+
+        // Toggle the specific questions
+        mechFields.style.display = isMechanical ? 'block' : 'none';
+        masterFields.style.display = isMaster ? 'block' : 'none';
+    }
     // --- MODAL WIZARD LOGIC ---
     function openLicenseModal() {
         document.getElementById('licenseModal').style.display = 'flex';
