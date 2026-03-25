@@ -11,7 +11,7 @@
         background-color: #121212; 
         color: #ffffff; 
         margin: 0; 
-        padding: 0 20px 0px 20px; 
+        padding: 0 20px 150px 20px; 
         display: flex; 
         flex-direction: column; 
         align-items: center;
@@ -36,7 +36,6 @@
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
     .main-content { 
         display: grid; 
-        /* WIDENED THE RIGHT COLUMN TO 420px */
         grid-template-columns: 280px 1fr 420px; 
         gap: 30px; 
         align-items: start; 
@@ -49,11 +48,9 @@
         overflow-y: auto; 
         background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         box-sizing: border-box;
-        transition: all 0.3s ease;
     }
     .filter-group { margin-bottom: 20px; }
     
-    /* NEW: Multi-Select Toggle Styles */
     .switch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
     .switch-header h4 { margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; }
     .switch-container { display: flex; align-items: center; gap: 8px; }
@@ -62,13 +59,12 @@
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 20px; }
     .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-    /* Changes the multi-select toggle switches from blue to dark red */
     input:checked + .slider { background-color: #7C1716; }
     input:checked + .slider:before { transform: translateX(16px); }
     
     input[type="text"], select { 
         width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 6px; 
-        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-image: url('marble.jpg'); 
         background-size: cover; background-position: center;
         color: #222222; outline: none; box-sizing: border-box; margin-bottom: 10px;
     }
@@ -76,21 +72,20 @@
 
     .tag-filters { display: flex; flex-wrap: wrap; gap: 8px; }
    .tag-btn { 
-        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-image: url('marble.jpg'); 
         background-size: cover; background-position: center;
         color: #333; border: 1px solid #ddd; border-radius: 15px; 
         padding: 6px 12px; font-size: 0.8em; cursor: pointer; transition: all 0.2s; 
     }
-    /* Changes active tag buttons from blue to dark red */
     .tag-btn.active { background: #7C1716; color: white; border-color: #7C1716; font-weight: bold; }
 
-    /* Column 2: Song List (Scrolls Naturally) */
-    /* MAYBE CHANGE PADDING ON THIS LINE: */
-    .list-section { min-width: 0; padding-bottom: 150px; } 
-    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    /* Column 2: Song List */
+    .list-section { min-width: 0; } 
+    .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }    
+
     .song-list { list-style: none; padding: 0; margin: 0; }
     .song-item { 
-        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-image: url('marble.jpg'); 
         background-size: cover; background-position: center;
         color: #333; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
         display: flex; justify-content: space-between; align-items: center; 
@@ -99,14 +94,11 @@
     .song-item:hover { background: #222; transform: translateY(-2px); border-left-color: #7C1716; }
     .song-item:active { transform: scale(0.98); }
     
-    /* The Stark White Highlight */
     .song-item.active-playing { 
-        background: #ffffff !important; /* Pure white, overrides the marble */
-        border-left: 10px solid #7C1716 !important; /* DOUBLE WIDTH BAND */
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Adds a shadow to make it pop */
+        background: #ffffff !important; 
+        border-left: 10px solid #7C1716 !important; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
     }
-    
-    /* Ensure the text stays dark on the stark white background */
     .song-item.active-playing .song-info h3 { color: #000000 !important; }
     .song-item.active-playing .song-info p { color: #333333 !important; }
     
@@ -114,14 +106,12 @@
     .song-info h3 { margin: 0; font-size: 1.1em; color: #111111; font-weight: bold; transition: color 0.2s; }
     .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #444444; font-weight: 500; transition: color 0.2s; }
     
-    /* Hover state colors for dark background */
     .song-item:hover .song-info h3 { color: #ffffff; }
     .song-item:hover .song-info p { color: #cccccc; }
 
-    /* Changes the little ▶ icon to Brand Red */
     .play-indicator { font-weight: bold; color: #7C1716; font-size: 1.2em; }
 
-    /* Column 3: Player & Lyrics (Sticky) */
+    /* Column 3: Player & Lyrics */
     .player-section {
         position: sticky; top: 140px; 
         height: calc(100vh - 250px); 
@@ -129,7 +119,7 @@
         transition: all 0.3s ease;
     }
     
-    .spotify-handle, .filter-handle { display: none; } 
+    .spotify-handle { display: none; } 
     .expanded-only-logo { display: none; } 
 
     .master-player { 
@@ -141,17 +131,16 @@
     audio { width: 100%; outline: none; height: 40px; }
 
     .autoplay-toggle { margin-top: 15px; font-size: 0.9em; color: #ccc; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #007bff; width: 16px; height: 16px; margin: 0; }
+    .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #7C1716; width: 16px; height: 16px; margin: 0; }
     .autoplay-toggle label { cursor: pointer; }
 
-    /* NEW: Lyrics Header Styling */
     .lyrics-heading {
         margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; 
         letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px;
     }
 
     .lyrics-pane {
-        background-image: url('marble.jpg'); /* The Magic Marble */
+        background-image: url('marble.jpg'); 
         background-size: cover; background-position: center;
         color: #222222; padding: 20px; border-radius: 8px; 
         white-space: pre-wrap; flex: 1; 
@@ -164,10 +153,31 @@
         content: "©221st STREET MUSIC";
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
         font-size: 1.8rem; font-weight: bold; 
-        color: rgba(0, 0, 0, 0.04); /* Switched to black so it shows on the marble! */
+        color: rgba(0, 0, 0, 0.04); 
         pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
     }
     .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; flex-shrink: 0; }
+
+    /* The Circular Icon Button */
+    .license-icon-btn {
+        background: #7C1716;
+        border: 1px solid #9c1d1b;
+        color: #ffffff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: none; 
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 1.2em;
+        outline: none;
+        margin: 15px auto 0 auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .license-icon-btn:hover { transform: scale(1.08); background: #9c1d1b; }
+    .license-icon-btn:active { transform: scale(0.95); }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
@@ -191,41 +201,66 @@
     .footer-contact a { color: #ffcccc; text-decoration: none; }
 
     /* =========================================================
-       MOBILE SPOTIFY UI OVERRIDE & COLLAPSIBLE FILTERS
+       NEW: INTERACTIVE MULTI-STEP MODAL
        ========================================================= */
+    .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+    .modal-content { background: #1a1a1a; padding: 35px 30px; border: 1px solid #333; border-radius: 16px; width: 90%; max-width: 450px; position: relative; display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+    .close-btn { position: absolute; top: 15px; right: 20px; color: #888; font-size: 1.8em; cursor: pointer; background: transparent; border: none; outline: none; transition: 0.2s; }
+    .close-btn:hover { color: white; }
+    
+    .modal-header-text { text-align: center; margin-bottom: 25px; }
+    .modal-header-text h2 { margin: 0; color: #fff; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
+    .modal-header-text p { margin: 5px 0 0 0; color: #888; font-size: 0.85rem; }
+
+    /* Form Steps */
+    .form-step { display: none; animation: slideIn 0.3s ease-out; }
+    .form-step.active { display: block; }
+    
+    .modal label { display: block; color: #ccc; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+    .modal input[type="text"], .modal input[type="email"], .modal select, .modal textarea { 
+        width: 100%; padding: 12px; font-size: 1rem; background: #0f0f0f; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; margin-bottom: 15px; font-family: inherit; transition: 0.2s; background-image: none;
+    }
+    .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: #7C1716; background: #000; }
+    .modal textarea { resize: vertical; min-height: 80px; }
+
+    /* License Checkboxes */
+    .license-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .license-option { display: flex; align-items: flex-start; gap: 10px; background: #222; padding: 12px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: 0.2s; }
+    .license-option:hover { border-color: #555; }
+    .license-option input { margin-top: 3px; accent-color: #7C1716; cursor: pointer; }
+    .license-option div { display: flex; flex-direction: column; }
+    .license-option strong { color: #fff; font-size: 0.95rem; }
+    .license-option span { color: #888; font-size: 0.75rem; line-height: 1.3; }
+
+    /* The Scroll-to-Agree Box */
+    .terms-box {
+        background: #0f0f0f; border: 1px solid #444; border-radius: 8px; padding: 15px; height: 180px; overflow-y: auto; color: #aaa; font-size: 0.8rem; line-height: 1.6; margin-bottom: 20px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .terms-box h4 { color: #fff; margin-top: 0; margin-bottom: 10px; font-size: 0.9rem; }
+
+    /* Action Buttons */
+    .modal-actions { display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }
+    .btn-secondary { background: transparent; border: 1px solid #555; color: #ccc; padding: 12px; border-radius: 8px; cursor: pointer; flex: 1; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+    .btn-secondary:hover { background: #222; color: #fff; }
+    
+    .btn-primary { background: #7C1716; border: none; color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; flex: 1; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+    .btn-primary:hover { background: #9c1d1b; }
+    
+    /* Disabled State for the Final Submit */
+    .btn-primary:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
+
+    @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* Mobile Adjustments for Player */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
         .container { padding-top: 160px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
+        .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; }
         
-        /* Filter Drawer Styling */
-        .filter-section { 
-            position: static; height: auto; max-height: none; margin-bottom: 20px; 
-            padding: 0; background: transparent; box-shadow: none;
-        }
-        
-        .filter-handle {
-            display: flex !important; justify-content: center; align-items: center;
-            height: 45px; cursor: pointer; 
-            background: #1e1e1e; color: #fff; font-size: 0.85em; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 2px;
-            border-radius: 8px; border: 1px solid #333; margin-bottom: 10px;
-        }
-        
-        .filter-content {
-            display: none; /* Hidden by default on mobile */
-            background: #1e1e1e; padding: 20px; border-radius: 8px; 
-            border: 1px solid #333; margin-bottom: 20px;
-        }
-        
-        .filter-section.filters-expanded .filter-content {
-            display: block;
-        }
-
-        /* The Collapsed Mini-Player (MARBLE EDITION) */
         .player-section {
             position: fixed; top: auto !important; bottom: 0 !important; left: 0; width: 100%;
-            background-image: url('marble.jpg'); /* HAWK TUA */
+            background-image: url('marble.jpg'); 
             background-size: cover; background-position: center;
             border-top: 1px solid #ddd; z-index: 2000;
             height: 175px; overflow: hidden; 
@@ -233,53 +268,29 @@
             border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
             gap: 0; 
         }
-
-        /* The Expanded Full-Screen Player */
         .player-section.spotify-expanded { height: 95vh; overflow-y: auto; }
-
-        /* The Interactive Handle */
         .spotify-handle {
             display: flex !important; justify-content: center; align-items: center;
             height: 35px; cursor: pointer; 
-            background: rgba(255, 255, 255, 0.4); /* Slight frost to separate the handle */
+            background: rgba(255, 255, 255, 0.4); 
             color: #222222; font-size: 0.75em; font-weight: bold;
             text-transform: uppercase; letter-spacing: 2px;
             flex-shrink: 0; border-bottom: 1px solid #ccc;
         }
-
-        .spotify-expanded .expanded-only-logo {
-            display: block;
-            max-width: 180px;
-            height: auto;
-            margin: 10px auto 20px auto;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        /* Flatten internal boxes and darken text for marble */
+        .spotify-expanded .expanded-only-logo { display: block; max-width: 180px; height: auto; margin: 10px auto 20px auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); animation: fadeIn 0.4s ease-in-out; }
         .master-player { box-shadow: none; border-radius: 0; padding: 15px 20px; background: transparent; color: #222; }
         #now-playing-title { color: #111111; font-weight: bold; }
         #now-playing-writer { margin: 0 0 10px 0; color: #444444; font-weight: 500; }
         .autoplay-toggle { margin-top: 10px; color: #333; }
-        
-        .lyrics-pane { 
-            box-shadow: none; height: auto; flex: 1; 
-            margin: 10px 20px 20px; 
-            background: transparent; /* Lets the main marble shine through */
-            color: #222222;
-            border-radius: 12px; border: 1px solid #ccc;
-        }
+        .lyrics-heading { display: none; }
+        .lyrics-pane { box-shadow: none; height: auto; flex: 1; margin: 10px 20px 20px; background: transparent; color: #222222; border-radius: 12px; border: 1px solid #ccc; }
         .disclaimer { margin: 0 20px 40px 20px; color: #555555; }
-
         .app-footer { position: static; margin-top: 40px; margin-left: -20px; width: 100vw; margin-bottom: 180px; }
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
         .footer-copyright, .footer-contact { text-align: center; padding: 0; }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
+        
+        .license-icon-btn { margin: 10px auto 10px auto; width: 45px; height: 45px; font-size: 1.4em; }
     }
     </style>
 </head>
@@ -293,59 +304,42 @@
 <div class="container">
     <div class="main-content">
         
-        <div class="filter-section" id="mobileFilterSection">
-            <div class="filter-handle" id="filterHandle" onclick="toggleMobileFilters()">
-                ▼ Show Search & Filters ▼
+        <div class="filter-section">
+            <div class="filter-group">
+                <div class="switch-header" style="border-bottom: none;">
+                    <h4>Search</h4>
+                </div>
+                <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
             </div>
-            
-            <div class="filter-content">
-                <div class="filter-group">
-                    <div class="switch-header" style="border-bottom: none;">
-                        <h4>Search</h4>
+            <div class="filter-group">
+                <div class="switch-header"><h4>Genre</h4></div>
+                <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
+                    <option value="All">All Genres</option>
+                    <option value="Bluegrass Gospel">Bluegrass Gospel</option>
+                    <option value="Contemporary Gospel">Contemporary Gospel</option>
+                    <option value="Country Gospel">Country Gospel</option>
+                    <option value="Southern Gospel">Southern Gospel</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <div class="switch-header">
+                    <h4>Tempo</h4>
+                    <div class="switch-container">
+                        <span class="switch-label">Multi</span>
+                        <label class="switch"><input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()"><span class="slider"></span></label>
                     </div>
-                    <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
                 </div>
-                
-                <div class="filter-group">
-                    <div class="switch-header">
-                        <h4>Genre</h4>
+                <div id="tempoContainer" class="tag-filters"></div>
+            </div>
+            <div class="filter-group">
+                <div class="switch-header">
+                    <h4>Themes</h4>
+                    <div class="switch-container">
+                        <span class="switch-label">Multi</span>
+                        <label class="switch"><input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()"><span class="slider"></span></label>
                     </div>
-                    <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
-                        <option value="All">All Genres</option>
-                        <option value="Bluegrass Gospel">Bluegrass Gospel</option>
-                        <option value="Contemporary Gospel">Contemporary Gospel</option>
-                        <option value="Country Gospel">Country Gospel</option>
-                        <option value="Southern Gospel">Southern Gospel</option>
-                    </select>
                 </div>
-
-                <div class="filter-group">
-                    <div class="switch-header">
-                        <h4>Tempo</h4>
-                        <div class="switch-container">
-                            <span class="switch-label">Multi</span>
-                            <label class="switch">
-                                <input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div id="tempoContainer" class="tag-filters"></div>
-                </div>
-
-                <div class="filter-group">
-                    <div class="switch-header">
-                        <h4>Themes</h4>
-                        <div class="switch-container">
-                            <span class="switch-label">Multi</span>
-                            <label class="switch">
-                                <input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div id="themeContainer" class="tag-filters"></div>
-                </div>
+                <div id="themeContainer" class="tag-filters"></div>
             </div>
         </div>
         
@@ -355,14 +349,10 @@
         </div>
         
         <div class="player-section">
-            
-            <div class="spotify-handle" id="spotifyHandle" onclick="toggleSpotifyPlayer()">
-                ▲ Now Playing & Lyrics ▲
-            </div>
+            <div class="spotify-handle" id="spotifyHandle" onclick="toggleSpotifyPlayer()">▲ Now Playing & Lyrics ▲</div>
 
             <div class="master-player">
                 <img src="logo.png" class="expanded-only-logo" alt="221st Street Publishing" onerror="this.style.display='none';">
-
                 <h3 id="now-playing-title">Select a song</h3>
                 <p id="now-playing-writer">Waiting for selection...</p>
                 <audio id="mainAudio" controls controlsList="nodownload">
@@ -372,15 +362,97 @@
                     <input type="checkbox" id="autoplayCheck">
                     <label for="autoplayCheck">Auto-play next song</label>
                 </div>
+                
+                <button id="licenseBtn" class="license-icon-btn" onclick="openLicenseModal()" title="Inquire about licensing">
+                    ✉️
+                </button>
             </div>
 
             <h4 class="lyrics-heading">Lyrics</h4>
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
-            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
+            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law.</p>
         </div>
-        
     </div>
 </div> 
+
+<div id="licenseModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeLicenseModal()">&times;</button>
+        <div class="modal-header-text">
+            <h2>License Request</h2>
+            <p>Step <span id="step-indicator">1</span> of 3</p>
+        </div>
+        
+        <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="licenseForm" onsubmit="submitLicenseForm(event)">
+            
+            <div id="step1" class="form-step active">
+                <label>Your Name *</label>
+                <input type="text" name="name" id="reqName" placeholder="Legal Business or Contact Name" required>
+                
+                <label>Email Address *</label>
+                <input type="email" name="email" id="reqEmail" placeholder="you@domain.com" required>
+                
+                <label>Phone Number</label>
+                <input type="text" name="phone" placeholder="(Optional) Phone or Text">
+
+                <div class="modal-actions" style="justify-content: flex-end;">
+                    <button type="button" class="btn-primary" onclick="nextStep(1)">Next &rarr;</button>
+                </div>
+            </div>
+
+            <div id="step2" class="form-step">
+                <label>What type of license do you need?</label>
+                <div class="license-options">
+                    <label class="license-option">
+                        <input type="checkbox" name="license_type" value="Mechanical">
+                        <div><strong>Mechanical License</strong><span>I want to record my own version of a song and sell copies.</span></div>
+                    </label>
+                    <label class="license-option">
+                        <input type="checkbox" name="license_type" value="Master Use">
+                        <div><strong>Master Use License</strong><span>I want to lease an existing studio soundtrack for a project.</span></div>
+                    </label>
+                    <label class="license-option">
+                        <input type="checkbox" name="license_type" value="Other">
+                        <div><strong>Other / Inquiry</strong><span>General publishing, synchronization, or custom requests.</span></div>
+                    </label>
+                </div>
+
+                <label>Which song are you inquiring about?</label>
+                <select name="selected_song" id="songDropdown">
+                    <option value="">-- Select from Catalog --</option>
+                    </select>
+                
+                <label>Or enter a custom track / project details</label>
+                <textarea name="project_details" placeholder="Album name, number of copies, streaming plans, or custom song title..."></textarea>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(2)">&larr; Back</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(2)">Next &rarr;</button>
+                </div>
+            </div>
+
+            <div id="step3" class="form-step">
+                <label>Review Preliminary Terms</label>
+                <div class="terms-box" id="termsBox">
+                    <h4>221st Street Publishing - Intent to License</h4>
+                    <p>By submitting this inquiry, you understand that this is not a legally binding contract, but a formal request to initiate licensing negotiations.</p>
+                    <p>1. <strong>Intellectual Property:</strong> All compositions remain the exclusive property of 221st Street Publishing and its respective songwriters.</p>
+                    <p>2. <strong>Usage Restrictions:</strong> No part of the requested compositions or master recordings may be utilized, distributed, or broadcast until a formal, executed agreement (Mechanical, Master Use, or otherwise) is signed by both parties.</p>
+                    <p>3. <strong>Communication:</strong> A publishing coordinator will review your request and contact you within 24-48 business hours with official documentation and rate structures based on your project parameters.</p>
+                    <p><em>Please scroll to the bottom to agree and submit your request.</em></p>
+                    <br><br><br>
+                    <p style="text-align: center; color: #555;">--- End of Terms ---</p>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(3)">&larr; Back</button>
+                    <button type="submit" class="btn-primary" id="finalSubmitBtn" disabled>I Agree & Submit</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
 
 <footer class="app-footer">
     <div class="footer-content">
@@ -424,8 +496,129 @@
                 playTrack(nextSong);
             }
         });
+
+        // --- NEW: Scroll-to-Agree Event Listener ---
+        const termsBox = document.getElementById('termsBox');
+        const submitBtn = document.getElementById('finalSubmitBtn');
+        
+        termsBox.addEventListener('scroll', function() {
+            // Using Math.ceil to prevent sub-pixel rounding errors on mobile
+            if (Math.ceil(this.scrollTop + this.clientHeight) >= this.scrollHeight - 5) {
+                submitBtn.disabled = false;
+                submitBtn.style.background = '#7C1716';
+                submitBtn.style.color = '#ffffff';
+                submitBtn.innerText = 'Submit Request';
+            }
+        });
     });
 
+    // --- MODAL WIZARD LOGIC ---
+    function openLicenseModal() {
+        document.getElementById('licenseModal').style.display = 'flex';
+        populateSongDropdown();
+        
+        // Reset to Step 1
+        document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('step-indicator').innerText = '1';
+        
+        // Reset Scroll & Button
+        document.getElementById('termsBox').scrollTop = 0;
+        const submitBtn = document.getElementById('finalSubmitBtn');
+        submitBtn.disabled = true;
+        submitBtn.style.background = '#333';
+        submitBtn.style.color = '#666';
+        submitBtn.innerText = 'I Agree & Submit';
+    }
+
+    function closeLicenseModal() {
+        document.getElementById('licenseModal').style.display = 'none';
+        document.getElementById('licenseForm').reset();
+    }
+
+    function nextStep(currentStep) {
+        // Basic validation for Step 1
+        if (currentStep === 1) {
+            const name = document.getElementById('reqName').value.trim();
+            const email = document.getElementById('reqEmail').value.trim();
+            if (!name || !email) {
+                alert("Please enter your name and email to continue.");
+                return;
+            }
+        }
+        
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        document.getElementById(`step${currentStep + 1}`).classList.add('active');
+        document.getElementById('step-indicator').innerText = currentStep + 1;
+    }
+
+    function prevStep(currentStep) {
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        document.getElementById(`step${currentStep - 1}`).classList.add('active');
+        document.getElementById('step-indicator').innerText = currentStep - 1;
+    }
+
+    function populateSongDropdown() {
+        const dropdown = document.getElementById('songDropdown');
+        dropdown.innerHTML = '<option value="">-- Select from Catalog --</option>';
+        
+        // Sort all songs alphabetically for the dropdown
+        const sortedSongs = [...catalogData].sort((a, b) => a.title.localeCompare(b.title));
+        
+        sortedSongs.forEach(song => {
+            const option = document.createElement('option');
+            option.value = song.title;
+            option.innerText = song.title;
+            dropdown.appendChild(option);
+        });
+
+        // If a song is actively playing, auto-select it!
+        if (currentSongIndex !== -1 && currentPlaylist[currentSongIndex]) {
+            dropdown.value = currentPlaylist[currentSongIndex].title;
+        }
+    }
+
+    async function submitLicenseForm(event) {
+        event.preventDefault(); 
+        const form = event.target;
+        
+        // Change button text to show processing
+        const submitBtn = document.getElementById('finalSubmitBtn');
+        submitBtn.innerText = 'Transmitting...';
+        submitBtn.disabled = true;
+
+        const data = new FormData(form);
+        try {
+            const response = await fetch("https://formspree.io/f/xvzwbvwv", {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                closeLicenseModal(); 
+                alert("Success! Your licensing request has been transmitted to 221st Street Publishing.");
+            } else {
+                alert("Oops! There was a problem submitting your inquiry.");
+                submitBtn.innerText = 'Submit Request';
+                submitBtn.disabled = false;
+            }
+        } catch (error) {
+            alert("Oops! There was a network error.");
+            submitBtn.innerText = 'Submit Request';
+            submitBtn.disabled = false;
+        }
+    }
+
+    // Modal background click to close
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('licenseModal');
+        if (event.target === modal) {
+            closeLicenseModal();
+        }
+    });
+
+    // --- EXISTING CATALOG LOGIC ---
     function renderDynamicFilters() {
         const themeContainer = document.getElementById('themeContainer');
         const tempoContainer = document.getElementById('tempoContainer');
@@ -595,6 +788,10 @@
         lyricsEl.scrollTop = 0; 
 
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
+        
+        // Show the License button now that a song is playing
+        document.getElementById('licenseBtn').style.display = 'flex';
+        
         displaySongs(currentPlaylist); 
 
         if (window.innerWidth <= 1000) {
@@ -606,20 +803,6 @@
 
         audio.load();
         audio.play();
-    }
-
-    // --- NEW: Mobile Filter Drawer Logic ---
-    function toggleMobileFilters() {
-        const filterSection = document.getElementById('mobileFilterSection');
-        const handle = document.getElementById('filterHandle');
-        
-        filterSection.classList.toggle('filters-expanded');
-        
-        if (filterSection.classList.contains('filters-expanded')) {
-            handle.innerText = '▲ Hide Search & Filters ▲';
-        } else {
-            handle.innerText = '▼ Show Search & Filters ▼';
-        }
     }
 
     function toggleSpotifyPlayer() {
