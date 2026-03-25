@@ -47,8 +47,9 @@
         position: sticky; top: 140px;
         max-height: calc(100vh - 320px); 
         overflow-y: auto; 
-        background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         box-sizing: border-box;
+        transition: all 0.3s ease;
     }
     .filter-group { margin-bottom: 20px; }
     
@@ -123,16 +124,16 @@
     /* Column 3: Player & Lyrics (Sticky) */
     .player-section {
         position: sticky; top: 140px; 
-        height: calc(100vh - 320px); 
+        height: calc(100vh - 250px); 
         display: flex; flex-direction: column; gap: 15px;
         transition: all 0.3s ease;
     }
     
-    .spotify-handle { display: none; } 
+    .spotify-handle, .filter-handle { display: none; } 
     .expanded-only-logo { display: none; } 
 
     .master-player { 
-        background: #1a1a1a; color: white; padding: 20px; text-align: center; 
+        background: #1e1e1e; color: white; padding: 20px; text-align: center; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; flex-shrink: 0;
     }
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.1em; }
@@ -190,15 +191,38 @@
     .footer-contact a { color: #ffcccc; text-decoration: none; }
 
     /* =========================================================
-       MOBILE SPOTIFY UI OVERRIDE
+       MOBILE SPOTIFY UI OVERRIDE & COLLAPSIBLE FILTERS
        ========================================================= */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
         .container { padding-top: 160px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
-        .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; }
         
-        /* 1. The Collapsed Mini-Player (MARBLE EDITION) */
+        /* Filter Drawer Styling */
+        .filter-section { 
+            position: static; height: auto; max-height: none; margin-bottom: 20px; 
+            padding: 0; background: transparent; box-shadow: none;
+        }
+        
+        .filter-handle {
+            display: flex !important; justify-content: center; align-items: center;
+            height: 45px; cursor: pointer; 
+            background: #1e1e1e; color: #fff; font-size: 0.85em; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 2px;
+            border-radius: 8px; border: 1px solid #333; margin-bottom: 10px;
+        }
+        
+        .filter-content {
+            display: none; /* Hidden by default on mobile */
+            background: #1e1e1e; padding: 20px; border-radius: 8px; 
+            border: 1px solid #333; margin-bottom: 20px;
+        }
+        
+        .filter-section.filters-expanded .filter-content {
+            display: block;
+        }
+
+        /* The Collapsed Mini-Player (MARBLE EDITION) */
         .player-section {
             position: fixed; top: auto !important; bottom: 0 !important; left: 0; width: 100%;
             background-image: url('marble.jpg'); /* HAWK TUA */
@@ -210,10 +234,10 @@
             gap: 0; 
         }
 
-        /* 2. The Expanded Full-Screen Player */
+        /* The Expanded Full-Screen Player */
         .player-section.spotify-expanded { height: 95vh; overflow-y: auto; }
 
-        /* 3. The Interactive Handle */
+        /* The Interactive Handle */
         .spotify-handle {
             display: flex !important; justify-content: center; align-items: center;
             height: 35px; cursor: pointer; 
@@ -238,9 +262,6 @@
         #now-playing-writer { margin: 0 0 10px 0; color: #444444; font-weight: 500; }
         .autoplay-toggle { margin-top: 10px; color: #333; }
         
-        /* Hides the new lyrics heading on mobile since the handle says "LYRICS" */
-        .lyrics-heading { display: none; }
-
         .lyrics-pane { 
             box-shadow: none; height: auto; flex: 1; 
             margin: 10px 20px 20px; 
@@ -272,53 +293,59 @@
 <div class="container">
     <div class="main-content">
         
-        <div class="filter-section">
-            <div class="filter-group">
-                <div class="switch-header" style="border-bottom: none;">
-                    <h4>Search</h4>
-                </div>
-                <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
+        <div class="filter-section" id="mobileFilterSection">
+            <div class="filter-handle" id="filterHandle" onclick="toggleMobileFilters()">
+                ▼ Show Search & Filters ▼
             </div>
             
-            <div class="filter-group">
-                <div class="switch-header">
-                    <h4>Genre</h4>
-                </div>
-                <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
-                    <option value="All">All Genres</option>
-                    <option value="Bluegrass Gospel">Bluegrass Gospel</option>
-                    <option value="Contemporary Gospel">Contemporary Gospel</option>
-                    <option value="Country Gospel">Country Gospel</option>
-                    <option value="Southern Gospel">Southern Gospel</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <div class="switch-header">
-                    <h4>Tempo</h4>
-                    <div class="switch-container">
-                        <span class="switch-label">Multi</span>
-                        <label class="switch">
-                            <input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()">
-                            <span class="slider"></span>
-                        </label>
+            <div class="filter-content">
+                <div class="filter-group">
+                    <div class="switch-header" style="border-bottom: none;">
+                        <h4>Search</h4>
                     </div>
+                    <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
                 </div>
-                <div id="tempoContainer" class="tag-filters"></div>
-            </div>
-
-            <div class="filter-group">
-                <div class="switch-header">
-                    <h4>Themes</h4>
-                    <div class="switch-container">
-                        <span class="switch-label">Multi</span>
-                        <label class="switch">
-                            <input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()">
-                            <span class="slider"></span>
-                        </label>
+                
+                <div class="filter-group">
+                    <div class="switch-header">
+                        <h4>Genre</h4>
                     </div>
+                    <select id="genreFilter" onchange="filterCatalog()" style="margin-top: 5px;">
+                        <option value="All">All Genres</option>
+                        <option value="Bluegrass Gospel">Bluegrass Gospel</option>
+                        <option value="Contemporary Gospel">Contemporary Gospel</option>
+                        <option value="Country Gospel">Country Gospel</option>
+                        <option value="Southern Gospel">Southern Gospel</option>
+                    </select>
                 </div>
-                <div id="themeContainer" class="tag-filters"></div>
+
+                <div class="filter-group">
+                    <div class="switch-header">
+                        <h4>Tempo</h4>
+                        <div class="switch-container">
+                            <span class="switch-label">Multi</span>
+                            <label class="switch">
+                                <input type="checkbox" id="tempoMultiToggle" onchange="toggleTempoMulti()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="tempoContainer" class="tag-filters"></div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="switch-header">
+                        <h4>Themes</h4>
+                        <div class="switch-container">
+                            <span class="switch-label">Multi</span>
+                            <label class="switch">
+                                <input type="checkbox" id="themeMultiToggle" onchange="toggleThemeMulti()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="themeContainer" class="tag-filters"></div>
+                </div>
             </div>
         </div>
         
@@ -548,7 +575,8 @@
             li.innerHTML = `
                 <div class="song-info">
                     <h3>${song.title}</h3>
-                    <p>${writers} | ${song.genre} | <strong>${song.tempo || 'N/A'}</strong></p>
+                    <p>Written by: ${writers}<br>
+                    Genre: ${song.genre}  |  Tempo: ${song.tempo || 'N/A'}</p>
                 </div>
                 <div class="play-indicator">▶</div>
             `;
@@ -578,6 +606,20 @@
 
         audio.load();
         audio.play();
+    }
+
+    // --- NEW: Mobile Filter Drawer Logic ---
+    function toggleMobileFilters() {
+        const filterSection = document.getElementById('mobileFilterSection');
+        const handle = document.getElementById('filterHandle');
+        
+        filterSection.classList.toggle('filters-expanded');
+        
+        if (filterSection.classList.contains('filters-expanded')) {
+            handle.innerText = '▲ Hide Search & Filters ▲';
+        } else {
+            handle.innerText = '▼ Show Search & Filters ▼';
+        }
     }
 
     function toggleSpotifyPlayer() {
