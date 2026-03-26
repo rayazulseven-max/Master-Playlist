@@ -31,6 +31,23 @@
         color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; transition: opacity 0.2s;
     }
     .home-link:hover { opacity: 0.7; }
+        /* Header License Button */
+    .header-license-btn {
+        position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+        background: #7C1716; color: white; border: none; padding: 8px 16px;
+        border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s;
+        font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3); outline: none;
+    }
+    .header-license-btn:hover { background: #9c1d1b; transform: translateY(-50%) scale(1.05); }
+    .header-license-btn:active { transform: translateY(-50%) scale(0.95); }
+
+    /* Mobile tweak so the header doesn't get crowded on small phones */
+    @media (max-width: 600px) {
+        .header-license-btn { padding: 6px 10px; font-size: 0.7em; right: 10px; }
+        .home-link { left: 10px; font-size: 14px; }
+        .brand-logo { max-width: 140px; }
+    }
 
     /* 3. 3-Column Desktop Grid */
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
@@ -299,7 +316,9 @@
 
 <div class="brand-header">
     <a href="https://221street.com/" class="home-link">&lt; Home</a>
-    <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none';">
+    <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2>221st Street Music</h2>');">
+    
+    <button class="header-license-btn" onclick="openLicenseModal()">License Request</button>
 </div>
 
 <div class="container">
