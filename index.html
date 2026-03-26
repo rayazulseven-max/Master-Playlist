@@ -811,7 +811,7 @@
         updateCartUI();
     }
 
-    async function submitLicenseForm(event) {
+        async function submitLicenseForm(event) {
         event.preventDefault(); 
         const form = event.target;
         const submitBtn = document.getElementById('finalSubmitBtn');
@@ -830,7 +830,8 @@
                 form.reset();
                 licenseCart = [];
                 localStorage.removeItem('savedLicenseCart'); 
-                localStorage.removeItem('savedLicenseForm'); // WIPE EVERYTHING ON SUCCESS
+                // NOTICE: We deleted the line that wiped 'savedLicenseForm'. 
+                // Their personal info is now permanently cached for their next visit!
                 updateCartUI();
                 
                 closeLicenseModal(); 
@@ -845,6 +846,7 @@
             submitBtn.disabled = false;
         }
     }
+
 
     function closeLicenseModal() { 
         document.getElementById('licenseModal').style.display = 'none'; 
