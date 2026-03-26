@@ -246,6 +246,16 @@
     .btn-primary:hover { background: #9c1d1b; }
     .btn-primary:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
 
+    /* FAQ Accordion Specifics */
+    .faq-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px; }
+    .faq-item { background: #0f0f0f; border: 1px solid #333; border-radius: 8px; transition: all 0.2s ease; }
+    .faq-item[open] { border-color: #7C1716; background: #151515; }
+    .faq-item summary { padding: 15px; font-weight: bold; cursor: pointer; color: #ddd; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; outline: none; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; color: #7C1716; font-size: 1.5em; font-weight: bold; transition: transform 0.2s ease; }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-item p { padding: 0 15px 15px 15px; margin: 0; color: #aaa; font-size: 0.85rem; line-height: 1.6; }
+
     @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
     /* Mobile Adjustments for Player */
@@ -498,7 +508,67 @@
         </form>
     </div>
 </div>
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeFaqModal()">&times;</button>
+        <div class="modal-header-text">
+            <h2>Frequently Asked Questions</h2>
+            <p>Tap a question to expand</p>
+        </div>
+        
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary>What is the difference between a Master and Mechanical license?</summary>
+                <p>A <strong>Mechanical License</strong> allows you to record your own version of our song and sell copies of it. A <strong>Master Use License</strong> gives you permission to use our actual studio recording (the master track) for your own project or performance.</p>
+            </details>
+            
+            <details class="faq-item">
+                <summary>How long does the licensing process take?</summary>
+                <p>Once you submit your initial request through our catalog, a publishing coordinator will review your parameters and follow up within 24-48 business hours with official documentation and rate structures.</p>
+            </details>
 
+            <details class="faq-item">
+                <summary>Can I license a song not listed in the catalog?</summary>
+                <p>Yes! If you know of a track in our broader catalog or need a custom arrangement, simply type the name directly into the song search bar on Step 2 of the Licensing Form.</p>
+            </details>
+        </div>
+    </div>
+</div>
+<div id="pitchModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closePitchModal()">&times;</button>
+        <div class="modal-header-text">
+            <h2>Pitch Your Music</h2>
+            <p>Interested in having 221st Street publish your catalog?</p>
+        </div>
+        
+        <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="pitchForm" onsubmit="submitPitchForm(event)">
+            <input type="hidden" name="Form_Type" value="Artist Publishing Pitch">
+            
+            <div class="form-step active" style="animation: none;">
+                <label>Your Name *</label>
+                <input type="text" name="Name" required placeholder="First and Last Name">
+                
+                <label>Artist / Band Name</label>
+                <input type="text" name="Artist_Name" placeholder="Who is performing?">
+                
+                <label>Email Address *</label>
+                <input type="email" name="Email" required placeholder="you@domain.com">
+                
+                <label>Link to Your Music *</label>
+                <input type="text" name="Music_Link" required placeholder="Spotify, YouTube, Google Drive, etc.">
+                
+                <label>Tell Us About Your Music</label>
+                <textarea name="Message" placeholder="A brief introduction, genre, what you're looking for..." required></textarea>
+                
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="submit" class="btn-primary" id="pitchSubmitBtn">Submit Pitch</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+    
 <footer class="app-footer">
     <div class="footer-content">
         <div class="footer-copyright">
@@ -510,6 +580,8 @@
         </a>
         <div class="footer-contact">
             <strong>Contact us:</strong><br>
+            <a href="#" onclick="openFaqModal(); return false;" style="color: #fff; text-decoration: underline; margin-bottom: 5px; display: inline-block;">View Q&A / FAQ</a><br>
+            <a href="#" onclick="openPitchModal(); return false;" style="color: #fff; text-decoration: underline; margin-bottom: 5px; display: inline-block;">Submit Your Music</a><br>
             918.607.3046<br>
             <a href="mailto:info@221street.com">info@221street.com</a>
         </div>
@@ -568,6 +640,7 @@
         else { handle.innerText = '▼ Show Search & Filters ▼'; }
     }
 
+    
     // --- SAVE & LOAD FORM DATA ---
     function saveFormData() {
         const formData = {
@@ -586,6 +659,9 @@
         };
         localStorage.setItem('savedLicenseForm', JSON.stringify(formData));
     }
+    
+    function openFaqModal() { document.getElementById('faqModal').style.display = 'flex'; }
+    function closeFaqModal() { document.getElementById('faqModal').style.display = 'none'; }
 
     function loadFormData() {
         const savedData = localStorage.getItem('savedLicenseForm');
@@ -853,8 +929,14 @@
     }
 
     window.addEventListener('click', function(event) {
-        const modal = document.getElementById('licenseModal');
-        if (event.target === modal) { closeLicenseModal(); }
+        const licModal = document.getElementById('licenseModal');
+        const faqModal = document.getElementById('faqModal');
+        const pitchModal = document.getElementById('pitchModal');
+        
+        if (event.target === licModal) { closeLicenseModal(); }
+        // Note: Make sure the FAQ modal HTML exists so this doesn't throw an error!
+        if (faqModal && event.target === faqModal) { closeFaqModal(); }
+        if (event.target === pitchModal) { closePitchModal(); }
     });
 
     // --- EXISTING CATALOG LOGIC ---
@@ -944,7 +1026,43 @@
         }
         filterCatalog();
     }
+function openPitchModal() {
+        document.getElementById('pitchModal').style.display = 'flex';
+    }
 
+    function closePitchModal() {
+        document.getElementById('pitchModal').style.display = 'none';
+    }
+
+    async function submitPitchForm(event) {
+        event.preventDefault(); 
+        const form = event.target;
+        const submitBtn = document.getElementById('pitchSubmitBtn');
+        
+        submitBtn.innerText = 'Transmitting...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch("https://formspree.io/f/xvzwbvwv", {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                form.reset();
+                closePitchModal(); 
+                alert("Success! Your music pitch has been submitted to 221st Street Publishing.");
+            } else {
+                alert("Oops! There was a problem submitting your pitch.");
+            }
+        } catch (error) {
+            alert("Oops! There was a network error.");
+        } finally {
+            submitBtn.innerText = 'Submit Pitch'; 
+            submitBtn.disabled = false;
+        }
+    }
     function filterCatalog() {
         const searchText = document.getElementById('searchBar').value.toLowerCase();
         const selectedGenre = document.getElementById('genreFilter').value;
