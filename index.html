@@ -393,11 +393,10 @@
 
             <div id="step2" class="form-step">
                 <div class="builder-box">
-                    <label style="color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px;">1. Select Song</label>
-                    <select id="songDropdown">
-                        <option value="">-- Select from Catalog --</option>
-                    </select>
-
+                    <label style="color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px;">1. Type or Select Song</label>
+                    <input type="text" id="songInput" list="songSuggestions" placeholder="Type a song or pick from list..." autocomplete="off">
+                    <datalist id="songSuggestions"></datalist>
+                    
                     <label style="color: #fff; margin-top: 15px; border-bottom: 1px solid #444; padding-bottom: 5px;">2. License Type</label>
                     <select id="typeDropdown" onchange="toggleSmartFields()">
                         <option value="">-- Select License --</option>
@@ -532,7 +531,7 @@
     // --- MODAL WIZARD LOGIC ---
     function openLicenseModal() {
         document.getElementById('licenseModal').style.display = 'flex';
-        populateSongDropdown();
+        populateSongSuggestions(); // <--- THIS LINE CHANGED
         
         document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         document.getElementById('step1').classList.add('active');
@@ -574,18 +573,23 @@
     }
 
     // --- SMART BUILDER & CART LOGIC ---
-    function populateSongDropdown() {
-        const dropdown = document.getElementById('songDropdown');
-        dropdown.innerHTML = '<option value="">-- Select from Catalog --</option>';
+    function populateSongSuggestions() {
+        const datalist = document.getElementById('songSuggestions');
+        const songInput = document.getElementById('songInput');
+        datalist.innerHTML = '';
+        
         const sortedSongs = [...catalogData].sort((a, b) => a.title.localeCompare(b.title));
         sortedSongs.forEach(song => {
             const option = document.createElement('option');
-            option.value = song.title; option.innerText = song.title;
-            dropdown.appendChild(option);
+            option.value = song.title;
+            datalist.appendChild(option);
         });
 
+        // If a song is actively playing, auto-fill the input box!
         if (currentSongIndex !== -1 && currentPlaylist[currentSongIndex]) {
-            dropdown.value = currentPlaylist[currentSongIndex].title;
+            songInput.value = currentPlaylist[currentSongIndex].title;
+        } else {
+            songInput.value = '';
         }
     }
 
@@ -606,11 +610,11 @@
     }
 
     function addToCart() {
-        const song = document.getElementById('songDropdown').value;
+        const song = document.getElementById('songInput').value.trim(); // <--- THIS LINE CHANGED
         const type = document.getElementById('typeDropdown').value;
         const notes = document.getElementById('builderNotes').value.trim();
         
-        if (!song || !type) { alert("You must select a Song and a License Type."); return; }
+        if (!song || !type) { alert("You must select or type a Song and a License Type."); return; }
 
         let configDetails = "";
         if (type === 'Mechanical License') {
@@ -622,17 +626,11 @@
             configDetails = `[Streaming: ${streaming}]`;
         }
 
-        const cartItem = {
-            song: song,
-            type: type,
-            details: configDetails,
-            notes: notes
-        };
-
+        const cartItem = { song: song, type: type, details: configDetails, notes: notes };
         licenseCart.push(cartItem);
         
         // Reset the builder fields
-        document.getElementById('songDropdown').value = '';
+        document.getElementById('songInput').value = ''; // <--- THIS LINE CHANGED
         document.getElementById('typeDropdown').value = '';
         document.getElementById('builderCopies').value = '';
         document.getElementById('builderNotes').value = '';
