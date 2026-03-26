@@ -26,29 +26,38 @@
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
-    .home-link {
-        position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
-        color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; transition: opacity 0.2s;
+    /* Header Button Grouping & Layout */
+    .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); }
+    .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
+    
+    /* Universal Header Button Style */
+    .header-btn {
+        background: #1a1a1a; color: #ddd; border: 1px solid #444; 
+        padding: 8px 16px; border-radius: 6px; font-weight: bold; 
+        cursor: pointer; transition: 0.2s; font-size: 0.85em; 
+        text-transform: uppercase; letter-spacing: 1px;
+        text-decoration: none; outline: none; 
+        display: inline-flex; align-items: center; justify-content: center;
     }
-    .home-link:hover { opacity: 0.7; }
-        /* Header License Button */
-    .header-license-btn {
-        position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-        background: #7C1716; color: white; border: none; padding: 8px 16px;
-        border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s;
-        font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3); outline: none;
-    }
-    .header-license-btn:hover { background: #9c1d1b; transform: translateY(-50%) scale(1.05); }
-    .header-license-btn:active { transform: translateY(-50%) scale(0.95); }
+    .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
+    .header-btn:active { transform: scale(0.95); }
 
-    /* Mobile tweak so the header doesn't get crowded on small phones */
-    @media (max-width: 600px) {
-        .header-license-btn { padding: 6px 10px; font-size: 0.7em; right: 10px; }
-        .home-link { left: 10px; font-size: 14px; }
+    /* The Red Highlight Button */
+    .highlight-btn {
+        background: #7C1716; color: white; border: 1px solid #9c1d1b;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .highlight-btn:hover { background: #9c1d1b; }
+    
+    /* Mobile Adjustments for Header Buttons */
+    @media (max-width: 900px) {
+        .header-left { left: 10px; }
+        .header-right { right: 10px; gap: 5px; }
+        .header-btn { padding: 6px 8px; font-size: 0.65em; letter-spacing: 0; }
         .brand-logo { max-width: 140px; }
     }
 
+    
     /* 3. 3-Column Desktop Grid */
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
     .main-content { 
@@ -315,10 +324,17 @@
 <body>
 
 <div class="brand-header">
-    <a href="https://221street.com/" class="home-link">&lt; Home</a>
+    <div class="header-left">
+        <a href="https://221street.com/" class="header-btn">&lt; Home</a>
+    </div>
+    
     <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2>221st Street Music</h2>');">
     
-    <button class="header-license-btn" onclick="openLicenseModal()">License Request</button>
+    <div class="header-right">
+        <button class="header-btn" onclick="openFaqModal()">FAQ</button>
+        <button class="header-btn" onclick="openPitchModal()">Submit Music</button>
+        <button class="header-btn highlight-btn" onclick="openLicenseModal()">License Request</button>
+    </div>
 </div>
 
 <div class="container">
@@ -602,8 +618,6 @@
         </a>
         <div class="footer-contact">
             <strong>Contact us:</strong><br>
-            <a href="#" onclick="openFaqModal(); return false;" style="color: #fff; text-decoration: underline; margin-bottom: 5px; display: inline-block;">View Q&A / FAQ</a><br>
-            <a href="#" onclick="openPitchModal(); return false;" style="color: #fff; text-decoration: underline; margin-bottom: 5px; display: inline-block;">Submit Your Music</a><br>
             918.607.3046<br>
             <a href="mailto:info@221street.com">info@221street.com</a>
         </div>
