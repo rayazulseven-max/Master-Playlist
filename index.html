@@ -26,6 +26,7 @@
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
+    
     /* Header Button Grouping & Layout */
     .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); }
     .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
@@ -49,12 +50,17 @@
     }
     .highlight-btn:hover { background: #9c1d1b; }
     
-    /* Mobile Adjustments for Header Buttons */
+    /* Mobile Adjustments for Header Buttons - Stacked Vertically! */
     @media (max-width: 900px) {
         .header-left { left: 10px; }
-        .header-right { right: 10px; gap: 5px; }
-        .header-btn { padding: 6px 8px; font-size: 0.65em; letter-spacing: 0; }
-        .brand-logo { max-width: 140px; }
+        .header-right { 
+            right: 10px; 
+            flex-direction: column; /* This stacks them descending */
+            align-items: flex-end; 
+            gap: 6px; 
+        }
+        .header-btn { padding: 5px 10px; font-size: 0.65em; letter-spacing: 0; }
+        .brand-logo { max-width: 130px; }
     }
 
     
@@ -287,7 +293,7 @@
     /* Mobile Adjustments for Player */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
-        .container { padding-top: 160px; padding-bottom: 20px; }
+        .container { padding-top: 170px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
         
         .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; padding: 0; background: transparent; box-shadow: none; }
