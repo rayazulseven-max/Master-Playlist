@@ -370,21 +370,27 @@
         <button class="close-btn" onclick="closeLicenseModal()">&times;</button>
         <div class="modal-header-text">
             <h2>License Request</h2>
-            <p>Step <span id="step-indicator">1</span> of 3</p>
+            <p>Step <span id="step-indicator">1</span> of <span id="total-steps">4</span></p>
         </div>
         
         <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="licenseForm" onsubmit="submitLicenseForm(event)">
             <input type="hidden" name="Package_Details" id="hiddenCartData" required>
             
             <div id="step1" class="form-step active">
-                <label>Your Name *</label>
-                <input type="text" name="Name" id="reqName" placeholder="Legal Business or Contact Name" required>
+                <label>Contact Name *</label>
+                <input type="text" name="Contact_Name" id="reqName" placeholder="Who should we contact?" required>
                 
                 <label>Email Address *</label>
                 <input type="email" name="Email" id="reqEmail" placeholder="you@domain.com" required>
                 
-                <label>Phone Number</label>
-                <input type="text" name="Phone" placeholder="(Optional) Phone or Text">
+                <label>Phone Number *</label>
+                <input type="text" name="Phone" id="reqPhone" placeholder="Required for contact" required>
+                
+                <label>Desired Method of Contact</label>
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; gap: 5px; text-transform: none; font-weight: normal; color: #fff;"><input type="checkbox" name="Contact_Preference" value="Call"> Call</label>
+                    <label style="display: flex; align-items: center; gap: 5px; text-transform: none; font-weight: normal; color: #fff;"><input type="checkbox" name="Contact_Preference" value="Text"> Text</label>
+                </div>
 
                 <div class="modal-actions" style="justify-content: flex-end;">
                     <button type="button" class="btn-primary" onclick="nextStep(1)">Next &rarr;</button>
@@ -432,11 +438,45 @@
 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="prevStep(2)">&larr; Back</button>
-                    <button type="button" class="btn-primary" onclick="nextStep(2)">Review & Submit &rarr;</button>
+                    <button type="button" class="btn-primary" id="step2NextBtn" onclick="nextStep(2)">Review & Submit &rarr;</button>
                 </div>
             </div>
 
             <div id="step3" class="form-step">
+                <div class="builder-box">
+                    <p style="margin: 0 0 15px 0; font-size: 0.85rem; color: #aaa; line-height: 1.4;">The following information will be included on the legal agreement between your organization and 221st Street Publishing.</p>
+                    
+                    <label>Organization's Legal Business Name *</label>
+                    <input type="text" name="Legal_Business_Name" id="legalName" placeholder="e.g., Sacred Call LLC" onkeyup="syncPerformingName()">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
+                        <label style="margin-bottom: 0;">Performing Name</label>
+                        <label style="font-size: 0.75rem; color: #ccc; font-weight: normal; text-transform: none; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" id="sameNameCheck" onchange="toggleSameName()" style="margin: 0; accent-color: #7C1716;"> Same as Legal
+                        </label>
+                    </div>
+                    <input type="text" name="Performing_Name" id="performingName" placeholder="What name does the group perform as?">
+                    
+                    <label>Street Address *</label>
+                    <input type="text" name="Street_Address" id="legalAddress" placeholder="123 Main St.">
+                    
+                    <label>City, State & ZIP *</label>
+                    <input type="text" name="City_State_Zip" id="legalCity" placeholder="City, ST 12345">
+                    
+                    <label>Who will be signing the agreement? *</label>
+                    <input type="text" name="Signer_Name" id="legalSigner" placeholder="Name of authorized signer">
+                    
+                    <label>That person's title? *</label>
+                    <input type="text" name="Signer_Title" id="legalTitle" placeholder="e.g., Owner, Manager, Artist">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(3)">&larr; Back</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(3)">Next &rarr;</button>
+                </div>
+            </div>
+
+            <div id="step4" class="form-step">
                 <label>Review Preliminary Terms</label>
                 <div class="terms-box" id="termsBox">
                     <h4>221st Street Publishing - Intent to License</h4>
@@ -450,7 +490,7 @@
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn-secondary" onclick="prevStep(3)">&larr; Back</button>
+                    <button type="button" class="btn-secondary" onclick="prevStep(4)">&larr; Back</button>
                     <button type="submit" class="btn-primary" id="finalSubmitBtn" disabled>I Agree & Submit</button>
                 </div>
             </div>
@@ -528,14 +568,25 @@
         else { handle.innerText = '▼ Show Search & Filters ▼'; }
     }
 
-    // --- MODAL WIZARD LOGIC ---
+    // --- DYNAMIC STEP LOGIC ---
+    function requiresLegalInfo() {
+        return licenseCart.some(item => item.type === 'Mechanical License' || item.type === 'Master Use License');
+    }
+
     function openLicenseModal() {
         document.getElementById('licenseModal').style.display = 'flex';
-        populateSongSuggestions(); // <--- THIS LINE CHANGED
+        populateSongSuggestions(); 
+        
+        // LOAD SAVED CART FROM BROWSER MEMORY
+        if (localStorage.getItem('savedLicenseCart')) {
+            licenseCart = JSON.parse(localStorage.getItem('savedLicenseCart'));
+            updateCartUI();
+        }
         
         document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         document.getElementById('step1').classList.add('active');
         document.getElementById('step-indicator').innerText = '1';
+        document.getElementById('total-steps').innerText = '4'; // Reset total steps
         
         document.getElementById('termsBox').scrollTop = 0;
         const submitBtn = document.getElementById('finalSubmitBtn');
@@ -545,20 +596,38 @@
         submitBtn.innerText = 'I Agree & Submit';
     }
 
-    function closeLicenseModal() { 
-        document.getElementById('licenseModal').style.display = 'none'; 
-        // We removed the form reset and array clearing from here so it saves!
-    }
-
     function nextStep(currentStep) {
         if (currentStep === 1) {
             const name = document.getElementById('reqName').value.trim();
             const email = document.getElementById('reqEmail').value.trim();
-            if (!name || !email) { alert("Please enter your name and email to continue."); return; }
+            const phone = document.getElementById('reqPhone').value.trim();
+            if (!name || !email || !phone) { alert("Please enter your name, email, and phone number to continue."); return; }
         }
         
         if (currentStep === 2) {
             if (licenseCart.length === 0) { alert("Please add at least one song configuration to your package."); return; }
+            
+            if (!requiresLegalInfo()) {
+                // Skip Legal Info step
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step4').classList.add('active');
+                document.getElementById('step-indicator').innerText = '3';
+                document.getElementById('total-steps').innerText = '3';
+                return;
+            } else {
+                document.getElementById('total-steps').innerText = '4';
+            }
+        }
+
+        if (currentStep === 3) {
+            const lName = document.getElementById('legalName').value.trim();
+            const lAddress = document.getElementById('legalAddress').value.trim();
+            const lCity = document.getElementById('legalCity').value.trim();
+            const lSigner = document.getElementById('legalSigner').value.trim();
+            const lTitle = document.getElementById('legalTitle').value.trim();
+            if (!lName || !lAddress || !lCity || !lSigner || !lTitle) {
+                alert("Please fill out the required legal fields for the contract."); return;
+            }
         }
         
         document.getElementById(`step${currentStep}`).classList.remove('active');
@@ -567,12 +636,66 @@
     }
 
     function prevStep(currentStep) {
+        let prev = currentStep - 1;
+        
+        if (currentStep === 4 && !requiresLegalInfo()) {
+            prev = 2; // Skip step 3 going backward
+            document.getElementById('step-indicator').innerText = '2';
+            document.getElementById('total-steps').innerText = '4';
+        } else {
+            document.getElementById('step-indicator').innerText = prev;
+        }
+
         document.getElementById(`step${currentStep}`).classList.remove('active');
-        document.getElementById(`step${currentStep - 1}`).classList.add('active');
-        document.getElementById('step-indicator').innerText = currentStep - 1;
+        document.getElementById(`step${prev}`).classList.add('active');
     }
 
-    // --- SMART BUILDER & CART LOGIC ---
+    function updateCartUI() {
+        const cartList = document.getElementById('cartItemsList');
+        const emptyText = document.getElementById('emptyCartText');
+        const hiddenData = document.getElementById('hiddenCartData');
+        const step2NextBtn = document.getElementById('step2NextBtn'); 
+        
+        cartList.innerHTML = '';
+        
+        if (licenseCart.length === 0) {
+            emptyText.style.display = 'block';
+            hiddenData.value = '';
+            if (step2NextBtn) step2NextBtn.innerHTML = 'Review & Submit &rarr;';
+            return;
+        }
+        
+        emptyText.style.display = 'none';
+        let stringifiedData = "LICENSING PACKAGE DETAILS:\n\n";
+
+        licenseCart.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div class="cart-item-details">
+                    <h4>${item.song}</h4>
+                    <p>${item.type} ${item.details}</p>
+                    ${item.notes ? `<p style="color:#555; font-style:italic;">"${item.notes}"</p>` : ''}
+                </div>
+                <button type="button" class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+            `;
+            cartList.appendChild(div);
+
+            stringifiedData += `${index + 1}. ${item.song} - ${item.type} ${item.details}\n`;
+            if (item.notes) stringifiedData += `   Notes: ${item.notes}\n`;
+        });
+
+        hiddenData.value = stringifiedData;
+
+        // Dynamically change the "Next" button text based on the cart contents!
+        if (step2NextBtn) {
+            step2NextBtn.innerHTML = requiresLegalInfo() ? 'Legal Info &rarr;' : 'Review & Submit &rarr;';
+        }
+        
+        // SAVE TO BROWSER MEMORY
+        localStorage.setItem('savedLicenseCart', JSON.stringify(licenseCart));
+    }
+
     function populateSongSuggestions() {
         const datalist = document.getElementById('songSuggestions');
         const songInput = document.getElementById('songInput');
@@ -610,7 +733,7 @@
     }
 
     function addToCart() {
-        const song = document.getElementById('songInput').value.trim(); // <--- THIS LINE CHANGED
+        const song = document.getElementById('songInput').value.trim(); 
         const type = document.getElementById('typeDropdown').value;
         const notes = document.getElementById('builderNotes').value.trim();
         
@@ -630,7 +753,7 @@
         licenseCart.push(cartItem);
         
         // Reset the builder fields
-        document.getElementById('songInput').value = ''; // <--- THIS LINE CHANGED
+        document.getElementById('songInput').value = ''; 
         document.getElementById('typeDropdown').value = '';
         document.getElementById('builderCopies').value = '';
         document.getElementById('builderNotes').value = '';
@@ -642,44 +765,6 @@
     function removeFromCart(index) {
         licenseCart.splice(index, 1);
         updateCartUI();
-    }
-
-    function updateCartUI() {
-        const cartList = document.getElementById('cartItemsList');
-        const emptyText = document.getElementById('emptyCartText');
-        const hiddenData = document.getElementById('hiddenCartData');
-        
-        cartList.innerHTML = '';
-        
-        if (licenseCart.length === 0) {
-            emptyText.style.display = 'block';
-            hiddenData.value = '';
-            return;
-        }
-        
-        emptyText.style.display = 'none';
-        let stringifiedData = "LICENSING PACKAGE DETAILS:\n\n";
-
-        licenseCart.forEach((item, index) => {
-            // Build UI
-            const div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = `
-                <div class="cart-item-details">
-                    <h4>${item.song}</h4>
-                    <p>${item.type} ${item.details}</p>
-                    ${item.notes ? `<p style="color:#555; font-style:italic;">"${item.notes}"</p>` : ''}
-                </div>
-                <button type="button" class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
-            `;
-            cartList.appendChild(div);
-
-            // Build Formspree String
-            stringifiedData += `${index + 1}. ${item.song} - ${item.type} ${item.details}\n`;
-            if (item.notes) stringifiedData += `   Notes: ${item.notes}\n`;
-        });
-
-        hiddenData.value = stringifiedData;
     }
 
     async function submitLicenseForm(event) {
@@ -698,9 +783,9 @@
             });
             
             if (response.ok) {
-                // MOVE THE WIPE COMMANDS HERE: Only clear after a successful send!
                 form.reset();
                 licenseCart = [];
+                localStorage.removeItem('savedLicenseCart'); // WIPE MEMORY ON SUCCESS
                 updateCartUI();
                 
                 closeLicenseModal(); 
@@ -711,10 +796,13 @@
         } catch (error) {
             alert("Oops! There was a network error.");
         } finally {
-            // Reset the button text/state whether it succeeds or fails
             submitBtn.innerText = 'I Agree & Submit'; 
             submitBtn.disabled = false;
         }
+    }
+
+    function closeLicenseModal() { 
+        document.getElementById('licenseModal').style.display = 'none'; 
     }
 
     window.addEventListener('click', function(event) {
@@ -773,6 +861,28 @@
             }
         }
         filterCatalog();
+    }
+
+    function toggleSameName() {
+        const isChecked = document.getElementById('sameNameCheck').checked;
+        const perfName = document.getElementById('performingName');
+        const legalName = document.getElementById('legalName');
+        
+        if (isChecked) {
+            perfName.value = legalName.value;
+            perfName.readOnly = true;
+            perfName.style.opacity = '0.5';
+        } else {
+            perfName.value = '';
+            perfName.readOnly = false;
+            perfName.style.opacity = '1';
+        }
+    }
+
+    function syncPerformingName() {
+        if (document.getElementById('sameNameCheck').checked) {
+            document.getElementById('performingName').value = document.getElementById('legalName').value;
+        }
     }
 
     function setTheme(theme, element) {
