@@ -224,14 +224,12 @@
     .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: #7C1716; background: #000; }
     .modal textarea { resize: vertical; min-height: 80px; }
 
-    /* License Checkboxes */
-    .license-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-    .license-option { display: flex; align-items: flex-start; gap: 10px; background: #222; padding: 12px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: 0.2s; }
-    .license-option:hover { border-color: #555; }
-    .license-option input { margin-top: 3px; accent-color: #7C1716; cursor: pointer; }
-    .license-option div { display: flex; flex-direction: column; }
-    .license-option strong { color: #fff; font-size: 0.95rem; }
-    .license-option span { color: #888; font-size: 0.75rem; line-height: 1.3; }
+    /* License Builder Specifics */
+    .builder-box { background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; }
+    .cart-item { background: #0f0f0f; border: 1px solid #444; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .cart-item-details h4 { margin: 0 0 4px 0; color: #fff; font-size: 0.95rem; }
+    .cart-item-details p { margin: 0; color: #888; font-size: 0.8rem; }
+    .remove-btn { background: transparent; border: none; color: #ff4444; font-size: 1.2rem; cursor: pointer; font-weight: bold; }
 
     /* The Scroll-to-Agree Box */
     .terms-box {
@@ -246,63 +244,29 @@
     
     .btn-primary { background: #7C1716; border: none; color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; flex: 1; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
     .btn-primary:hover { background: #9c1d1b; }
-    
-    /* Disabled State for the Final Submit */
     .btn-primary:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
 
     @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
-    /* =========================================================
-       MOBILE SPOTIFY UI OVERRIDE & COLLAPSIBLE FILTERS
-       ========================================================= */
+    /* Mobile Adjustments for Player */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
         .container { padding-top: 160px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
         
-        /* Filter Drawer Styling */
-        .filter-section { 
-            position: static; height: auto; max-height: none; margin-bottom: 20px; 
-            padding: 0; background: transparent; box-shadow: none;
-        }
-        
-        .filter-handle {
-            display: flex !important; justify-content: center; align-items: center;
-            height: 45px; cursor: pointer; 
-            background: #1e1e1e; color: #fff; font-size: 0.85em; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 2px;
-            border-radius: 8px; border: 1px solid #333; margin-bottom: 10px;
-        }
-        
-        .filter-content {
-            display: none; /* Hidden by default on mobile */
-            background: #1e1e1e; padding: 20px; border-radius: 8px; 
-            border: 1px solid #333; margin-bottom: 20px;
-        }
-        
-        .filter-section.filters-expanded .filter-content {
-            display: block;
-        }
+        .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; padding: 0; background: transparent; box-shadow: none; }
+        .filter-handle { display: flex !important; justify-content: center; align-items: center; height: 45px; cursor: pointer; background: #1e1e1e; color: #fff; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; border-radius: 8px; border: 1px solid #333; margin-bottom: 10px; }
+        .filter-content { display: none; background: #1e1e1e; padding: 20px; border-radius: 8px; border: 1px solid #333; margin-bottom: 20px; }
+        .filter-section.filters-expanded .filter-content { display: block; }
         
         .player-section {
             position: fixed; top: auto !important; bottom: 0 !important; left: 0; width: 100%;
-            background-image: url('marble.jpg'); 
-            background-size: cover; background-position: center;
-            border-top: 1px solid #ddd; z-index: 2000;
-            height: 175px; overflow: hidden; 
-            transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-            gap: 0; 
+            background-image: url('marble.jpg'); background-size: cover; background-position: center;
+            border-top: 1px solid #ddd; z-index: 2000; height: 175px; overflow: hidden; 
+            transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); gap: 0; 
         }
         .player-section.spotify-expanded { height: 95vh; overflow-y: auto; }
-        .spotify-handle {
-            display: flex !important; justify-content: center; align-items: center;
-            height: 35px; cursor: pointer; 
-            background: rgba(255, 255, 255, 0.4); 
-            color: #222222; font-size: 0.75em; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 2px;
-            flex-shrink: 0; border-bottom: 1px solid #ccc;
-        }
+        .spotify-handle { display: flex !important; justify-content: center; align-items: center; height: 35px; cursor: pointer; background: rgba(255, 255, 255, 0.4); color: #222222; font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; flex-shrink: 0; border-bottom: 1px solid #ccc; }
         .spotify-expanded .expanded-only-logo { display: block; max-width: 180px; height: auto; margin: 10px auto 20px auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); animation: fadeIn 0.4s ease-in-out; }
         .master-player { box-shadow: none; border-radius: 0; padding: 15px 20px; background: transparent; color: #222; }
         #now-playing-title { color: #111111; font-weight: bold; }
@@ -315,14 +279,10 @@
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
         .footer-copyright, .footer-contact { text-align: center; padding: 0; }
-        
         .license-icon-btn { margin: 10px auto 10px auto; width: 45px; height: 45px; font-size: 1.4em; }
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -336,15 +296,10 @@
     <div class="main-content">
         
         <div class="filter-section" id="mobileFilterSection">
-            <div class="filter-handle" id="filterHandle" onclick="toggleMobileFilters()">
-                ▼ Show Search & Filters ▼
-            </div>
-            
+            <div class="filter-handle" id="filterHandle" onclick="toggleMobileFilters()">▼ Show Search & Filters ▼</div>
             <div class="filter-content">
                 <div class="filter-group">
-                    <div class="switch-header" style="border-bottom: none;">
-                        <h4>Search</h4>
-                    </div>
+                    <div class="switch-header" style="border-bottom: none;"><h4>Search</h4></div>
                     <input type="text" id="searchBar" placeholder="Song title or writer..." onkeyup="filterCatalog()">
                 </div>
                 <div class="filter-group">
@@ -400,9 +355,7 @@
                     <label for="autoplayCheck">Auto-play next song</label>
                 </div>
                 
-                <button id="licenseBtn" class="license-icon-btn" onclick="openLicenseModal()" title="Inquire about licensing">
-                    ✉️
-                </button>
+                <button id="licenseBtn" class="license-icon-btn" onclick="openLicenseModal()" title="Inquire about licensing">✉️</button>
             </div>
 
             <h4 class="lyrics-heading">Lyrics</h4>
@@ -421,16 +374,17 @@
         </div>
         
         <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="licenseForm" onsubmit="submitLicenseForm(event)">
+            <input type="hidden" name="Package_Details" id="hiddenCartData" required>
             
             <div id="step1" class="form-step active">
                 <label>Your Name *</label>
-                <input type="text" name="name" id="reqName" placeholder="Legal Business or Contact Name" required>
+                <input type="text" name="Name" id="reqName" placeholder="Legal Business or Contact Name" required>
                 
                 <label>Email Address *</label>
-                <input type="email" name="email" id="reqEmail" placeholder="you@domain.com" required>
+                <input type="email" name="Email" id="reqEmail" placeholder="you@domain.com" required>
                 
                 <label>Phone Number</label>
-                <input type="text" name="phone" placeholder="(Optional) Phone or Text">
+                <input type="text" name="Phone" placeholder="(Optional) Phone or Text">
 
                 <div class="modal-actions" style="justify-content: flex-end;">
                     <button type="button" class="btn-primary" onclick="nextStep(1)">Next &rarr;</button>
@@ -438,56 +392,48 @@
             </div>
 
             <div id="step2" class="form-step">
-                <label>What type of license do you need?</label>
-                <div class="license-options">
-                    <label class="license-option">
-                        <input type="checkbox" name="license_type" value="Mechanical" onchange="toggleSmartFields()">
-                        <div><strong>Mechanical License</strong><span>I want to record my own version of a song and sell copies.</span></div>
-                    </label>
-                    <label class="license-option">
-                        <input type="checkbox" name="license_type" value="Master Use" onchange="toggleSmartFields()">
-                        <div><strong>Master Use License</strong><span>I want to lease an existing studio soundtrack for a project.</span></div>
-                    </label>
-                    <label class="license-option">
-                        <input type="checkbox" name="license_type" value="Publishing">
-                        <div><strong>Publishing / Other</strong><span>General publishing, synchronization, or custom requests.</span></div>
-                    </label>
-                </div>
-
-                <label>Which song are you inquiring about?</label>
-                <select name="selected_song" id="songDropdown">
-                    <option value="">-- Select from Catalog --</option>
+                <div class="builder-box">
+                    <label style="color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px;">1. Select Song</label>
+                    <select id="songDropdown">
+                        <option value="">-- Select from Catalog --</option>
                     </select>
-                
-                <div id="smart-fields" style="display: none; background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; animation: fadeIn 0.3s ease-out;">
-                    <p style="margin: 0 0 10px 0; font-size: 0.8rem; color: #7C1716; font-weight: bold; text-transform: uppercase;">License Requirements</p>
+
+                    <label style="color: #fff; margin-top: 15px; border-bottom: 1px solid #444; padding-bottom: 5px;">2. License Type</label>
+                    <select id="typeDropdown" onchange="toggleSmartFields()">
+                        <option value="">-- Select License --</option>
+                        <option value="Mechanical License">Mechanical License (Sell your own copies)</option>
+                        <option value="Master Use License">Master Use License (Use our studio track)</option>
+                        <option value="Publishing/Other">Publishing / Other</option>
+                    </select>
                     
-                    <label>Legal Business Name (or Artist Name)</label>
-                    <input type="text" name="business_name" placeholder="For the contract..." style="margin-bottom: 10px;">
-                    
-                    <label>Mailing Address (City, State, Zip)</label>
-                    <input type="text" name="address" placeholder="For the contract..." style="margin-bottom: 10px;">
-                    
-                    <div id="mechanical-fields" style="display: none;">
-                        <label>Expected Album Name & Number of Copies</label>
-                        <input type="text" name="album_details" placeholder="e.g., 'My Worship Album' - 500 Physical Copies">
+                    <div id="smart-fields" style="display: none; margin-top: 15px;">
+                        <div id="mechanical-fields" style="display: none;">
+                            <label style="color: #7C1716;">Copies Required</label>
+                            <input type="text" id="builderCopies" placeholder="e.g., 100 CDs & 25 USBs">
+                        </div>
+                        <div id="master-fields" style="display: none;">
+                            <label style="color: #7C1716;">Streaming Intent</label>
+                            <select id="builderStreaming">
+                                <option value="Will stream (Spotify, Apple, etc.)">Yes, will upload to streaming</option>
+                                <option value="Physical/Local only">No, physical copies or local sync only</option>
+                            </select>
+                        </div>
+                        <label style="color: #7C1716; margin-top: 5px;">Notes (Optional)</label>
+                        <textarea id="builderNotes" placeholder="Any specific details for this track?" style="min-height: 50px;"></textarea>
                     </div>
-                    
-                    <div id="master-fields" style="display: none;">
-                        <label>Streaming Intent</label>
-                        <select name="streaming_intent">
-                            <option value="Yes">Yes, will be uploaded to streaming (Spotify, Apple)</option>
-                            <option value="No">No, physical copies or local sync only</option>
-                        </select>
-                    </div>
+
+                    <button type="button" class="btn-secondary" onclick="addToCart()" style="width: 100%; border-color: #7C1716; color: #7C1716; margin-top: 10px;">+ ADD TO PACKAGE</button>
                 </div>
 
-                <label>Additional Notes / Project Details</label>
-                <textarea name="project_details" placeholder="Any other details we should know?"></textarea>
+                <label>Your Licensing Package:</label>
+                <div id="cartDisplay" style="background: #000; padding: 10px; border-radius: 8px; border: 1px solid #333; min-height: 60px; max-height: 150px; overflow-y: auto; margin-bottom: 15px;">
+                    <p id="emptyCartText" style="text-align: center; color: #666; margin: 15px 0; font-size: 0.8rem; font-style: italic;">No songs added yet.</p>
+                    <div id="cartItemsList"></div>
+                </div>
 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="prevStep(2)">&larr; Back</button>
-                    <button type="button" class="btn-primary" onclick="nextStep(2)">Next &rarr;</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(2)">Review & Submit &rarr;</button>
                 </div>
             </div>
 
@@ -538,6 +484,9 @@
     let isTempoMulti = false;
     let isThemeMulti = false;
 
+    // Cart Array
+    let licenseCart = [];
+
     document.addEventListener("DOMContentLoaded", () => {
         fetch('songs.json')
             .then(res => res.json())
@@ -557,12 +506,11 @@
             }
         });
 
-        // --- NEW: Scroll-to-Agree Event Listener ---
+        // Scroll-to-Agree Event Listener
         const termsBox = document.getElementById('termsBox');
         const submitBtn = document.getElementById('finalSubmitBtn');
         
         termsBox.addEventListener('scroll', function() {
-            // Using Math.ceil to prevent sub-pixel rounding errors on mobile
             if (Math.ceil(this.scrollTop + this.clientHeight) >= this.scrollHeight - 5) {
                 submitBtn.disabled = false;
                 submitBtn.style.background = '#7C1716';
@@ -572,18 +520,13 @@
         });
     });
 
-    // --- NEW: Mobile Filter Drawer Logic ---
+    // --- MOBILE FILTERS ---
     function toggleMobileFilters() {
         const filterSection = document.getElementById('mobileFilterSection');
         const handle = document.getElementById('filterHandle');
-        
         filterSection.classList.toggle('filters-expanded');
-        
-        if (filterSection.classList.contains('filters-expanded')) {
-            handle.innerText = '▲ Hide Search & Filters ▲';
-        } else {
-            handle.innerText = '▼ Show Search & Filters ▼';
-        }
+        if (filterSection.classList.contains('filters-expanded')) { handle.innerText = '▲ Hide Search & Filters ▲'; } 
+        else { handle.innerText = '▼ Show Search & Filters ▼'; }
     }
 
     // --- MODAL WIZARD LOGIC ---
@@ -591,12 +534,10 @@
         document.getElementById('licenseModal').style.display = 'flex';
         populateSongDropdown();
         
-        // Reset to Step 1
         document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         document.getElementById('step1').classList.add('active');
         document.getElementById('step-indicator').innerText = '1';
         
-        // Reset Scroll & Button
         document.getElementById('termsBox').scrollTop = 0;
         const submitBtn = document.getElementById('finalSubmitBtn');
         submitBtn.disabled = true;
@@ -608,17 +549,19 @@
     function closeLicenseModal() {
         document.getElementById('licenseModal').style.display = 'none';
         document.getElementById('licenseForm').reset();
+        licenseCart = []; // empty the cart when closed
+        updateCartUI();
     }
 
     function nextStep(currentStep) {
-        // Basic validation for Step 1
         if (currentStep === 1) {
             const name = document.getElementById('reqName').value.trim();
             const email = document.getElementById('reqEmail').value.trim();
-            if (!name || !email) {
-                alert("Please enter your name and email to continue.");
-                return;
-            }
+            if (!name || !email) { alert("Please enter your name and email to continue."); return; }
+        }
+        
+        if (currentStep === 2) {
+            if (licenseCart.length === 0) { alert("Please add at least one song configuration to your package."); return; }
         }
         
         document.getElementById(`step${currentStep}`).classList.remove('active');
@@ -632,31 +575,121 @@
         document.getElementById('step-indicator').innerText = currentStep - 1;
     }
 
+    // --- SMART BUILDER & CART LOGIC ---
     function populateSongDropdown() {
         const dropdown = document.getElementById('songDropdown');
         dropdown.innerHTML = '<option value="">-- Select from Catalog --</option>';
-        
-        // Sort all songs alphabetically for the dropdown
         const sortedSongs = [...catalogData].sort((a, b) => a.title.localeCompare(b.title));
-        
         sortedSongs.forEach(song => {
             const option = document.createElement('option');
-            option.value = song.title;
-            option.innerText = song.title;
+            option.value = song.title; option.innerText = song.title;
             dropdown.appendChild(option);
         });
 
-        // If a song is actively playing, auto-select it!
         if (currentSongIndex !== -1 && currentPlaylist[currentSongIndex]) {
             dropdown.value = currentPlaylist[currentSongIndex].title;
         }
+    }
+
+    function toggleSmartFields() {
+        const licenseType = document.getElementById('typeDropdown').value;
+        const smartWrapper = document.getElementById('smart-fields');
+        const mechFields = document.getElementById('mechanical-fields');
+        const masterFields = document.getElementById('master-fields');
+
+        if (licenseType === 'Mechanical License' || licenseType === 'Master Use License') {
+            smartWrapper.style.display = 'block';
+        } else {
+            smartWrapper.style.display = 'none';
+        }
+
+        mechFields.style.display = (licenseType === 'Mechanical License') ? 'block' : 'none';
+        masterFields.style.display = (licenseType === 'Master Use License') ? 'block' : 'none';
+    }
+
+    function addToCart() {
+        const song = document.getElementById('songDropdown').value;
+        const type = document.getElementById('typeDropdown').value;
+        const notes = document.getElementById('builderNotes').value.trim();
+        
+        if (!song || !type) { alert("You must select a Song and a License Type."); return; }
+
+        let configDetails = "";
+        if (type === 'Mechanical License') {
+            const copies = document.getElementById('builderCopies').value.trim();
+            if (!copies) { alert("Please enter the copies required for a Mechanical License."); return; }
+            configDetails = `[Copies: ${copies}]`;
+        } else if (type === 'Master Use License') {
+            const streaming = document.getElementById('builderStreaming').value;
+            configDetails = `[Streaming: ${streaming}]`;
+        }
+
+        const cartItem = {
+            song: song,
+            type: type,
+            details: configDetails,
+            notes: notes
+        };
+
+        licenseCart.push(cartItem);
+        
+        // Reset the builder fields
+        document.getElementById('songDropdown').value = '';
+        document.getElementById('typeDropdown').value = '';
+        document.getElementById('builderCopies').value = '';
+        document.getElementById('builderNotes').value = '';
+        toggleSmartFields();
+
+        updateCartUI();
+    }
+
+    function removeFromCart(index) {
+        licenseCart.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const cartList = document.getElementById('cartItemsList');
+        const emptyText = document.getElementById('emptyCartText');
+        const hiddenData = document.getElementById('hiddenCartData');
+        
+        cartList.innerHTML = '';
+        
+        if (licenseCart.length === 0) {
+            emptyText.style.display = 'block';
+            hiddenData.value = '';
+            return;
+        }
+        
+        emptyText.style.display = 'none';
+        let stringifiedData = "LICENSING PACKAGE DETAILS:\n\n";
+
+        licenseCart.forEach((item, index) => {
+            // Build UI
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div class="cart-item-details">
+                    <h4>${item.song}</h4>
+                    <p>${item.type} ${item.details}</p>
+                    ${item.notes ? `<p style="color:#555; font-style:italic;">"${item.notes}"</p>` : ''}
+                </div>
+                <button type="button" class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+            `;
+            cartList.appendChild(div);
+
+            // Build Formspree String
+            stringifiedData += `${index + 1}. ${item.song} - ${item.type} ${item.details}\n`;
+            if (item.notes) stringifiedData += `   Notes: ${item.notes}\n`;
+        });
+
+        hiddenData.value = stringifiedData;
     }
 
     async function submitLicenseForm(event) {
         event.preventDefault(); 
         const form = event.target;
         
-        // Change button text to show processing
         const submitBtn = document.getElementById('finalSubmitBtn');
         submitBtn.innerText = 'Transmitting...';
         submitBtn.disabled = true;
@@ -671,55 +704,27 @@
             
             if (response.ok) {
                 closeLicenseModal(); 
-                alert("Success! Your licensing request has been transmitted to 221st Street Publishing.");
+                alert("Success! Your itemized licensing request has been transmitted to 221st Street Publishing.");
             } else {
                 alert("Oops! There was a problem submitting your inquiry.");
-                submitBtn.innerText = 'Submit Request';
-                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Request'; submitBtn.disabled = false;
             }
         } catch (error) {
             alert("Oops! There was a network error.");
-            submitBtn.innerText = 'Submit Request';
-            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit Request'; submitBtn.disabled = false;
         }
     }
 
-    // Modal background click to close
     window.addEventListener('click', function(event) {
         const modal = document.getElementById('licenseModal');
-        if (event.target === modal) {
-            closeLicenseModal();
-        }
+        if (event.target === modal) { closeLicenseModal(); }
     });
-
-    // --- SMART FORM LOGIC ---
-    function toggleSmartFields() {
-        const isMechanical = document.querySelector('input[value="Mechanical"]').checked;
-        const isMaster = document.querySelector('input[value="Master Use"]').checked;
-        
-        const smartWrapper = document.getElementById('smart-fields');
-        const mechFields = document.getElementById('mechanical-fields');
-        const masterFields = document.getElementById('master-fields');
-
-        // Show the wrapper if either specific license is checked
-        if (isMechanical || isMaster) {
-            smartWrapper.style.display = 'block';
-        } else {
-            smartWrapper.style.display = 'none';
-        }
-
-        // Toggle the specific questions
-        mechFields.style.display = isMechanical ? 'block' : 'none';
-        masterFields.style.display = isMaster ? 'block' : 'none';
-    }
 
     // --- EXISTING CATALOG LOGIC ---
     function renderDynamicFilters() {
         const themeContainer = document.getElementById('themeContainer');
         const tempoContainer = document.getElementById('tempoContainer');
-        
-        const allThemes = new Set();
-        const allTempos = new Set();
+        const allThemes = new Set(); const allTempos = new Set();
 
         catalogData.forEach(song => {
             if (song.tags) song.tags.forEach(t => allThemes.add(t));
@@ -728,20 +733,14 @@
 
         tempoContainer.innerHTML = `<button class="tag-btn active" onclick="setTempo('All', this)">All</button>`;
         Array.from(allTempos).sort().forEach(tempo => {
-            const btn = document.createElement('button');
-            btn.className = 'tag-btn';
-            btn.innerText = tempo;
-            btn.onclick = (e) => setTempo(tempo, e.target);
-            tempoContainer.appendChild(btn);
+            const btn = document.createElement('button'); btn.className = 'tag-btn'; btn.innerText = tempo;
+            btn.onclick = (e) => setTempo(tempo, e.target); tempoContainer.appendChild(btn);
         });
 
         themeContainer.innerHTML = `<button class="tag-btn active" onclick="setTheme('All', this)">All</button>`;
         Array.from(allThemes).sort().forEach(theme => {
-            const btn = document.createElement('button');
-            btn.className = 'tag-btn';
-            btn.innerText = theme;
-            btn.onclick = (e) => setTheme(theme, e.target);
-            themeContainer.appendChild(btn);
+            const btn = document.createElement('button'); btn.className = 'tag-btn'; btn.innerText = theme;
+            btn.onclick = (e) => setTheme(theme, e.target); themeContainer.appendChild(btn);
         });
     }
 
@@ -749,9 +748,7 @@
         isTempoMulti = document.getElementById('tempoMultiToggle').checked;
         if (!isTempoMulti) {
             document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-            const allBtn = document.querySelector('#tempoContainer .tag-btn');
-            if(allBtn) allBtn.classList.add('active');
-            filterCatalog();
+            const allBtn = document.querySelector('#tempoContainer .tag-btn'); if(allBtn) allBtn.classList.add('active'); filterCatalog();
         }
     }
 
@@ -759,51 +756,31 @@
         isThemeMulti = document.getElementById('themeMultiToggle').checked;
         if (!isThemeMulti) {
             document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-            const allBtn = document.querySelector('#themeContainer .tag-btn');
-            if(allBtn) allBtn.classList.add('active');
-            filterCatalog();
+            const allBtn = document.querySelector('#themeContainer .tag-btn'); if(allBtn) allBtn.classList.add('active'); filterCatalog();
         }
     }
 
     function setTempo(tempo, element) {
-        const isAll = (tempo === 'All');
-        const allBtn = document.querySelector('#tempoContainer .tag-btn');
-
-        if (!isTempoMulti) {
-            document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-        } else {
-            if (isAll) {
-                document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-                element.classList.add('active');
-            } else {
-                if (allBtn) allBtn.classList.remove('active');
-                element.classList.toggle('active');
-                if (document.querySelectorAll('#tempoContainer .tag-btn.active').length === 0) {
-                    if (allBtn) allBtn.classList.add('active');
-                }
+        const isAll = (tempo === 'All'); const allBtn = document.querySelector('#tempoContainer .tag-btn');
+        if (!isTempoMulti) { document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active')); element.classList.add('active'); } 
+        else {
+            if (isAll) { document.querySelectorAll('#tempoContainer .tag-btn').forEach(btn => btn.classList.remove('active')); element.classList.add('active'); } 
+            else {
+                if (allBtn) allBtn.classList.remove('active'); element.classList.toggle('active');
+                if (document.querySelectorAll('#tempoContainer .tag-btn.active').length === 0) { if (allBtn) allBtn.classList.add('active'); }
             }
         }
         filterCatalog();
     }
 
     function setTheme(theme, element) {
-        const isAll = (theme === 'All');
-        const allBtn = document.querySelector('#themeContainer .tag-btn');
-
-        if (!isThemeMulti) {
-            document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-        } else {
-            if (isAll) {
-                document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active'));
-                element.classList.add('active');
-            } else {
-                if (allBtn) allBtn.classList.remove('active');
-                element.classList.toggle('active');
-                if (document.querySelectorAll('#themeContainer .tag-btn.active').length === 0) {
-                    if (allBtn) allBtn.classList.add('active');
-                }
+        const isAll = (theme === 'All'); const allBtn = document.querySelector('#themeContainer .tag-btn');
+        if (!isThemeMulti) { document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active')); element.classList.add('active'); } 
+        else {
+            if (isAll) { document.querySelectorAll('#themeContainer .tag-btn').forEach(btn => btn.classList.remove('active')); element.classList.add('active'); } 
+            else {
+                if (allBtn) allBtn.classList.remove('active'); element.classList.toggle('active');
+                if (document.querySelectorAll('#themeContainer .tag-btn.active').length === 0) { if (allBtn) allBtn.classList.add('active'); }
             }
         }
         filterCatalog();
@@ -812,33 +789,18 @@
     function filterCatalog() {
         const searchText = document.getElementById('searchBar').value.toLowerCase();
         const selectedGenre = document.getElementById('genreFilter').value;
-        
         const activeTempoElements = document.querySelectorAll('#tempoContainer .tag-btn.active');
         const activeTempos = Array.from(activeTempoElements).map(el => el.innerText);
-        
         const activeThemeElements = document.querySelectorAll('#themeContainer .tag-btn.active');
         const activeThemes = Array.from(activeThemeElements).map(el => el.innerText);
 
         const filtered = catalogData.filter(song => {
-            const matchesText = song.title.toLowerCase().includes(searchText) || 
-                                song.writers.some(w => w.toLowerCase().includes(searchText));
-            
+            const matchesText = song.title.toLowerCase().includes(searchText) || song.writers.some(w => w.toLowerCase().includes(searchText));
             const matchesGenre = (selectedGenre === "All") ? true : (song.genre === selectedGenre);
-            
             let matchesTempo = false;
-            if (activeTempos.includes('All')) {
-                matchesTempo = true;
-            } else {
-                matchesTempo = activeTempos.includes(song.tempo);
-            }
-
+            if (activeTempos.includes('All')) { matchesTempo = true; } else { matchesTempo = activeTempos.includes(song.tempo); }
             let matchesTheme = false;
-            if (activeThemes.includes('All')) {
-                matchesTheme = true;
-            } else {
-                matchesTheme = activeThemes.some(t => song.tags && song.tags.includes(t));
-            }
-            
+            if (activeThemes.includes('All')) { matchesTheme = true; } else { matchesTheme = activeThemes.some(t => song.tags && song.tags.includes(t)); }
             return matchesText && matchesGenre && matchesTempo && matchesTheme;
         });
         
@@ -863,8 +825,7 @@
             li.innerHTML = `
                 <div class="song-info">
                     <h3>${song.title}</h3>
-                    <p>Written by: ${writers}<br>
-                    Genre: ${song.genre}  |  Tempo: ${song.tempo || 'N/A'}</p>
+                    <p>Written by: ${writers}<br>Genre: ${song.genre}  |  Tempo: ${song.tempo || 'N/A'}</p>
                 </div>
                 <div class="play-indicator">▶</div>
             `;
@@ -879,39 +840,27 @@
         document.getElementById('now-playing-writer').innerText = "Writer(s): " + song.writers.join(', ');
         
         const lyricsEl = document.getElementById('lyrics-pane');
-        lyricsEl.innerText = song.lyrics || "Lyrics coming soon!";
-        lyricsEl.scrollTop = 0; 
+        lyricsEl.innerText = song.lyrics || "Lyrics coming soon!"; lyricsEl.scrollTop = 0; 
 
         currentSongIndex = currentPlaylist.findIndex(s => s.file === song.file);
         
-        // Show the License button now that a song is playing
         document.getElementById('licenseBtn').style.display = 'flex';
-        
         displaySongs(currentPlaylist); 
 
         if (window.innerWidth <= 1000) {
             const player = document.querySelector('.player-section');
-            if (!player.classList.contains('spotify-expanded')) {
-                toggleSpotifyPlayer();
-            }
+            if (!player.classList.contains('spotify-expanded')) { toggleSpotifyPlayer(); }
         }
 
-        audio.load();
-        audio.play();
+        audio.load(); audio.play();
     }
 
     function toggleSpotifyPlayer() {
         const player = document.querySelector('.player-section');
         const handle = document.getElementById('spotifyHandle');
-        
         player.classList.toggle('spotify-expanded');
-        
-        if (player.classList.contains('spotify-expanded')) {
-            handle.innerText = '▼ Tap to Collapse ▼';
-        } else {
-            handle.innerText = '▲ Now Playing & Lyrics ▲';
-            document.querySelector('.player-section').scrollTop = 0; 
-        }
+        if (player.classList.contains('spotify-expanded')) { handle.innerText = '▼ Tap to Collapse ▼'; } 
+        else { handle.innerText = '▲ Now Playing & Lyrics ▲'; document.querySelector('.player-section').scrollTop = 0; }
     }
 
     document.addEventListener('contextmenu', event => event.preventDefault());
