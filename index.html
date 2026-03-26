@@ -289,7 +289,7 @@
 
 <div class="brand-header">
     <a href="https://221street.com/" class="home-link">&lt; Home</a>
-    <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2>221st Street Music</h2>');">
+    <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none';">
 </div>
 
 <div class="container">
@@ -393,7 +393,7 @@
                 </div>
 
                 <div class="modal-actions" style="justify-content: flex-end;">
-                    <button type="button" class="btn-primary" onclick="nextStep(1)">Next &rarr;</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(1)">Save & Continue &rarr;</button>
                 </div>
             </div>
 
@@ -438,7 +438,7 @@
 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="prevStep(2)">&larr; Back</button>
-                    <button type="button" class="btn-primary" id="step2NextBtn" onclick="nextStep(2)">Review & Submit &rarr;</button>
+                    <button type="button" class="btn-primary" id="step2NextBtn" onclick="nextStep(2)">Save & Continue &rarr;</button>
                 </div>
             </div>
 
@@ -472,7 +472,7 @@
                 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" onclick="prevStep(3)">&larr; Back</button>
-                    <button type="button" class="btn-primary" onclick="nextStep(3)">Next &rarr;</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(3)">Save & Continue &rarr;</button>
                 </div>
             </div>
 
@@ -568,6 +568,51 @@
         else { handle.innerText = '▼ Show Search & Filters ▼'; }
     }
 
+    // --- SAVE & LOAD FORM DATA ---
+    function saveFormData() {
+        const formData = {
+            reqName: document.getElementById('reqName').value,
+            reqEmail: document.getElementById('reqEmail').value,
+            reqPhone: document.getElementById('reqPhone').value,
+            contactCall: document.querySelector('input[name="Contact_Preference"][value="Call"]').checked,
+            contactText: document.querySelector('input[name="Contact_Preference"][value="Text"]').checked,
+            legalName: document.getElementById('legalName').value,
+            sameNameCheck: document.getElementById('sameNameCheck').checked,
+            performingName: document.getElementById('performingName').value,
+            legalAddress: document.getElementById('legalAddress').value,
+            legalCity: document.getElementById('legalCity').value,
+            legalSigner: document.getElementById('legalSigner').value,
+            legalTitle: document.getElementById('legalTitle').value
+        };
+        localStorage.setItem('savedLicenseForm', JSON.stringify(formData));
+    }
+
+    function loadFormData() {
+        const savedData = localStorage.getItem('savedLicenseForm');
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            document.getElementById('reqName').value = formData.reqName || '';
+            document.getElementById('reqEmail').value = formData.reqEmail || '';
+            document.getElementById('reqPhone').value = formData.reqPhone || '';
+            
+            const callCheck = document.querySelector('input[name="Contact_Preference"][value="Call"]');
+            if(callCheck) callCheck.checked = formData.contactCall || false;
+            
+            const textCheck = document.querySelector('input[name="Contact_Preference"][value="Text"]');
+            if(textCheck) textCheck.checked = formData.contactText || false;
+            
+            document.getElementById('legalName').value = formData.legalName || '';
+            document.getElementById('sameNameCheck').checked = formData.sameNameCheck || false;
+            document.getElementById('performingName').value = formData.performingName || '';
+            document.getElementById('legalAddress').value = formData.legalAddress || '';
+            document.getElementById('legalCity').value = formData.legalCity || '';
+            document.getElementById('legalSigner').value = formData.legalSigner || '';
+            document.getElementById('legalTitle').value = formData.legalTitle || '';
+            
+            toggleSameName(); // visually update the greyed out box if needed
+        }
+    }
+
     // --- DYNAMIC STEP LOGIC ---
     function requiresLegalInfo() {
         return licenseCart.some(item => item.type === 'Mechanical License' || item.type === 'Master Use License');
@@ -577,16 +622,17 @@
         document.getElementById('licenseModal').style.display = 'flex';
         populateSongSuggestions(); 
         
-        // LOAD SAVED CART FROM BROWSER MEMORY
+        // LOAD SAVED CART & FORM FIELDS FROM BROWSER MEMORY
         if (localStorage.getItem('savedLicenseCart')) {
             licenseCart = JSON.parse(localStorage.getItem('savedLicenseCart'));
             updateCartUI();
         }
+        loadFormData();
         
         document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         document.getElementById('step1').classList.add('active');
         document.getElementById('step-indicator').innerText = '1';
-        document.getElementById('total-steps').innerText = '4'; // Reset total steps
+        document.getElementById('total-steps').innerText = '4'; 
         
         document.getElementById('termsBox').scrollTop = 0;
         const submitBtn = document.getElementById('finalSubmitBtn');
@@ -608,11 +654,11 @@
             if (licenseCart.length === 0) { alert("Please add at least one song configuration to your package."); return; }
             
             if (!requiresLegalInfo()) {
-                // Skip Legal Info step
                 document.getElementById('step2').classList.remove('active');
                 document.getElementById('step4').classList.add('active');
                 document.getElementById('step-indicator').innerText = '3';
                 document.getElementById('total-steps').innerText = '3';
+                saveFormData(); // Save when jumping straight to end
                 return;
             } else {
                 document.getElementById('total-steps').innerText = '4';
@@ -633,6 +679,8 @@
         document.getElementById(`step${currentStep}`).classList.remove('active');
         document.getElementById(`step${currentStep + 1}`).classList.add('active');
         document.getElementById('step-indicator').innerText = currentStep + 1;
+        
+        saveFormData(); // Save all fields to cache when they hit next!
     }
 
     function prevStep(currentStep) {
@@ -687,12 +735,10 @@
 
         hiddenData.value = stringifiedData;
 
-        // Dynamically change the "Next" button text based on the cart contents!
         if (step2NextBtn) {
-            step2NextBtn.innerHTML = requiresLegalInfo() ? 'Legal Info &rarr;' : 'Review & Submit &rarr;';
+            step2NextBtn.innerHTML = requiresLegalInfo() ? 'Save & Continue &rarr;' : 'Save & Continue &rarr;';
         }
         
-        // SAVE TO BROWSER MEMORY
         localStorage.setItem('savedLicenseCart', JSON.stringify(licenseCart));
     }
 
@@ -708,7 +754,6 @@
             datalist.appendChild(option);
         });
 
-        // If a song is actively playing, auto-fill the input box!
         if (currentSongIndex !== -1 && currentPlaylist[currentSongIndex]) {
             songInput.value = currentPlaylist[currentSongIndex].title;
         } else {
@@ -752,7 +797,6 @@
         const cartItem = { song: song, type: type, details: configDetails, notes: notes };
         licenseCart.push(cartItem);
         
-        // Reset the builder fields
         document.getElementById('songInput').value = ''; 
         document.getElementById('typeDropdown').value = '';
         document.getElementById('builderCopies').value = '';
@@ -785,7 +829,8 @@
             if (response.ok) {
                 form.reset();
                 licenseCart = [];
-                localStorage.removeItem('savedLicenseCart'); // WIPE MEMORY ON SUCCESS
+                localStorage.removeItem('savedLicenseCart'); 
+                localStorage.removeItem('savedLicenseForm'); // WIPE EVERYTHING ON SUCCESS
                 updateCartUI();
                 
                 closeLicenseModal(); 
