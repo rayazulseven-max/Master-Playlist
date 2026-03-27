@@ -5,85 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
-    /* 1. Base Styles & Scrolling Body */
-    body { 
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-        background-color: #121212; 
-        color: #ffffff; 
-        margin: 0; 
-        padding: 0 20px 0px 20px; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center;
-        user-select: none;
-    }
-
-    /* 2. Dark Header (Fixed) */
-    .brand-header {
-        position: fixed; top: 0; left: 0; width: 100%;
-        background-color: rgba(18, 18, 18, 0.98);
-        z-index: 1200; padding: 15px 0; text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0 20px 0px 20px; display: flex; flex-direction: column; align-items: center; user-select: none; }
+    .brand-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(18, 18, 18, 0.98); z-index: 1200; padding: 15px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
     
-    /* Header Button Grouping & Layout */
-    .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); }
+    .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
     .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
     
-    /* Universal Header Button Style */
-    .header-btn {
-        background: #1a1a1a; color: #ddd; border: 1px solid #444; 
-        padding: 8px 16px; border-radius: 6px; font-weight: bold; 
-        cursor: pointer; transition: 0.2s; font-size: 0.85em; 
-        text-transform: uppercase; letter-spacing: 1px;
-        text-decoration: none; outline: none; 
-        display: inline-flex; align-items: center; justify-content: center;
-    }
+    .header-btn { background: #1a1a1a; color: #ddd; border: 1px solid #444; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; outline: none; display: inline-flex; align-items: center; justify-content: center; }
     .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
     .header-btn:active { transform: scale(0.95); }
 
-    /* The Red Highlight Button */
-    .highlight-btn {
-        background: #7C1716; color: white; border: 1px solid #9c1d1b;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
+    .highlight-btn { background: #7C1716; color: white; border: 1px solid #9c1d1b; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .highlight-btn:hover { background: #9c1d1b; }
     
-    /* Mobile Adjustments for Header Buttons - Stacked Vertically! */
     @media (max-width: 900px) {
-        .header-left { left: 10px; }
-        .header-right { 
-            right: 10px; 
-            flex-direction: column; /* This stacks them descending */
-            align-items: flex-end; 
-            gap: 6px; 
-        }
+        .header-left { left: 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
+        .header-right { right: 10px; flex-direction: column; align-items: flex-end; gap: 6px; }
         .header-btn { padding: 5px 10px; font-size: 0.65em; letter-spacing: 0; }
         .brand-logo { max-width: 130px; }
     }
 
-    
-    /* 3. 3-Column Desktop Grid */
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
-    .main-content { 
-        display: grid; 
-        grid-template-columns: 280px 1fr 420px; 
-        gap: 30px; 
-        align-items: start; 
-    }
+    .main-content { display: grid; grid-template-columns: 280px 1fr 420px; gap: 30px; align-items: start; }
 
-    /* Column 1: Filters (Sticky) */
-    .filter-section {
-        position: sticky; top: 140px;
-        max-height: calc(100vh - 320px); 
-        overflow-y: auto; 
-        background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-    }
+    .filter-section { position: sticky; top: 140px; max-height: calc(100vh - 320px); overflow-y: auto; background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); box-sizing: border-box; transition: all 0.3s ease; }
     .filter-group { margin-bottom: 20px; }
-    
     .switch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
     .switch-header h4 { margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; }
     .switch-container { display: flex; align-items: center; gap: 8px; }
@@ -95,70 +42,33 @@
     input:checked + .slider { background-color: #7C1716; }
     input:checked + .slider:before { transform: translateX(16px); }
     
-    input[type="text"], select { 
-        width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 6px; 
-        background-image: url('marble.jpg'); 
-        background-size: cover; background-position: center;
-        color: #222222; outline: none; box-sizing: border-box; margin-bottom: 10px;
-    }
+    input[type="text"], input[type="email"], input[type="number"], select, textarea { width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 6px; background-image: url('marble.jpg'); background-size: cover; background-position: center; color: #222222; outline: none; box-sizing: border-box; margin-bottom: 10px; font-family: inherit; }
     input[type="text"] { user-select: text; }
 
     .tag-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-   .tag-btn { 
-        background-image: url('marble.jpg'); 
-        background-size: cover; background-position: center;
-        color: #333; border: 1px solid #ddd; border-radius: 15px; 
-        padding: 6px 12px; font-size: 0.8em; cursor: pointer; transition: all 0.2s; 
-    }
+   .tag-btn { background-image: url('marble.jpg'); background-size: cover; background-position: center; color: #333; border: 1px solid #ddd; border-radius: 15px; padding: 6px 12px; font-size: 0.8em; cursor: pointer; transition: all 0.2s; }
     .tag-btn.active { background: #7C1716; color: white; border-color: #7C1716; font-weight: bold; }
 
-    /* Column 2: Song List */
     .list-section { min-width: 0; padding-bottom: 150px;} 
     .result-count { font-size: 0.85em; color: #aaaaaa; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }    
-
     .song-list { list-style: none; padding: 0; margin: 0; }
-    .song-item { 
-        background-image: url('marble.jpg'); 
-        background-size: cover; background-position: center;
-        color: #333; padding: 18px; margin-bottom: 10px; border-radius: 8px; 
-        display: flex; justify-content: space-between; align-items: center; 
-        cursor: pointer; transition: transform 0.1s, box-shadow 0.2s, background 0.2s; border-left: 4px solid transparent; 
-    }
+    .song-item { background-image: url('marble.jpg'); background-size: cover; background-position: center; color: #333; padding: 18px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s, background 0.2s; border-left: 4px solid transparent; }
     .song-item:hover { background: #222; transform: translateY(-2px); border-left-color: #7C1716; }
     .song-item:active { transform: scale(0.98); }
-    
-    .song-item.active-playing { 
-        background: #ffffff !important; 
-        border-left: 10px solid #7C1716 !important; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
-    }
+    .song-item.active-playing { background: #ffffff !important; border-left: 10px solid #7C1716 !important; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
     .song-item.active-playing .song-info h3 { color: #000000 !important; }
     .song-item.active-playing .song-info p { color: #333333 !important; }
-    
     .song-info { flex: 1; padding-right: 15px; }
     .song-info h3 { margin: 0; font-size: 1.1em; color: #111111; font-weight: bold; transition: color 0.2s; }
     .song-info p { margin: 5px 0 0 0; font-size: 0.85em; color: #444444; font-weight: 500; transition: color 0.2s; }
-    
     .song-item:hover .song-info h3 { color: #ffffff; }
     .song-item:hover .song-info p { color: #cccccc; }
-
     .play-indicator { font-weight: bold; color: #7C1716; font-size: 1.2em; }
 
-    /* Column 3: Player & Lyrics */
-    .player-section {
-        position: sticky; top: 140px; 
-        height: calc(100vh - 250px); 
-        display: flex; flex-direction: column; gap: 15px;
-        transition: all 0.3s ease;
-    }
-    
+    .player-section { position: sticky; top: 140px; height: calc(100vh - 250px); display: flex; flex-direction: column; gap: 15px; transition: all 0.3s ease; }
     .spotify-handle, .filter-handle { display: none; } 
     .expanded-only-logo { display: none; } 
-
-    .master-player { 
-        background: #1e1e1e; color: white; padding: 20px; text-align: center; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; flex-shrink: 0;
-    }
+    .master-player { background: #1e1e1e; color: white; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-radius: 8px; flex-shrink: 0; }
     #now-playing-title { margin: 0 0 5px 0; font-size: 1.1em; }
     #now-playing-writer { margin: 0 0 15px 0; font-size: 0.85em; color: #aaa; }
     audio { width: 100%; outline: none; height: 40px; }
@@ -167,118 +77,59 @@
     .autoplay-toggle input[type="checkbox"] { cursor: pointer; accent-color: #7C1716; width: 16px; height: 16px; margin: 0; }
     .autoplay-toggle label { cursor: pointer; }
 
-    .lyrics-heading {
-        margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; 
-        letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px;
-    }
+    .lyrics-heading { margin: 0; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    .lyrics-pane { background-image: url('marble.jpg'); background-size: cover; background-position: center; color: #222222; padding: 20px; border-radius: 8px; white-space: pre-wrap; flex: 1; overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow-x: hidden; overflow-wrap: break-word; }
+    .lyrics-pane::before { content: "©221st STREET MUSIC"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 1.8rem; font-weight: bold; color: rgba(0, 0, 0, 0.04); pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px; }
+    
+    /* REVERTED DISCLAIMER TO READABLE SIZE */
+    .disclaimer { font-size: 0.85rem; color: #888; text-align: justify; line-height: 1.5; margin: 0; flex-shrink: 0; }
 
-    .lyrics-pane {
-        background-image: url('marble.jpg'); 
-        background-size: cover; background-position: center;
-        color: #222222; padding: 20px; border-radius: 8px; 
-        white-space: pre-wrap; flex: 1; 
-        overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        overflow-x: hidden;
-        overflow-wrap: break-word; 
-    }
-    .lyrics-pane::before {
-        content: "©221st STREET MUSIC";
-        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
-        font-size: 1.8rem; font-weight: bold; 
-        color: rgba(0, 0, 0, 0.04); 
-        pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px;
-    }
-    .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; flex-shrink: 0; }
-
-    /* The Circular Icon Button */
-    .license-icon-btn {
-        background: #7C1716;
-        border: 1px solid #9c1d1b;
-        color: #ffffff;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: none; 
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 1.2em;
-        outline: none;
-        margin: 15px auto 0 auto;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
+    .license-icon-btn { background: #7C1716; border: 1px solid #9c1d1b; color: #ffffff; border-radius: 50%; width: 40px; height: 40px; display: none; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1.2em; outline: none; margin: 15px auto 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
     .license-icon-btn:hover { transform: scale(1.08); background: #9c1d1b; }
     .license-icon-btn:active { transform: scale(0.95); }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #666; }
 
-    /* Footer */
-    .app-footer {
-        position: fixed; bottom: 0; left: 0; width: 100%; 
-        background: linear-gradient(to bottom, #450F0C, #7C1716); 
-        color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); 
-        border-top: 3px solid #ffffff; 
-        box-sizing: border-box; font-size: 0.85em;
-        z-index: 1300; 
-    }
+    .app-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(to bottom, #450F0C, #7C1716); color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); border-top: 3px solid #ffffff; box-sizing: border-box; font-size: 0.85em; z-index: 1300; }
     .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
     .footer-logo { height: 120px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -53px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
     .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
     .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
     .footer-contact a { color: #ffcccc; text-decoration: none; }
 
-    /* =========================================================
-       NEW: INTERACTIVE MULTI-STEP MODAL
-       ========================================================= */
     .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(8px); }
     .modal-content { background: #1a1a1a; padding: 35px 30px; border: 1px solid #333; border-radius: 16px; width: 90%; max-width: 450px; position: relative; display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-height: 85vh; overflow-y: auto; }
     .close-btn { position: absolute; top: 15px; right: 20px; color: #888; font-size: 1.8em; cursor: pointer; background: transparent; border: none; outline: none; transition: 0.2s; }
     .close-btn:hover { color: white; }
-    
     .modal-header-text { text-align: center; margin-bottom: 25px; }
     .modal-header-text h2 { margin: 0; color: #fff; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
     .modal-header-text p { margin: 5px 0 0 0; color: #888; font-size: 0.85rem; }
 
-    /* Form Steps */
     .form-step { display: none; animation: slideIn 0.3s ease-out; }
     .form-step.active { display: block; }
-    
     .modal label { display: block; color: #ccc; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-    .modal input[type="text"], .modal input[type="email"], .modal select, .modal textarea { 
-        width: 100%; padding: 12px; font-size: 1rem; background: #0f0f0f; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; margin-bottom: 15px; font-family: inherit; transition: 0.2s; background-image: none;
-    }
+    .modal input[type="text"], .modal input[type="email"], .modal input[type="number"], .modal select, .modal textarea { width: 100%; padding: 12px; font-size: 1rem; background: #0f0f0f; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; margin-bottom: 15px; font-family: inherit; transition: 0.2s; background-image: none; }
     .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: #7C1716; background: #000; }
     .modal textarea { resize: vertical; min-height: 80px; }
 
-    /* License Builder Specifics */
     .builder-box { background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; }
     .cart-item { background: #0f0f0f; border: 1px solid #444; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .cart-item-details h4 { margin: 0 0 4px 0; color: #fff; font-size: 0.95rem; }
     .cart-item-details p { margin: 0; color: #888; font-size: 0.8rem; }
     .remove-btn { background: transparent; border: none; color: #ff4444; font-size: 1.2rem; cursor: pointer; font-weight: bold; }
 
-    /* The Scroll-to-Agree Box */
-    .terms-box {
-        background: #0f0f0f; border: 1px solid #444; border-radius: 8px; padding: 15px; height: 180px; overflow-y: auto; color: #aaa; font-size: 0.8rem; line-height: 1.6; margin-bottom: 20px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);
-    }
+    .terms-box { background: #0f0f0f; border: 1px solid #444; border-radius: 8px; padding: 15px; height: 180px; overflow-y: auto; color: #aaa; font-size: 0.8rem; line-height: 1.6; margin-bottom: 20px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5); }
     .terms-box h4 { color: #fff; margin-top: 0; margin-bottom: 10px; font-size: 0.9rem; }
-
-    /* Action Buttons */
     .modal-actions { display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }
     .btn-secondary { background: transparent; border: 1px solid #555; color: #ccc; padding: 12px; border-radius: 8px; cursor: pointer; flex: 1; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
     .btn-secondary:hover { background: #222; color: #fff; }
-    
     .btn-primary { background: #7C1716; border: none; color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; flex: 1; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
     .btn-primary:hover { background: #9c1d1b; }
     .btn-primary:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
 
-    /* FAQ Accordion Specifics */
     .faq-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px; }
     .faq-item { background: #0f0f0f; border: 1px solid #333; border-radius: 8px; transition: all 0.2s ease; }
     .faq-item[open] { border-color: #7C1716; background: #151515; }
@@ -290,23 +141,15 @@
 
     @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
-    /* Mobile Adjustments for Player */
     @media (max-width: 1000px) {
         body { padding-bottom: 180px; } 
         .container { padding-top: 170px; padding-bottom: 20px; }
         .main-content { grid-template-columns: 1fr; }
-        
         .filter-section { position: static; height: auto; max-height: none; margin-bottom: 20px; padding: 0; background: transparent; box-shadow: none; }
         .filter-handle { display: flex !important; justify-content: center; align-items: center; height: 45px; cursor: pointer; background: #1e1e1e; color: #fff; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; border-radius: 8px; border: 1px solid #333; margin-bottom: 10px; }
         .filter-content { display: none; background: #1e1e1e; padding: 20px; border-radius: 8px; border: 1px solid #333; margin-bottom: 20px; }
         .filter-section.filters-expanded .filter-content { display: block; }
-        
-        .player-section {
-            position: fixed; top: auto !important; bottom: 0 !important; left: 0; width: 100%;
-            background-image: url('marble.jpg'); background-size: cover; background-position: center;
-            border-top: 1px solid #ddd; z-index: 2000; height: 175px; overflow: hidden; 
-            transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); gap: 0; 
-        }
+        .player-section { position: fixed; top: auto !important; bottom: 0 !important; left: 0; width: 100%; background-image: url('marble.jpg'); background-size: cover; background-position: center; border-top: 1px solid #ddd; z-index: 2000; height: 175px; overflow: hidden; transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); gap: 0; }
         .player-section.spotify-expanded { height: 95vh; overflow-y: auto; }
         .spotify-handle { display: flex !important; justify-content: center; align-items: center; height: 35px; cursor: pointer; background: rgba(255, 255, 255, 0.4); color: #222222; font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; flex-shrink: 0; border-bottom: 1px solid #ccc; }
         .spotify-expanded .expanded-only-logo { display: block; max-width: 180px; height: auto; margin: 10px auto 20px auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); animation: fadeIn 0.4s ease-in-out; }
@@ -331,15 +174,15 @@
 
 <div class="brand-header">
     <div class="header-left">
-        <a href="https://221street.com/" class="header-btn">Home</a>
+        <a href="index.html" class="header-btn">Home</a>
+        <a href="contact.html" class="header-btn">Contact Us</a>
     </div>
     
     <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2>221st Street Music</h2>');">
     
     <div class="header-right">
         <button class="header-btn" onclick="openFaqModal()">FAQ</button>
-        <button class="header-btn" onclick="openPitchModal()">Submit Music</button>
-        <button class="header-btn highlight-btn" onclick="openLicenseModal()">License Request</button>
+        <button class="header-btn highlight-btn" onclick="openLicenseModal()">Request License</button>
     </div>
 </div>
 
@@ -411,7 +254,7 @@
 
             <h4 class="lyrics-heading">Lyrics</h4>
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
-            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law.</p>
+            <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
         </div>
     </div>
 </div> 
@@ -420,19 +263,20 @@
     <div class="modal-content">
         <button class="close-btn" onclick="closeLicenseModal()">&times;</button>
         <div class="modal-header-text">
-            <h2>License Request</h2>
+            <h2>Request License</h2>
             <p>Step <span id="step-indicator">1</span> of <span id="total-steps">4</span></p>
         </div>
         
         <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="licenseForm" onsubmit="submitLicenseForm(event)">
             <input type="hidden" name="Package_Details" id="hiddenCartData" required>
+            <input type="hidden" name="_subject" value="NEW LICENSE REQUEST (Catalog)">
             
             <div id="step1" class="form-step active">
                 <label>Contact Name *</label>
                 <input type="text" name="Contact_Name" id="reqName" placeholder="Who should we contact?" required>
                 
                 <label>Email Address *</label>
-                <input type="email" name="Email" id="reqEmail" placeholder="you@domain.com" required>
+                <input type="email" name="_replyto" id="reqEmail" placeholder="you@domain.com" required>
                 
                 <label>Phone Number *</label>
                 <input type="text" name="Phone" id="reqPhone" placeholder="Required for contact" required>
@@ -450,9 +294,8 @@
 
             <div id="step2" class="form-step">
                 <div class="builder-box">
-                    <label style="color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px;">1. Type or Select Song</label>
-                    <input type="text" id="songInput" list="songSuggestions" placeholder="Type a song or pick from list..." autocomplete="off">
-                    <datalist id="songSuggestions"></datalist>
+                    <label style="color: #fff; border-bottom: 1px solid #444; padding-bottom: 5px;">1. Type Song Name</label>
+                    <input type="text" id="songInput" placeholder="What song are you requesting?">
                     
                     <label style="color: #fff; margin-top: 15px; border-bottom: 1px solid #444; padding-bottom: 5px;">2. License Type</label>
                     <select id="typeDropdown" onchange="toggleSmartFields()">
@@ -545,7 +388,6 @@
                     <button type="submit" class="btn-primary" id="finalSubmitBtn" disabled>I Agree & Submit</button>
                 </div>
             </div>
-            
         </form>
     </div>
 </div>
@@ -577,42 +419,6 @@
     </div>
 </div>
 
-<div id="pitchModal" class="modal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closePitchModal()">&times;</button>
-        <div class="modal-header-text">
-            <h2>Pitch Your Music</h2>
-            <p>Interested in having 221st Street publish your catalog?</p>
-        </div>
-        
-        <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="pitchForm" onsubmit="submitPitchForm(event)">
-            <input type="hidden" name="_subject" value="NEW ARTIST PITCH: Catalog Submission!">
-            <input type="hidden" name="Form_Type" value="Artist Publishing Pitch">
-            
-            <div style="display: flex; flex-direction: column;">
-                <label>Your Name *</label>
-                <input type="text" name="name" required placeholder="First and Last Name">
-                
-                <label>Artist / Band Name</label>
-                <input type="text" name="Artist_Name" placeholder="Who is performing?">
-                
-                <label>Email Address *</label>
-                <input type="email" name="_replyto" required placeholder="you@domain.com">
-                
-                <label>Link to Your Music *</label>
-                <input type="text" name="Music_Link" required placeholder="Spotify, YouTube, Google Drive, etc.">
-                
-                <label>Tell Us About Your Music</label>
-                <textarea name="message" placeholder="A brief introduction, genre, what you're looking for..." required></textarea>
-                
-                <div class="modal-actions" style="margin-top: 20px;">
-                    <button type="submit" class="btn-primary" id="pitchSubmitBtn">Submit Pitch</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-    
 <footer class="app-footer">
     <div class="footer-content">
         <div class="footer-copyright">
@@ -698,8 +504,6 @@
     
     function openFaqModal() { document.getElementById('faqModal').style.display = 'flex'; }
     function closeFaqModal() { document.getElementById('faqModal').style.display = 'none'; }
-    function openPitchModal() { document.getElementById('pitchModal').style.display = 'flex'; }
-    function closePitchModal() { document.getElementById('pitchModal').style.display = 'none'; }
     function closeLicenseModal() { document.getElementById('licenseModal').style.display = 'none'; }
 
     function loadFormData() {
@@ -734,7 +538,14 @@
 
     function openLicenseModal() {
         document.getElementById('licenseModal').style.display = 'flex';
-        populateSongSuggestions(); 
+        
+        // Auto-fill currently playing song into the plain text box
+        const songInput = document.getElementById('songInput');
+        if (currentSongIndex !== -1 && currentPlaylist[currentSongIndex]) {
+            songInput.value = currentPlaylist[currentSongIndex].title;
+        } else {
+            songInput.value = '';
+        }
         
         if (localStorage.getItem('savedLicenseCart')) {
             licenseCart = JSON.parse(localStorage.getItem('savedLicenseCart'));
@@ -855,25 +666,6 @@
         localStorage.setItem('savedLicenseCart', JSON.stringify(licenseCart));
     }
 
-    function populateSongSuggestions() {
-        const datalist = document.getElementById('songSuggestions');
-        const songInput = document.getElementById('songInput');
-        datalist.innerHTML = '';
-        
-        const sortedSongs = [...catalogData].sort((a, b) => a.title.localeCompare(b.title));
-        sortedSongs.forEach(song => {
-            const option = document.createElement('option');
-            option.value = song.title;
-            datalist.appendChild(option);
-        });
-
-        if (currentSongIndex !== -1 && currentPlaylist[currentSongIndex]) {
-            songInput.value = currentPlaylist[currentSongIndex].title;
-        } else {
-            songInput.value = '';
-        }
-    }
-
     function toggleSmartFields() {
         const licenseType = document.getElementById('typeDropdown').value;
         const smartWrapper = document.getElementById('smart-fields');
@@ -958,44 +750,11 @@
         }
     }
 
-    async function submitPitchForm(event) {
-        event.preventDefault(); 
-        const form = event.target;
-        const submitBtn = document.getElementById('pitchSubmitBtn');
-        
-        submitBtn.innerText = 'Transmitting...';
-        submitBtn.disabled = true;
-
-        try {
-            const response = await fetch("https://formspree.io/f/xvzwbvwv", {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
-            
-            if (response.ok) {
-                form.reset();
-                closePitchModal(); 
-                alert("Success! Your music pitch has been submitted to 221st Street Publishing.");
-            } else {
-                alert("Oops! There was a problem submitting your pitch.");
-            }
-        } catch (error) {
-            alert("Oops! There was a network error.");
-        } finally {
-            submitBtn.innerText = 'Submit Pitch'; 
-            submitBtn.disabled = false;
-        }
-    }
-
     window.addEventListener('click', function(event) {
         const licModal = document.getElementById('licenseModal');
         const faqModal = document.getElementById('faqModal');
-        const pitchModal = document.getElementById('pitchModal');
-        
         if (event.target === licModal) { closeLicenseModal(); }
         if (faqModal && event.target === faqModal) { closeFaqModal(); }
-        if (event.target === pitchModal) { closePitchModal(); }
     });
 
     // --- EXISTING CATALOG LOGIC ---
