@@ -81,8 +81,8 @@
     .lyrics-pane { background-image: url('marble.jpg'); background-size: cover; background-position: center; color: #222222; padding: 20px; border-radius: 8px; white-space: pre-wrap; flex: 1; overflow-y: auto; font-size: 0.95em; line-height: 1.6; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow-x: hidden; overflow-wrap: break-word; }
     .lyrics-pane::before { content: "©221st STREET MUSIC"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 1.8rem; font-weight: bold; color: rgba(0, 0, 0, 0.04); pointer-events: none; white-space: nowrap; z-index: 1; letter-spacing: 4px; }
     
-    /* REVERTED DISCLAIMER TO READABLE SIZE */
-    .disclaimer { font-size: 0.85rem; color: #888; text-align: justify; line-height: 1.5; margin: 0; flex-shrink: 0; }
+    /* REVERTED DISCLAIMER TO COMPACT SIZE */
+    .disclaimer { font-size: 0.7em; color: #666; text-align: justify; line-height: 1.4; margin: 0; flex-shrink: 0; }
 
     .license-icon-btn { background: #7C1716; border: 1px solid #9c1d1b; color: #ffffff; border-radius: 50%; width: 40px; height: 40px; display: none; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1.2em; outline: none; margin: 15px auto 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
     .license-icon-btn:hover { transform: scale(1.08); background: #9c1d1b; }
@@ -181,8 +181,8 @@
     <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2>221st Street Music</h2>');">
     
     <div class="header-right">
-        <button class="header-btn" onclick="openFaqModal()">FAQ</button>
         <button class="header-btn highlight-btn" onclick="openLicenseModal()">Request License</button>
+        <button class="header-btn" onclick="openFaqModal()">FAQ</button>
     </div>
 </div>
 
@@ -254,6 +254,7 @@
 
             <h4 class="lyrics-heading">Lyrics</h4>
             <div id="lyrics-pane" class="lyrics-pane">Select a song to view lyrics...</div>
+            
             <p class="disclaimer">All compositions are the intellectual property of their creator(s) and are protected by international copyright law. No part of these composition(s) may be used in any form or for any purpose without first obtaining proper licensing and/or by getting expressed written permission from the copyright owner(s).</p>
         </div>
     </div>
