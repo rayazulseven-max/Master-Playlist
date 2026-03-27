@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Archive | 221st Street Music</title>
+    <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+    .brand-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(18, 18, 18, 0.98); z-index: 1200; padding: 15px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
+    
+    .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
+    .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
+    
+    .header-btn { background: #1a1a1a; color: #ddd; border: 1px solid #444; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; outline: none; display: inline-flex; align-items: center; justify-content: center; }
+    .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
+    .header-btn:active { transform: scale(0.95); }
+    .highlight-btn { background: #7C1716; color: white; border: 1px solid #9c1d1b; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .highlight-btn:hover { background: #9c1d1b; }
+    
+    @media (max-width: 900px) {
+        .header-left { left: 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
+        .header-right { right: 10px; flex-direction: column; align-items: flex-end; gap: 6px; }
+        .header-btn { padding: 5px 10px; font-size: 0.65em; letter-spacing: 0; }
+        .brand-logo { max-width: 130px; }
+    }
 
+    .content-wrapper { max-width: 1000px; width: 100%; margin: 140px auto 100px auto; padding: 0 20px; box-sizing: border-box; flex: 1; }
+    .page-title { font-size: 2.5rem; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+
+    /* PAGE WIDE BANDS */
+    .archive-band { display: flex; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 25px; margin-bottom: 15px; cursor: pointer; transition: 0.2s; align-items: center; gap: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .archive-band:hover { background: #222; border-color: #7C1716; transform: translateX(5px); }
+    
+    .archive-date { color: #7C1716; font-weight: bold; width: 100px; flex-shrink: 0; font-size: 0.9em; text-transform: uppercase; }
+    .archive-content { flex: 1; }
+    .archive-content h3 { margin: 0 0 5px 0; color: #ddd; font-size: 1.2rem; }
+    .archive-content p { margin: 0; color: #aaa; font-size: 0.9em; line-height: 1.5; }
+    .archive-arrow { color: #555; font-size: 1.5em; font-weight: bold; }
+
+    /* ARTICLE MODAL */
+    .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+    .modal-content { background-image: url('marble.jpg'); background-size: cover; background-position: center; padding: 40px; border: 1px solid #333; border-radius: 12px; width: 90%; max-width: 700px; position: relative; display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.8); max-height: 85vh; overflow-y: auto; color: #222; }
+    .close-btn { position: absolute; top: 15px; right: 20px; color: #555; font-size: 2em; cursor: pointer; background: transparent; border: none; outline: none; transition: 0.2s; }
+    .close-btn:hover { color: #000; }
+    
+    #articleDate { color: #7C1716; font-weight: bold; text-transform: uppercase; font-size: 0.85em; margin-bottom: 5px;}
+    #articleTitle { margin: 0 0 20px 0; font-size: 2rem; border-bottom: 2px solid #7C1716; padding-bottom: 10px; }
+    #articleBody { font-size: 1.05rem; line-height: 1.8; color: #333; }
+
+    .app-footer { background: linear-gradient(to bottom, #450F0C, #7C1716); color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); border-top: 3px solid #ffffff; box-sizing: border-box; font-size: 0.85em; margin-top: auto; position: relative; }
+    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
+    .footer-logo { height: 120px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -53px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
+    .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
+    .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
+
+    @media (max-width: 800px) {
+        .archive-band { flex-direction: column; align-items: flex-start; gap: 5px; padding: 20px; }
+        .archive-arrow { display: none; }
+        .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
+        .footer-content { flex-direction: column; text-align: center; gap: 10px; }
+        .footer-copyright, .footer-contact { text-align: center; padding: 0; }
+    }
+    </style>
+</head>
+<body>
+
+<div class="brand-header">
+    <div class="header-left">
+        <a href="index.html" class="header-btn">Home</a>
+        <a href="catalog.html" class="header-btn">&lt; Catalog</a>
+    </div>
+    
+    <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2>221st Street Music</h2>');">
+    
+    <div class="header-right">
+        <a href="contact.html" class="header-btn">Contact Us</a>
+        <a href="catalog.html" class="header-btn highlight-btn">Request License</a>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <h1 class="page-title">News Archive</h1>
+    
+    <div class="archive-band" onclick="openArticle('Mar 2026', 'Welcome to the New 221st Street', 'We are thrilled to announce the launch of our brand new, fully integrated digital licensing platform. Songwriters and artists can now browse our entire catalog, read lyrics, and build comprehensive licensing packages right from their browser.<br><br>Thank you to all our partners who made this possible!')">
+        <div class="archive-date">Mar 2026</div>
+        <div class="archive-content">
+            <h3>Welcome to the New 221st Street</h3>
+            <p>We are thrilled to announce the launch of our brand new, fully integrated digital licensing platform...</p>
+        </div>
+        <div class="archive-arrow">&rarr;</div>
+    </div>
+
+    <div class="archive-band" onclick="openArticle('Feb 2026', 'Folenuis Music Partnership', 'We are excited to get to work with David & Lisa Folenius again. It is truly an honor to get to help with many of the different aspects of this dynamic new ministry.<br><br>Take a moment and visit their website, and make plans to catch them at one of their upcoming concerts!')">
+        <div class="archive-date">Feb 2026</div>
+        <div class="archive-content">
+            <h3>Folenuis Music Partnership</h3>
+            <p>We are excited to get to work with David & Lisa Folenius again. It is truly an honor to get to help...</p>
+        </div>
+        <div class="archive-arrow">&rarr;</div>
+    </div>
+    
+    <div class="archive-band" onclick="openArticle('Jan 2026', 'Susan Hart - Welcome, Just Worship', 'What a privilege to work with this precious person! Susan is an anointed psalmist, songwriter, singer, and pianist/musician. We were honored to be heavily involved in all aspects of creating this project, including the instrumentation, producing, and graphics.<br><br>Be sure to check out her music, and stay tuned for the release of her sophomore project coming later this year.')">
+        <div class="archive-date">Jan 2026</div>
+        <div class="archive-content">
+            <h3>Susan Hart - Welcome, Just Worship</h3>
+            <p>What a privilege to work with this precious person! Susan is an anointed psalmist, songwriter, singer...</p>
+        </div>
+        <div class="archive-arrow">&rarr;</div>
+    </div>
+</div>
+
+<div id="articleModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeArticle()">&times;</button>
+        <div id="articleDate">Date</div>
+        <h2 id="articleTitle">Title</h2>
+        <div id="articleBody">Content goes here...</div>
+    </div>
+</div>
+
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">©2026 - 221st Street Music LLC.<br>All rights reserved.</div>
+        <a href="https://221street.com/" style="display: contents;">
+            <img src="logo.png" alt="221st Street Publishing" class="footer-logo" onerror="this.style.display='none';">
+        </a>
+        <div class="footer-contact"><strong>Contact us:</strong><br>918.607.3046<br><a href="mailto:info@221street.com">info@221street.com</a></div>
+    </div>
+</footer>
+
+<script>
+    function openArticle(date, title, bodyHTML) {
+        document.getElementById('articleDate').innerText = date;
+        document.getElementById('articleTitle').innerText = title;
+        document.getElementById('articleBody').innerHTML = bodyHTML;
+        document.getElementById('articleModal').style.display = 'flex';
+    }
+
+    function closeArticle() {
+        document.getElementById('articleModal').style.display = 'none';
+    }
+
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('articleModal');
+        if (event.target === modal) { closeArticle(); }
+    });
+</script>
+</body>
+</html>
