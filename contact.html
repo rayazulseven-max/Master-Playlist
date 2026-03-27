@@ -160,8 +160,14 @@
             </p>
         </div>
 
-        <div class="map-panel">
-            <img src="oklahoma-map.png" alt="Map of Oklahoma" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h3 style=\'color:#555;\'>Map Loading...</h3>');">
+        <div class="map-panel" style="position: relative; border: 2px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 15px 40px rgba(0,0,0,0.6);">
+            
+            <img src="hq-map.png" alt="221st Street Headquarters" style="width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) brightness(0.9);">
+            
+            <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(18,18,18,0.85); padding: 10px 15px; border-left: 3px solid #7C1716; border-radius: 4px; backdrop-filter: blur(5px);">
+                <p style="margin: 0; color: #fff; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">Sapulpa Headquarters</p>
+                <p style="margin: 3px 0 0 0; color: #aaa; font-size: 0.65rem; letter-spacing: 2px;">Tulsa Metro Area</p>
+            </div>
         </div>
     </div>
 </div>
