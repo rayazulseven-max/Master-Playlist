@@ -48,8 +48,17 @@
         .header-left { display: none; } 
         .mobile-menu-btn { display: block; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
         .desktop-only { display: none !important; } 
-        .brand-logo { max-width: 140px; margin-left: 20px; } 
-        .header-btn { font-size: 0.7em; padding: 8px 12px; } 
+        .brand-logo { max-width: 130px; margin: 0; } /* Keeps it perfectly centered */
+        .header-right { right: 10px; }
+        .header-btn { font-size: 0.65em; padding: 6px 10px; white-space: nowrap; } 
+    }
+
+    /* NEW: Extra safeguard for narrow phone screens */
+    @media (max-width: 400px) {
+        .brand-logo { max-width: 105px; } /* Shrinks logo slightly */
+        .header-btn { font-size: 0.55em; padding: 5px 8px; } /* Shrinks button slightly */
+        .mobile-menu-btn { left: 10px; font-size: 24px; }
+        .header-right { right: 5px; }
     }
 
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
