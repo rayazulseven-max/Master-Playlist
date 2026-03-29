@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>221st Street Music | Searchable Catalog</title>
     <style>
+    /* =======================================================
+    UNIVERSAL SLEEK SCROLLBARS (Applied to ALL pages)
+    ======================================================= */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1e1e1e; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #7C1716; }
+    
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0 20px 0px 20px; display: flex; flex-direction: column; align-items: center; user-select: none; }
     .brand-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(18, 18, 18, 0.98); z-index: 1200; padding: 15px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
@@ -20,7 +28,7 @@
         text-transform: uppercase; letter-spacing: 1px;
         text-decoration: none; outline: none; 
         display: inline-flex; align-items: center; justify-content: center;
-        font-family: inherit; /* <--- THIS FIXES THE FONT GLITCH! */
+        font-family: inherit;
     }
     .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
     .header-btn:active { transform: scale(0.95); }
@@ -28,11 +36,20 @@
     .highlight-btn { background: #7C1716; color: white; border: 1px solid #9c1d1b; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .highlight-btn:hover { background: #9c1d1b; }
     
+    /* --- MOBILE MENU & HEADER RESPONSIVENESS --- */
+    .mobile-menu-btn { display: none; background: transparent; color: #fff; border: none; font-size: 28px; cursor: pointer; padding: 0; outline: none; }
+    .mobile-dropdown { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(18, 18, 18, 0.98); border-top: 1px solid #333; flex-direction: column; align-items: center; padding: 15px 0; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1100; }
+    .mobile-dropdown.active { display: flex; animation: slideDown 0.2s ease-out; }
+    .mobile-dropdown .header-btn { width: 85%; }
+    
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
     @media (max-width: 900px) {
-        .header-left { left: 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
-        .header-right { right: 10px; flex-direction: column; align-items: flex-end; gap: 6px; }
-        .header-btn { padding: 5px 10px; font-size: 0.65em; letter-spacing: 0; }
-        .brand-logo { max-width: 130px; }
+        .header-left { display: none; } 
+        .mobile-menu-btn { display: block; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
+        .desktop-only { display: none !important; } 
+        .brand-logo { max-width: 140px; margin-left: 20px; } 
+        .header-btn { font-size: 0.7em; padding: 8px 12px; } 
     }
 
     .container { max-width: 1400px; width: 100%; padding-top: 140px; }
@@ -96,11 +113,6 @@
     .license-icon-btn { background: #7C1716; border: 1px solid #9c1d1b; color: #ffffff; border-radius: 50%; width: 40px; height: 40px; display: none; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1.2em; outline: none; margin: 15px auto 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
     .license-icon-btn:hover { transform: scale(1.08); background: #9c1d1b; }
     .license-icon-btn:active { transform: scale(0.95); }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #666; }
 
     .app-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(to bottom, #450F0C, #7C1716); color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); border-top: 3px solid #ffffff; box-sizing: border-box; font-size: 0.85em; z-index: 1300; }
     .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
@@ -182,6 +194,8 @@
 <body>
 
 <div class="brand-header">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
     <div class="header-left">
         <a href="index.html" class="header-btn">Home</a>
         <a href="#" class="header-btn" style="opacity: 0.5; cursor: default;">Catalog</a>
@@ -191,8 +205,15 @@
     
     <div class="header-right">
         <button class="header-btn highlight-btn" onclick="openLicenseModal()">Request License</button>
-        <button class="header-btn" onclick="openFaqModal()">FAQ</button>
+        <button class="header-btn desktop-only" onclick="openFaqModal()">FAQ</button>
+        <a href="contact.html" class="header-btn desktop-only">Contact Us</a>
+    </div>
+
+    <div class="mobile-dropdown" id="mobileMenu">
+        <a href="index.html" class="header-btn">Home</a>
+        <a href="#" class="header-btn" style="opacity: 0.5; cursor: default;">Catalog</a>
         <a href="contact.html" class="header-btn">Contact Us</a>
+        <button class="header-btn" onclick="openFaqModal(); toggleMobileMenu();">FAQ</button>
     </div>
 </div>
 
@@ -550,6 +571,11 @@
             }
         });
     });
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('active');
+    }
 
     function toggleMobileFilters() {
         const filterSection = document.getElementById('mobileFilterSection');
@@ -1000,4 +1026,4 @@
     document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 </body>
-</html> 
+</html>
