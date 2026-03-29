@@ -45,7 +45,10 @@
     .mobile-menu-btn { display: none; background: transparent; color: #fff; border: none; font-size: 28px; cursor: pointer; padding: 0; outline: none; }
     .mobile-dropdown { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(18, 18, 18, 0.98); border-top: 1px solid #333; flex-direction: column; align-items: center; padding: 15px 0; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1100; }
     .mobile-dropdown.active { display: flex; animation: slideDown 0.2s ease-out; }
-    .mobile-dropdown .header-btn { width: 85%; }
+    .mobile-dropdown .header-btn { 
+        width: 85%; 
+        padding: 12px; /* Taller, uniform padding for mobile tapping */
+    }
     
     @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
