@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | 221st Street Music</title>
     <style>
+    /* =======================================================
+    UNIVERSAL SLEEK SCROLLBARS (Applied to ALL pages)
+    ======================================================= */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1e1e1e; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #7C1716; }   
+    
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
     .brand-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(18, 18, 18, 0.98); z-index: 1200; padding: 15px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
     .brand-logo { max-width: 250px; height: auto; display: inline-block; }
@@ -12,7 +20,6 @@
     .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
     .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
     
-    /* Universal Header Button Style */
     .header-btn {
         background: #1a1a1a; color: #ddd; border: 1px solid #444; 
         padding: 8px 16px; border-radius: 6px; font-weight: bold; 
@@ -20,7 +27,7 @@
         text-transform: uppercase; letter-spacing: 1px;
         text-decoration: none; outline: none; 
         display: inline-flex; align-items: center; justify-content: center;
-        font-family: inherit; /* <--- THIS FIXES THE FONT GLITCH! */
+        font-family: inherit;
     }
     .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
     .header-btn:active { transform: scale(0.95); }
@@ -28,11 +35,20 @@
     .highlight-btn { background: #7C1716; color: white; border: 1px solid #9c1d1b; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .highlight-btn:hover { background: #9c1d1b; }
     
+    /* --- MOBILE MENU & HEADER RESPONSIVENESS --- */
+    .mobile-menu-btn { display: none; background: transparent; color: #fff; border: none; font-size: 28px; cursor: pointer; padding: 0; outline: none; }
+    .mobile-dropdown { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(18, 18, 18, 0.98); border-top: 1px solid #333; flex-direction: column; align-items: center; padding: 15px 0; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1100; }
+    .mobile-dropdown.active { display: flex; animation: slideDown 0.2s ease-out; }
+    .mobile-dropdown .header-btn { width: 85%; }
+    
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
     @media (max-width: 900px) {
-        .header-left { left: 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
-        .header-right { right: 10px; flex-direction: column; align-items: flex-end; gap: 6px; }
-        .header-btn { padding: 5px 10px; font-size: 0.65em; letter-spacing: 0; }
-        .brand-logo { max-width: 130px; }
+        .header-left { display: none; } 
+        .mobile-menu-btn { display: block; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
+        .desktop-only { display: none !important; } 
+        .brand-logo { max-width: 140px; margin-left: 20px; } 
+        .header-btn { font-size: 0.7em; padding: 8px 12px; } 
     }
 
     .contact-wrapper { margin: 140px auto 100px auto; max-width: 1200px; width: 95%; flex: 1; }
@@ -50,7 +66,6 @@
     .info-section a { color: #111; text-decoration: none; font-weight: bold; transition: color 0.2s; }
     .info-section a:hover { color: #7C1716; text-decoration: underline; }
 
-    /* Map Panel changed to Generic Image Container */
     .map-panel { background: #1e1e1e; border-radius: 12px; overflow: hidden; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; min-height: 400px;}
     .map-panel img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
 
@@ -92,11 +107,14 @@
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
         .footer-copyright, .footer-contact { text-align: center; padding: 0; }
     }
+        
     </style>
 </head>
 <body>
 
 <div class="brand-header">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    
     <div class="header-left">
         <a href="index.html" class="header-btn">Home</a>
         <a href="catalog.html" class="header-btn">Catalog</a>
@@ -106,8 +124,15 @@
     
     <div class="header-right">
         <a href="catalog.html" class="header-btn highlight-btn">Request License</a>
-        <button class="header-btn" onclick="openFaqModal()">FAQ</button>
-        <button class="header-btn" onclick="openPitchModal()">Submit Music</button>
+        <button class="header-btn desktop-only" onclick="openFaqModal()">FAQ</button>
+        <button class="header-btn desktop-only" onclick="openPitchModal()">Submit Music</button>
+    </div>
+
+    <div class="mobile-dropdown" id="mobileMenu">
+        <a href="index.html" class="header-btn">Home</a>
+        <a href="catalog.html" class="header-btn">Catalog</a>
+        <button class="header-btn" onclick="openPitchModal(); toggleMobileMenu();">Submit Music</button>
+        <button class="header-btn" onclick="openFaqModal(); toggleMobileMenu();">FAQ</button>
     </div>
 </div>
 
@@ -162,7 +187,7 @@
 
         <div class="map-panel" style="position: relative; border: 2px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 15px 40px rgba(0,0,0,0.6);">
             
-            <img src="hq-map.png" alt="221st Street Headquarters" style="width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) brightness(0.9);">
+            <img src="hq-map.jpg" alt="221st Street Headquarters" style="width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) brightness(0.9);">
             
             <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(18,18,18,0.85); padding: 10px 15px; border-left: 3px solid #7C1716; border-radius: 4px; backdrop-filter: blur(5px);">
                 <p style="margin: 0; color: #fff; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">Sapulpa Headquarters</p>
@@ -324,7 +349,7 @@
 <footer class="app-footer">
     <div class="footer-content">
         <div class="footer-copyright">
-            ©2026 - 221st Street Music LLC.<br>
+            &copy;2026 - 221st Street Music LLC.<br>
             All rights reserved.
         </div>
         <a href="https://221street.com/" style="display: contents;">
@@ -339,6 +364,11 @@
 </footer>
 
 <script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('active');
+    }
+
     function openFaqModal() { document.getElementById('faqModal').style.display = 'flex'; }
     function closeFaqModal() { document.getElementById('faqModal').style.display = 'none'; }
     function openPitchModal() { document.getElementById('pitchModal').style.display = 'flex'; }
@@ -383,4 +413,4 @@
     });
 </script>
 </body>
-</html> 
+</html>
