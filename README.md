@@ -1,66 +1,34 @@
-# 🎵 221st Street Music: Catalog Manager’s Guide
+# 🎵 221st Street Publishing - Enterprise Licensing Ecosystem
 
 Welcome to your music catalog! This site is designed to be high-performance, mobile-friendly, and easy to update without needing to write complex code.
 
 ---
 
-## 📂 What’s in this Folder?
+## 🖼 Project Overview
 
-| File/Folder | What it does |
-| :--- | :--- |
-| index.html | The Engine. The actual website code. You usually won't need to touch this. |
-| songs.json | The Database. This is where you add song titles, writers, and lyrics. |
-| audio/ | The Vault. This folder is where you upload your .mp3 files. |
-| logo.png | The Brand. Your optimized logo used in the header and footer. |
+​A high-fidelity, full-stack web application designed for a premier independent music publishing company. This project modernized a legacy web presence into a unified, multi-page platform for catalog management, legal licensing, and artist acquisition. The system serves as a central intelligence hub, replacing manual inquiries with an automated, user-friendly digital infrastructure.
+---
+
+## 💿 Key Features & Architecture
+* ​Dynamic Catalog Engine: Powered by a custom JSON-driven data architecture, allowing for instantaneous filtering and searching. Users can filter hundreds of tracks by genre, tempo, theme, and title without reloading the page.
+* ​Interactive Audio Player: A sticky, persistent audio player that maintains state across the catalog page, featuring auto-play logic and synchronized lyric displays for each selected track.
+* ​Multi-Step Licensing System: A sophisticated "cart" and form-routing system. Users can select tracks, define their required license type (Mechanical or Master Use), input dynamic quantities, and generate an itemized payload.
+* ​Automated Lead Capture: Form logic securely transmits complex licensing arrays and legal entity data via Formspree API directly to the publishing coordinator.
+* ​Responsive Mobile-First UX: Engineered with a custom responsive framework. Features include a slide-down mobile hamburger menu, dynamic viewport scaling to prevent UI collisions, and custom-styled webkit scrollbars.
+* ​Universal Modal System: Implements a global, state-retaining modal architecture for standardizing Frequently Asked Questions, Artist Pitches, and Licensing Requests across all pages without disrupting user workflow.
 
 ---
 
-## 🏠 Navigation Features
-
-We have added two ways for users to get back to your main site (221street.com):
-
-1. **The "< Home" Link:** Located at the top left of the header.
-2. **Clickable Logos:** Both the top header logo and the bottom footer logo now act as direct links back to your homepage.
-
----
-
-## 🛠 How to Add a New Song
-
-Updating the site is a simple 3-step process. 
-
-### Step 1: Upload the Audio
-* Drop your song file (e.g., `Sleigh_Ride.mp3`) into the **audio** folder.
-* **Crucial:** Make sure the filename has no spaces and ends in `.mp3`.
-
-### Step 2: Update the JSON Database
-Open `songs.json` in a text editor. To add a new song, copy a previous "block" of code and change the details.
-
-**The Comma Rule:** Every song block needs a comma after the `}` except for the **very last song** in the list.
-
-**The File Name:** The `file` entry must match your MP3 filename in the audio folder *exactly*.
-
-### Step 3: Save and Sync
-1. Save your changes to `songs.json`.
-2. Open **GitHub Desktop**.
-3. Type a summary (e.g., "Added New Hit") in the bottom left.
-4. Click **Commit to main** then **Push origin**.
+## 💾 Technology Stack
+* ​Frontend: HTML5, CSS3 (Custom variables, responsive media queries, keyframe animations)
+* ​Backend/Logic: Vanilla JavaScript (ES6+), asynchronous fetch API operations
+* ​Data Structure: JSON (Proprietary catalog array)
+​API Integrations: Formspree (Form handling and transmission)
 
 ---
 
-## ⚠️ Troubleshooting "The Oopsies"
-
-* **"The site is totally blank!"** Check for a missing comma or quote in `songs.json`.
-
-* **"The song won't play!"** Make sure the `file` name in JSON matches the `.mp3` file exactly.
-
-* **"The lyrics are all on one line!"** Use `\n` where you want a new line to start (e.g., `Verse 1:\nThis is line two`).
-
----
-
-## 🔒 Built-in Protection
-* **Right-Click Disabled:** Prevents easy "Save As" on your assets.
-* **Watermarking:** A "PROPRIETARY" watermark is automatically placed over all lyrics.
-* **Legal Footer:** International copyright notices are locked at the bottom.
+## ​📈 Business Impact & Transformation
+​This deployment professionalized the "221st Street Publishing" brand to an industry-competitive standard. By automating the lead capture process, implementing sequential audio playback, and providing instant access to licensing criteria, the platform dramatically reduces friction for prospective clients and enables infinitely scalable catalog expansion.
 
 ---
 
