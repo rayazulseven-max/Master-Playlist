@@ -4,7 +4,7 @@ Welcome to your music catalog! This site is designed to be high-performance, mob
 
 ---
 
-## 🖼 Project Overview
+# 🖼 Project Overview
 
 ​A high-fidelity, full-stack web application designed for a premier independent music publishing company. This project modernized a legacy web presence into a unified, multi-page platform for catalog management, legal licensing, and artist acquisition. The system serves as a central intelligence hub, replacing manual inquiries with an automated, user-friendly digital infrastructure.
 ---
