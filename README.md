@@ -11,20 +11,20 @@ Welcome to your music catalog! This site is designed to be high-performance, mob
 ---
 
 ## 💿 Key Features & Architecture
-* ​Dynamic Catalog Engine: Powered by a custom JSON-driven data architecture, allowing for instantaneous filtering and searching. Users can filter hundreds of tracks by genre, tempo, theme, and title without reloading the page.
-* ​Interactive Audio Player: A sticky, persistent audio player that maintains state across the catalog page, featuring auto-play logic and synchronized lyric displays for each selected track.
-* ​Multi-Step Licensing System: A sophisticated "cart" and form-routing system. Users can select tracks, define their required license type (Mechanical or Master Use), input dynamic quantities, and generate an itemized payload.
+* ​**Dynamic Catalog Engine:** Powered by a custom JSON-driven data architecture, allowing for instantaneous filtering and searching. Users can filter hundreds of tracks by genre, tempo, theme, and title without reloading the page.
+* ​**Interactive Audio Player:** A sticky, persistent audio player that maintains state across the catalog page, featuring auto-play logic and synchronized lyric displays for each selected track.
+* ​**Multi-Step Licensing System:** A sophisticated "cart" and form-routing system. Users can select tracks, define their required license type (Mechanical or Master Use), input dynamic quantities, and generate an itemized payload.
 * ​Automated Lead Capture: Form logic securely transmits complex licensing arrays and legal entity data via Formspree API directly to the publishing coordinator.
-* ​Responsive Mobile-First UX: Engineered with a custom responsive framework. Features include a slide-down mobile hamburger menu, dynamic viewport scaling to prevent UI collisions, and custom-styled webkit scrollbars.
-* ​Universal Modal System: Implements a global, state-retaining modal architecture for standardizing Frequently Asked Questions, Artist Pitches, and Licensing Requests across all pages without disrupting user workflow.
+* ​**Responsive Mobile-First UX:** Engineered with a custom responsive framework. Features include a slide-down mobile hamburger menu, dynamic viewport scaling to prevent UI collisions, and custom-styled webkit scrollbars.
+* ​**Universal Modal System:** Implements a global, state-retaining modal architecture for standardizing Frequently Asked Questions, Artist Pitches, and Licensing Requests across all pages without disrupting user workflow.
 
 ---
 
 ## 💾 Technology Stack
-* ​Frontend: HTML5, CSS3 (Custom variables, responsive media queries, keyframe animations)
-* ​Backend/Logic: Vanilla JavaScript (ES6+), asynchronous fetch API operations
-* ​Data Structure: JSON (Proprietary catalog array)
-​API Integrations: Formspree (Form handling and transmission)
+* ​**Frontend:** HTML5, CSS3 (Custom variables, responsive media queries, keyframe animations)
+* ​**Backend/Logic:** Vanilla JavaScript (ES6+), asynchronous fetch API operations
+* ​**Data Structure:** JSON (Proprietary catalog array)
+* **​API Integrations:** Formspree (Form handling and transmission)
 
 ---
 
