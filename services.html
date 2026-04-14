@@ -1,1 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | 221st Street Publishing</title>
+    <style>
+    /* UNIVERSAL STYLES (Copied from your index.html) */
+    html { scroll-behavior: smooth; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1e1e1e; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #7C1716; }
 
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+    
+    /* GLASS HEADER */
+    .brand-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(18, 18, 18, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 1200; padding: 15px 0; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
+    
+    .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
+    .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
+    
+    .header-btn { background: #1a1a1a; color: #ddd; border: 1px solid #444; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; outline: none; display: inline-flex; align-items: center; justify-content: center; font-family: inherit; box-sizing: border-box; line-height: 1.2; margin: 0; -webkit-appearance: none; appearance: none; }
+    .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
+    .header-btn:active { transform: scale(0.95); }
+    .highlight-btn { background: #7C1716; color: white; border: 1px solid #9c1d1b; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .highlight-btn:hover { background: #9c1d1b; }
+
+    /* MOBILE MENU (Condensed for space) */
+    .mobile-menu-btn { display: none; background: transparent; color: #fff; border: none; font-size: 28px; cursor: pointer; padding: 0; outline: none; }
+    .mobile-dropdown { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(18, 18, 18, 0.98); border-top: 1px solid #333; flex-direction: column; align-items: center; padding: 15px 0; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1100; }
+    .mobile-dropdown.active { display: flex; animation: slideDown 0.2s ease-out; }
+    .mobile-dropdown .header-btn { width: 85%; padding: 12px; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* SERVICES SPECIFIC CSS */
+    .services-hero { margin-top: 80px; padding: 60px 20px; text-align: center; background: linear-gradient(to bottom, rgba(18,18,18,0.8), rgba(18,18,18,1)), url('landing/016.png'); background-size: cover; background-position: center; border-bottom: 2px solid #333; }
+    .services-hero h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 15px; }
+    .services-hero p { font-size: 1.1rem; color: #ccc; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+    .content-wrapper { max-width: 1200px; width: 100%; margin: 0 auto; padding: 50px 20px 100px 20px; box-sizing: border-box; }
+    .section-title { font-size: 1.8rem; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; color: #fff; }
+
+    /* The "Why Professional" Grid */
+    .grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px; }
+    
+    .info-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 30px; transition: transform 0.3s ease, border-color 0.3s ease; }
+    .info-card:hover { transform: translateY(-5px); border-color: #7C1716; }
+    .info-card h3 { color: #7C1716; margin-top: 0; font-size: 1.3rem; margin-bottom: 15px; }
+    .info-card p { color: #aaa; line-height: 1.6; font-size: 0.95rem; margin-bottom: 0; }
+
+    /* Formatting for lists inside cards */
+    .info-card ul { padding-left: 20px; margin-top: 10px; color: #aaa; line-height: 1.6; }
+    .info-card li { margin-bottom: 8px; }
+
+    /* Standard Footer */
+    .app-footer { background: linear-gradient(to bottom, #450F0C, #7C1716); color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); border-top: 3px solid #ffffff; box-sizing: border-box; font-size: 0.85em; margin-top: auto; position: relative; }
+    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
+    .footer-logo { height: 120px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -53px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
+    .footer-copyright { flex: 1; text-align: left; padding-right: 80px; } 
+    .footer-contact { flex: 1; text-align: right; line-height: 1.5; padding-left: 80px; }
+    .footer-contact a { color: #ffcccc; text-decoration: none; }
+    .footer-contact a:hover { text-decoration: underline; color: #ffffff; }
+
+    /* Media Queries */
+    @media (max-width: 900px) {
+        .header-left { display: none; } 
+        .mobile-menu-btn { display: block; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
+        .desktop-only { display: none !important; } 
+        .brand-logo { max-width: 130px; margin: 0; } 
+        .header-right { right: 10px; }
+        .header-btn { font-size: 0.65em; padding: 6px 10px; white-space: nowrap; } 
+    }
+    @media (max-width: 1000px) {
+        .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
+        .footer-content { flex-direction: column; text-align: center; gap: 10px; }
+        .footer-copyright, .footer-contact { text-align: center; padding: 0; }
+    }
+    /* FAQ MODAL CSS */
+    .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+    .modal-content { background: #1a1a1a; padding: 35px 30px; border: 1px solid #333; border-radius: 16px; width: 90%; max-width: 450px; position: relative; display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-height: 85vh; overflow-y: auto; color: #fff; }
+    .close-btn { position: absolute; top: 15px; right: 20px; color: #888; font-size: 1.8em; cursor: pointer; background: transparent; border: none; outline: none; transition: 0.2s; }
+    .close-btn:hover { color: white; }
+    .modal-header-text { text-align: center; margin-bottom: 25px; }
+    .modal-header-text h2 { margin: 0; color: #fff; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
+    .modal-header-text p { margin: 5px 0 0 0; color: #888; font-size: 0.85rem; }
+
+    .faq-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px; }
+    .faq-item { background: #0f0f0f; border: 1px solid #333; border-radius: 8px; transition: all 0.2s ease; }
+    .faq-item[open] { border-color: #7C1716; background: #151515; }
+    .faq-item summary { padding: 15px; font-weight: bold; cursor: pointer; color: #ddd; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; outline: none; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; color: #7C1716; font-size: 1.5em; font-weight: bold; transition: transform 0.2s ease; }
+    .faq-item[open] summary::after { content: '−'; }
+    .faq-item p { padding: 0 15px 15px 15px; margin: 0; color: #aaa; font-size: 0.85rem; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="brand-header">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    
+    <div class="header-left">
+        <a href="index.html" class="header-btn">Home</a>
+        <a href="catalog.html" class="header-btn">Catalog</a>
+        <a href="services.html" class="header-btn desktop-only" style="opacity: 0.5; cursor: default;">Services</a>
+    </div>
+    
+    <a href="index.html" style="display: inline-block; text-decoration: none;">
+        <img src="logo.png" alt="221st Street Publishing" class="brand-logo" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h2 style=\'color:#fff; margin:0;\'>221st Street Music</h2>');">
+    </a>
+    
+    <div class="header-right">
+        <a href="catalog.html" class="header-btn highlight-btn">Request License</a>
+        <button class="header-btn desktop-only" onclick="openFaqModal()">FAQ</button> <a href="contact.html" class="header-btn desktop-only">Contact Us</a>        
+    </div>
+
+    <div class="mobile-dropdown" id="mobileMenu">
+        <a href="index.html" class="header-btn">Home</a>
+        <a href="catalog.html" class="header-btn">Catalog</a>
+        <a href="services.html" class="header-btn">Services</a>
+        <a href="contact.html" class="header-btn">Contact Us</a>
+        <button class="header-btn" onclick="openFaqModal(); toggleMobileMenu();">FAQ</button> </div>
+</div>
+
+<div class="services-hero">
+    <h1>CD, DVD, & USB Manufacturing</h1>
+    <p>Professional manufacturing services with the highest quality at competitive prices. We understand the complexities of the industry and know what it takes to get the most out of your budget.</p>
+</div>
+
+<div class="content-wrapper">
+
+    <h2 class="section-title">Packaging Options</h2>
+    <div class="grid-2col">
+        <div class="info-card">
+            <h3>Standard & Custom Formats</h3>
+            <p>The standard jewel case is still our most popular method of packaging, but we offer a variety of options to fit your project's specific needs:</p>
+            <ul>
+                <li>Standard & Slimline Jewel Cases</li>
+                <li>Amaray DVD Cases</li>
+                <li>Multi-Disc Cases & Albums</li>
+                <li>Paper Sleeves & Cardboard Jackets</li>
+                <li>Digipacks & Eco-Wallets</li>
+                <li>Bulk Spindles</li>
+            </ul>
+        </div>
+        
+        <div class="info-card">
+            <h3>USB Flash Drives</h3>
+            <p>As technology evolves, many artists are offering their projects on USB flash drives. These drives plug directly into modern vehicles and are available in different colors, shapes, and sizes.</p>
+        </div>
+    </div>
+
+    <div class="info-card" style="margin-top: 30px; text-align: center; border-color: #333; background: linear-gradient(to bottom, #1a1a1a, #111);">
+        <h3>Graphic Design & Templates</h3>
+        <p style="max-width: 600px; margin: 0 auto 20px auto; font-size: 1.05rem;">Need graphics design? We can help with that too. We take an interest in your project and want it to look as good as you want it to.</p>
+        <a href="templates.html" class="header-btn highlight-btn" style="padding: 12px 24px; font-size: 1rem;">Photoshop Design Templates</a>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 40px;">Why Choose Professional Over DIY?</h2>
+    <div class="grid-2col">
+        <div class="info-card">
+            <h3>1. Professional Looks Better</h3>
+            <p>Your project is a representation of you. Our print resolutions range from 300 dpi to a superior 1440 dpi. Our clients are constantly getting compliments on the appearance of their projects.</p>
+        </div>
+        <div class="info-card">
+            <h3>2. Direct-to-Disc Printing</h3>
+            <p>Labels can get misaligned or come off! Label adhesive breaks down with time and heat. All of our discs are printed directly onto the face of the media, so there is no label to come off or damage a player.</p>
+        </div>
+        <div class="info-card">
+            <h3>3. Cost & Time Efficiency</h3>
+            <p>If you consider equipment costs, media expenses, and the time needed to get the best results, it rarely makes sense to DIY. We can easily produce 100 pieces in the same amount of time it takes to produce 15 by hand.</p>
+        </div>
+        <div class="info-card">
+            <h3>4. A Second Set of Eyes</h3>
+            <p>There are a lot of details that go into a project. We review all of the graphics submitted to us for design accuracy, potentially saving you from sizing or measurement embarrassments.</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <p style="color: #aaa; font-style: italic; max-width: 800px; margin: 0 auto;">"We feature turn-around times that meet or beat industry standards. If you have a tight deadline, let us know! With proper planning, we can make the near-impossible a reality."</p>
+    </div>
+
+</div>
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeFaqModal()">&times;</button>
+        <div class="modal-header-text">
+            <h2>Frequently Asked Questions</h2>
+            <p>Tap a question to expand</p>
+        </div>
+        
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary>I would like to sing one of your songs. What's my next step?</summary>
+                <p>It's simple. Just fill out our License Request Form or call/text us. We are here to help!<br><br>
+                Just to describe the steps of the licensing process...<br><br>
+                <u>Step 1:</u> We receive your licensing request.<br>
+                <em>(This happens by you contacting us, either by filling out the License Request Form or by you calling/texting us. We will then create the appropriate license agreements and send them to you for you to review.)</em><br><br>
+                <u>Step 2:</u> Sign and return the agreements with payment.<br>
+                <em>(After you have reviewed and agree to the terms of the licensing agreement, please sign the forms in the appropriate places, and return them to us along with the proper payment.)</em><br><br>
+                <u>Step 3:</u> The license is issued.<br>
+                <em>(Once we receive the signed forms and payment, we will countersign and send a copy of the completed agreement to you. At this point, the license is in full effect, and you are free to use the song as described in the terms of the licensing agreement.)</em></p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How long does the licensing process take?</summary>
+                <p>Once your license request is submitted, our publishing coordinator will review your request and follow up with you, typically within 24-48 business hours. It is important that you provide valid contact information with your request so that we can reach out if we need to resolve or answer any questions. (Don't worry...we won't give or sell your phone number to the vinyl siding people.)<br><br>
+                Once we have all of the information we need to create the agreements, we will draw them up and send them to you, which usually happens within 24 hours. At this point, the ball is in your court (as the expression goes). Once we receive the agreements back along with full payment, we will finalize the licenses and send them to you. Typically this will happen within 24-48 business hours of receipt.<br><br>
+                We treat all license requests with an urgency, but should a circumstance arise where the process needs to be expedited, just call us. We will do our best to accommodate.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What is a mechanical license?</summary>
+                <p>A mechanical license is a legal agreement that gives an artist or performer the right to reproduce and distribute <strong>copyrighted</strong> musical compositions (songs) in a recorded format. That distribution usually happens by manufacturing CDs, USB flash drives, and digital downloads.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What is a master use license?</summary>
+                <p>A master use license is a legal agreement that grants the right for an entity to use and distribute a specific version of a recording on another project. At 221st Street Publishing, this license is most often issued when someone wants to use one of our performance soundtracks during their recording or performance.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What is the difference between a mechanical and master use license, and which one do I need?</summary>
+                <p>The mechanical license is for the right to use a composition in your project. The monies paid for this license are often referred to as the songwriter's royalty. The master use license is for the right to use someone else's recording in your project. This is often thought of as leasing a soundtrack.<br><br>
+                This is how it works...
+                <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 20px;">
+                    <li>If you are using a <strong>song that someone else wrote*</strong>, you must get permission to legally use it. This typically requires a <u>mechanical license</u>.</li>
+                    <li>If you are using a <strong>recording that someone else created</strong>, you must get permission to legally use it. This typically requires a <u>master use license</u>.</li>
+                    <li>If you wrote the song or created the music, you don't need to pay someone else for the <strong>right</strong> to use it.</li>
+                </ul>
+                <u>Please note:</u> securing a master use license does NOT replace or satisfy the need for a mechanical license.<br><br>
+                *Songs and arrangements that are in the public domain do not need a mechanical license.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Will there always be a need for both a master use license and a mechanical license?</summary>
+                <p>No. Although they are often needed together, each circumstance is different.<br><br>
+                Examples:
+                <ul style="margin-top: 5px; margin-bottom: 0; padding-left: 20px;">
+                    <li>If you are recording your own version of a modern song using someone else's soundtrack, you will need a <u>mechanical license</u> and a <u>master use license</u>.</li>
+                    <li>If your band is recording your own version of a modern song and are not using a soundtrack, you will only need a <u>mechanical license</u>.</li>
+                    <li>If you are recording your own version of a public domain song (for example, an old hymn like "Amazing Grace") using someone else's soundtrack, you only need a <u>master use license</u>.</li>
+                    <li>If your band is recording your own version of a public domain song (for example, an old hymn like "Amazing Grace") and are not using a soundtrack, you will NOT need to <u>secure any licenses</u> for the use of this song.</li>
+                </ul></p>
+            </details>
+
+            <details class="faq-item">
+                <summary>I'm not charging for the CD. Do I still need a license?</summary>
+                <p>There's a LOT of misinformation out there regarding this question, so let's clear things up. The correct answer is <strong><u>YES, you need a license</u></strong>. There are <u>NO</u> provisions in the copyright laws that say you don't need to pay songwriter royalties if you don't charge for your CDs. If you use and distribute someone else's intellectual property, the author is due royalties for their composition's use, and you should go through their publisher to handle that. Now, if you're needing a few extra copies for <em>genuine</em> promotion of your band or for a special event where you're giving back to the community, you can always ask the publisher to tack on a special allowance along with your other PAID licenses as an act of good will. It is always at the publisher's discretion, but you might find favor with them if your cause is sincere and not just looking for a deal. Just a word of advice – I would encourage you not to abuse their kindness, and don't get upset if they cannot accommodate. After all, the law says: if you use it, you pay for it.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Can’t I just change the song and make it my own?</summary>
+                <p>This is another area where there is a lot of misinformation. Basically, you can’t change three words and call the song yours. Per the compulsory license provisions of the US copyright law, you cannot change the basic melody, lyrics, or fundamental character of the composition without the publisher’s written permission. Also, any changes are not subject to protection as a derivative work, except with the publisher’s written permission. I’m not attempting to offer legal advice here, but I can tell you is that using someone else’s intellectual property without paying for it is stealing.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Wait! Can 221st Street Publishing legally issue licenses for songs that they do not own the publishing rights for?</summary>
+                <p>This is a bit of a trick question. If we are talking about mechanical licenses, the answer is no, absolutely not. (We are only allowed to issue mechanical licenses for the songs that we control the copyrights of. If multiple publishers are involved in a composition, we are only able to issue a license for the percentage that we control.) If we are talking about master use licenses, we are legally and ethically allowed to license our works. This means that we can create and license performance soundtracks for songs that we do not own the publishing rights for, and you can use these tracks in your performances and recordings—provided that proper mechanical licenses for these compositions are secured in their appropriate fashion.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Why should I go through 221st Street Publishing to license a song instead of someone else?</summary>
+                <p>You can certainly use a licensing intermediary to complete the licensing process, but all you're doing is paying them to be a middle man. They will still go through us to license our works, as we are the rights holder for the songs in our catalog. When you go through us directly, we do not charge any additional processing fees or licensing fees beyond the cost of the royalties that are due us (as long as a low minimum amount is met). Even though we have a minimum amount, it will still be noticeably less than the amount you will pay for going through an intermediary 95% of the time. You might as well go directly to the source. We make the process easy!</p>
+            </details>            
+        </div>
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #333; text-align: justify;">
+            <p style="margin: 0; font-size: 0.75rem; color: #777; line-height: 1.5; font-style: italic;">
+                <strong>Disclaimer:</strong> This FAQ is not intended to give legal advice. The information contained herein is common knowledge, and should only be treated as such. You should always consult your music business attorney when in doubt or before proceeding in areas where the governing laws are not fully understood.
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">
+            ©2026 - 221st Street Music LLC.<br>
+            All rights reserved.<br>
+Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit; text-decoration: none; padding-bottom: 1px; transition: 0.2s; opacity: 0.8;" onmouseover="this.style.opacity='1'; this.style.color='#fff';" onmouseout="this.style.opacity='0.8'; this.style.color='inherit';">Ray Azul</a>
+        </div>
+        <a href="https://221street.com/" style="display: contents;">
+            <img src="logo.png" alt="221st Street Publishing" class="footer-logo" onerror="this.style.display='none';">
+        </a>
+        <div class="footer-contact"><strong>Contact us:</strong><br>918.607.3046<br><a href="mailto:info@221street.com">info@221street.com</a></div>
+    </div>
+</footer>
+
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('active');
+    }
+    
+    /* FAQ Logic */
+    function openFaqModal() { document.getElementById('faqModal').style.display = 'flex'; }
+    function closeFaqModal() { document.getElementById('faqModal').style.display = 'none'; }
+    
+    // Closes the modal if the user clicks the dark background outside the box
+    window.addEventListener('click', function(event) {
+        const faqModal = document.getElementById('faqModal');
+        if (event.target === faqModal) { closeFaqModal(); }
+    });
+</script>
+</body>
+</html>

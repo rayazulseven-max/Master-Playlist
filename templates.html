@@ -3,100 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>221st Street Music | Contact Us</title>
+    <title>Design Templates | 221st Street Publishing</title>
     <style>
-    /* =======================================================
-    UNIVERSAL SLEEK SCROLLBARS (Applied to ALL pages)
-    ======================================================= */
+    /* UNIVERSAL STYLES */
+    html { scroll-behavior: smooth; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1e1e1e; }
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #7C1716; }   
-    
+    ::-webkit-scrollbar-thumb:hover { background: #7C1716; }
+
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
-    .brand-header { 
-            position: fixed; top: 0; left: 0; width: 100%; 
-            /* Lower the opacity to 75% so we can see through it */
-            background-color: rgba(18, 18, 18, 0.75); 
-            /* The magic blur effect */
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px); /* Safari support */
-            z-index: 1200; padding: 15px 0; text-align: center; 
-            /* Adds a tiny, crisp line at the bottom of the glass */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-        }    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
+    
+    /* GLASS HEADER */
+    .brand-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(18, 18, 18, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); appearance: none; -webkit-appearance: none; z-index: 1200; padding: 15px 0; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .brand-logo { max-width: 250px; height: auto; display: inline-block; }
     
     .header-left { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
     .header-right { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 10px; }
     
-    /* Universal Header Button Style */
-    .header-btn {
-        background: #1a1a1a; color: #ddd; border: 1px solid #444; 
-        padding: 8px 16px; border-radius: 6px; font-weight: bold; 
-        cursor: pointer; transition: 0.2s; font-size: 0.85em; 
-        text-transform: uppercase; letter-spacing: 1px;
-        text-decoration: none; outline: none; 
-        display: inline-flex; align-items: center; justify-content: center;
-        font-family: inherit; 
-        box-sizing: border-box; /* Forces identical width calculations */
-        line-height: 1.2; /* Forces identical vertical centering */
-        margin: 0; 
-        -webkit-appearance: none;
-        appearance: none;
-    }
-        
+    .header-btn { background: #1a1a1a; color: #ddd; border: 1px solid #444; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; line-height: 1.2; margin: 0; appearance: none; -webkit-appearance: none; }
     .header-btn:hover { background: #333; color: #fff; transform: scale(1.05); }
     .header-btn:active { transform: scale(0.95); }
-
     .highlight-btn { background: #7C1716; color: white; border: 1px solid #9c1d1b; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .highlight-btn:hover { background: #9c1d1b; }
-    
-    /* --- MOBILE MENU & HEADER RESPONSIVENESS --- */
+
+    /* MOBILE MENU */
     .mobile-menu-btn { display: none; background: transparent; color: #fff; border: none; font-size: 28px; cursor: pointer; padding: 0; outline: none; }
     .mobile-dropdown { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(18, 18, 18, 0.98); border-top: 1px solid #333; flex-direction: column; align-items: center; padding: 15px 0; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1100; }
     .mobile-dropdown.active { display: flex; animation: slideDown 0.2s ease-out; }
-    .mobile-dropdown .header-btn { 
-        width: 85%; 
-        padding: 12px; /* Taller, uniform padding for mobile tapping */
-    }
-    
+    .mobile-dropdown .header-btn { width: 85%; padding: 12px; }
     @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-    @media (max-width: 900px) {
-        .header-left { display: none; } 
-        .mobile-menu-btn { display: block; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
-        .desktop-only { display: none !important; } 
-        .brand-logo { max-width: 130px; margin: 0; } /* Keeps it perfectly centered */
-        .header-right { right: 10px; }
-        .header-btn { font-size: 0.65em; padding: 6px 10px; white-space: nowrap; } 
-    }
+    /* TEMPLATES HERO (Shorter than standard hero) */
+    .templates-hero { margin-top: 80px; padding: 50px 20px; text-align: center; background: linear-gradient(to bottom, rgba(18,18,18,0.7), rgba(18,18,18,1)), url('landing/016.png'); background-size: cover; background-position: center; border-bottom: 2px solid #333; min-height: 250px; display: flex; flex-direction: column; justify-content: center; }
+    .templates-hero h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 10px; }
+    .templates-hero p { font-size: 1.1rem; color: #ccc; max-width: 800px; margin: 0 auto; line-height: 1.6; }
 
-    /* NEW: Extra safeguard for narrow phone screens */
-    @media (max-width: 400px) {
-        .brand-logo { max-width: 105px; } /* Shrinks logo slightly */
-        .header-btn { font-size: 0.55em; padding: 5px 8px; } /* Shrinks button slightly */
-        .mobile-menu-btn { left: 10px; font-size: 24px; }
-        .header-right { right: 5px; }
-    }
+    /* CONTENT GRID */
+    .content-wrapper { max-width: 1000px; width: 100%; margin: 0 auto; padding: 40px 20px 100px 20px; box-sizing: border-box; }
+    
+    .cta-banner { background: rgba(124, 23, 22, 0.1); border: 1px solid #7C1716; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 40px; }
+    .cta-banner h3 { margin: 0 0 10px 0; color: #fff; }
+    .cta-banner p { margin: 0; color: #ccc; font-size: 0.95rem; }
+    .cta-banner a { color: #ffcccc; font-weight: bold; text-decoration: none; }
+    .cta-banner a:hover { color: #fff; text-decoration: underline; }
 
-    .contact-wrapper { margin: 140px auto 100px auto; max-width: 1200px; width: 95%; flex: 1; }
-    .page-title { font-size: 2.5rem; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
-    .contact-grid { display: grid; grid-template-columns: 400px 1fr; gap: 30px; align-items: stretch; }
+    .grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    
+    .info-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 30px; transition: transform 0.3s ease, border-color 0.3s ease; }
+    .info-card:hover { transform: translateY(-5px); border-color: #7C1716; }
+    .info-card h3 { color: #7C1716; margin-top: 0; font-size: 1.3rem; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+    
+    /* LINK LIST STYLING */
+    .template-list { list-style: none; padding: 0; margin: 0; }
+    .template-list li { margin-bottom: 12px; }
+    .template-list a { display: block; color: #ddd; text-decoration: none; padding: 10px 15px; background: #222; border-radius: 6px; border: 1px solid #333; transition: all 0.2s ease; font-size: 0.95rem; }
+    .template-list a:before { content: '⭳'; margin-right: 10px; color: #7C1716; font-weight: bold; }
+    .template-list a:hover { background: #7C1716; border-color: #9c1d1b; color: #fff; transform: translateX(5px); }
+    .template-list a:hover:before { color: #fff; }
 
-    .info-panel { background-image: url('marble.jpg'); background-size: cover; background-position: center; color: #222; padding: 40px 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #ccc; }
-    .info-header { text-align: center; border-bottom: 2px solid #7C1716; padding-bottom: 20px; margin-bottom: 25px; }
-    .info-header h2 { margin: 0 0 5px 0; font-size: 1.5rem; color: #111; }
-    .info-header p { margin: 0; font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-
-    .info-section { margin-bottom: 25px; }
-    .info-section h3 { margin: 0 0 5px 0; font-size: 0.9rem; color: #7C1716; text-transform: uppercase; letter-spacing: 1px; }
-    .info-section p { margin: 0 0 5px 0; font-size: 1rem; color: #333; line-height: 1.5; font-weight: 500; }
-    .info-section a { color: #111; text-decoration: none; font-weight: bold; transition: color 0.2s; }
-    .info-section a:hover { color: #7C1716; text-decoration: underline; }
-
-    .map-panel { background: #1e1e1e; border-radius: 12px; overflow: hidden; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; min-height: 400px;}
-    .map-panel img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-
+    /* FOOTER */
     .app-footer { background: linear-gradient(to bottom, #450F0C, #7C1716); color: white; padding: 15px 20px calc(15px + env(safe-area-inset-bottom)); border-top: 3px solid #ffffff; box-sizing: border-box; font-size: 0.85em; margin-top: auto; position: relative; }
     .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
     .footer-logo { height: 120px; width: auto; position: absolute; left: 50%; transform: translateX(-50%); top: -53px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6)); }
@@ -105,19 +71,27 @@
     .footer-contact a { color: #ffcccc; text-decoration: none; }
     .footer-contact a:hover { text-decoration: underline; color: #ffffff; }
 
+    @media (max-width: 900px) {
+        .header-left { display: none; } 
+        .mobile-menu-btn { display: block; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
+        .desktop-only { display: none !important; } 
+        .brand-logo { max-width: 130px; margin: 0; } 
+        .header-right { right: 10px; }
+        .header-btn { font-size: 0.65em; padding: 6px 10px; white-space: nowrap; } 
+    }
+    @media (max-width: 1000px) {
+        .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
+        .footer-content { flex-direction: column; text-align: center; gap: 10px; }
+        .footer-copyright, .footer-contact { text-align: center; padding: 0; }
+    }
+    /* FAQ MODAL CSS */
     .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-    .modal-content { background: #1a1a1a; padding: 35px 30px; border: 1px solid #333; border-radius: 16px; width: 90%; max-width: 450px; position: relative; display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-height: 85vh; overflow-y: auto; }
+    .modal-content { background: #1a1a1a; padding: 35px 30px; border: 1px solid #333; border-radius: 16px; width: 90%; max-width: 450px; position: relative; display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-height: 85vh; overflow-y: auto; color: #fff; }
     .close-btn { position: absolute; top: 15px; right: 20px; color: #888; font-size: 1.8em; cursor: pointer; background: transparent; border: none; outline: none; transition: 0.2s; }
     .close-btn:hover { color: white; }
     .modal-header-text { text-align: center; margin-bottom: 25px; }
     .modal-header-text h2 { margin: 0; color: #fff; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
     .modal-header-text p { margin: 5px 0 0 0; color: #888; font-size: 0.85rem; }
-    .modal label { display: block; color: #ccc; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-    .modal input[type="text"], .modal input[type="email"], .modal input[type="number"], .modal textarea { width: 100%; padding: 12px; font-size: 1rem; background: #0f0f0f; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; margin-bottom: 15px; font-family: inherit; transition: 0.2s; }
-    .modal input:focus, .modal textarea:focus { border-color: #7C1716; background: #000; }
-    .modal textarea { resize: vertical; min-height: 80px; }
-    .btn-primary { background: #7C1716; border: none; color: #fff; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
-    .btn-primary:hover { background: #9c1d1b; }
 
     .faq-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px; }
     .faq-item { background: #0f0f0f; border: 1px solid #333; border-radius: 8px; transition: all 0.2s ease; }
@@ -127,15 +101,6 @@
     .faq-item summary::after { content: '+'; color: #7C1716; font-size: 1.5em; font-weight: bold; transition: transform 0.2s ease; }
     .faq-item[open] summary::after { content: '−'; }
     .faq-item p { padding: 0 15px 15px 15px; margin: 0; color: #aaa; font-size: 0.85rem; line-height: 1.6; }
-
-    @media (max-width: 1000px) {
-        .contact-grid { grid-template-columns: 1fr; }
-        .page-title { font-size: 2rem; margin-top: 20px; }
-        .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
-        .footer-content { flex-direction: column; text-align: center; gap: 10px; }
-        .footer-copyright, .footer-contact { text-align: center; padding: 0; }
-    }
-        
     </style>
 </head>
 <body>
@@ -155,79 +120,55 @@
     
     <div class="header-right">
         <a href="catalog.html" class="header-btn highlight-btn">Request License</a>
-        <button class="header-btn desktop-only" onclick="openFaqModal()">FAQ</button>
-        <button class="header-btn desktop-only" onclick="openPitchModal()">Submit Music</button>
+        <button class="header-btn desktop-only" onclick="openFaqModal()">FAQ</button> <a href="contact.html" class="header-btn desktop-only">Contact Us</a>        
     </div>
 
     <div class="mobile-dropdown" id="mobileMenu">
         <a href="index.html" class="header-btn">Home</a>
         <a href="catalog.html" class="header-btn">Catalog</a>
-        <button class="header-btn" onclick="openPitchModal(); toggleMobileMenu();">Submit Music</button>
-        <button class="header-btn" onclick="openFaqModal(); toggleMobileMenu();">FAQ</button>
-    </div>
+        <a href="services.html" class="header-btn">Services</a>
+        <a href="contact.html" class="header-btn">Contact Us</a>
+        <button class="header-btn" onclick="openFaqModal(); toggleMobileMenu();">FAQ</button> </div>
 </div>
 
-<div class="contact-wrapper">
-    <h1 class="page-title">Contact Us</h1>
-    
-    <div class="contact-grid">
-        <div class="info-panel">
-            <div class="info-header">
-                <h2>221st Street Music LLC</h2>
-                <p>Part of the Mended Heart Music Family of Companies</p>
-            </div>
+<div class="templates-hero">
+    <h1>Photoshop Design Templates</h1>
+    <p>Provided for the convenience of your graphics designer. If you need a template not listed here, please let us know.</p>
+</div>
 
-            <div class="info-section">
-                <h3>Publishing Coordinator</h3>
-                <p>Kenny Mock</p>
-            </div>
+<div class="content-wrapper">
+    <div class="cta-banner">
+        <h3>Do you need graphics design services?</h3>
+        <p>We can help with that too! <a href="contact.html">Click here to contact us</a> for a custom quote.</p>
+    </div>
 
-            <div class="info-section">
-                <h3>Contact Numbers</h3>
-                <p><strong>Phone/Text:</strong> <a href="tel:9186073046">918.607.3046</a></p>
-                <p><strong>Fax:</strong> 918.224.8764</p>
-            </div>
-
-            <div class="info-section">
-                <h3>Digital Communication</h3>
-                <p><strong>General:</strong> <a href="mailto:info@221street.com">info@221street.com</a></p>
-                <p><strong>Licensing:</strong> <a href="mailto:licensing@221street.com">licensing@221street.com</a></p>
-            </div>
-
-            <div class="info-section">
-                <h3>Mailing Address</h3>
-                <p>221st Street Publishing<br>
-                8654 S. 113th West Ave.<br>
-                Sapulpa, OK 74066</p>
-                <p style="font-size: 0.75rem; color: #7C1716; font-style: italic; margin-top: 10px;">
-                    * Please do not send unsolicited songs without contacting us first.
-                </p>
-            </div>
-
-            <div class="info-section" style="margin-top: 35px; border-top: 1px solid #ccc; padding-top: 20px;">
-                <h3>Our Network</h3>
-                <p><a href="#" target="_blank">Join our Discord Community ↗</a></p>
-                <p><a href="https://mendedheartmusic.com/" target="_blank">Mended Heart Music ↗</a></p>
-                <p><a href="#" target="_blank">Other Affiliate Site ↗</a></p>
-            </div>
-            
-            <p style="font-size: 0.85rem; color: #333; font-weight: bold; margin-top: 30px; text-align: center;">
-                We will contact you as soon as possible regarding your request (typically within 24-48 hours).
-            </p>
+    <div class="grid-2col">
+        <div class="info-card">
+            <h3>CD/DVD & Jewel Cases</h3>
+            <ul class="template-list">
+                <li><a href="#">CD/DVD Disc Face</a></li>
+                <li><a href="#">2 Panel Jewel Case Insert (Front/Back)</a></li>
+                <li><a href="#">4 Panel Jewel Case Insert (Outside)</a></li>
+                <li><a href="#">4 Panel Jewel Case Insert (Inside)</a></li>
+                <li><a href="#">6 Panel Jewel Case Insert - Roll-Fold (Front)</a></li>
+                <li><a href="#">6 Panel Jewel Case Insert - Roll-Fold (Back)</a></li>
+                <li><a href="#">Jewel Case Tray Card (Outside)</a></li>
+                <li><a href="#">Jewel Case Tray Card (Inside w/ Preview Disc Face)</a></li>
+            </ul>
         </div>
-
-        <div class="map-panel" style="position: relative; border: 2px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 15px 40px rgba(0,0,0,0.6);">
-            
-            <img src="hq-map.png" alt="221st Street Headquarters" style="width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) brightness(0.9);">
-            
-            <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(18,18,18,0.85); padding: 10px 15px; border-left: 3px solid #7C1716; border-radius: 4px; backdrop-filter: blur(5px);">
-                <p style="margin: 0; color: #fff; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">Sapulpa Headquarters</p>
-                <p style="margin: 3px 0 0 0; color: #aaa; font-size: 0.65rem; letter-spacing: 2px;">Tulsa Metro Area</p>
-            </div>
+        
+        <div class="info-card">
+            <h3>Other Misc. Templates</h3>
+            <ul class="template-list">
+                <li><a href="#">5" x 7" Greeting Card (Outside)</a></li>
+                <li><a href="#">5" x 7" Greeting Card (Inside w/ Preview)</a></li>
+                <li><a href="#">2" x 3.5" Business Card (Horizontal)</a></li>
+                <li><a href="#">8.5" x 11" Tri-Fold Brochure (Front)</a></li>
+                <li><a href="#">8.5" x 11" Tri-Fold Brochure (Back)</a></li>
+            </ul>
         </div>
     </div>
 </div>
-
 <div id="faqModal" class="modal">
     <div class="modal-content">
         <button class="close-btn" onclick="closeFaqModal()">&times;</button>
@@ -319,64 +260,6 @@
     </div>
 </div>
 
-<div id="pitchModal" class="modal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closePitchModal()">&times;</button>
-        <div class="modal-header-text">
-            <h2>Pitch Your Music</h2>
-            <p>Interested in having 221st Street publish your catalog?</p>
-        </div>
-        
-        <form action="https://formspree.io/f/xvzwbvwv" method="POST" id="pitchForm" onsubmit="submitPitchForm(event)">
-            <input type="hidden" name="_subject" value="NEW ARTIST PITCH: Catalog Submission!">
-            <input type="hidden" name="Form_Type" value="Artist Publishing Pitch">
-            
-            <div style="display: flex; flex-direction: column;">
-                <label>Your Name *</label>
-                <input type="text" name="name" required placeholder="First and Last Name">
-                
-                <label>Email Address *</label>
-                <input type="email" name="_replyto" required placeholder="you@domain.com">
-
-                <label>Phone Number *</label>
-                <input type="text" name="Phone" required placeholder="(555) 555-5555">
-
-                <label>Preferred Contact Method</label>
-                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                    <label style="color: #fff; font-weight: normal; text-transform: none;"><input type="radio" name="Contact_Pref" value="Call" checked> Phone Call</label>
-                    <label style="color: #fff; font-weight: normal; text-transform: none;"><input type="radio" name="Contact_Pref" value="Email"> Email</label>
-                </div>
-
-                <label>Approx. # of songs to license?</label>
-                <input type="number" name="Total_Songs" id="songCount" min="1" placeholder="e.g. 12" onkeyup="checkSongCount()" onchange="checkSongCount()">
-                
-                <div id="congratsMessage" style="display: none; color: #4caf50; font-size: 0.85rem; margin-top: -5px; margin-bottom: 15px; font-weight: bold; line-height: 1.4;">
-                    Congratulations on writing this many songs! Please list up to 10 below. We'll contact you for the remainder of your catalog!
-                </div>
-
-                <label>Name of Song(s) *</label>
-                <textarea name="Song_Names" placeholder="List song names here..." required style="min-height: 60px;"></textarea>
-
-                <label style="color: #fff; font-weight: normal; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; text-transform: none;">
-                    <input type="checkbox" name="Pitch_Whole_Catalog"> I want to pitch my entire catalog
-                </label>
-
-                <label style="color: #fff; font-weight: normal; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 8px; text-transform: none; line-height: 1.3;">
-                    <input type="checkbox" name="Original_Composition" required style="margin-top: 3px;"> 
-                    I confirm I created 100% of this composition (Music and Lyrics)
-                </label>
-
-                <label>Tell Us About Your Music</label>
-                <textarea name="message" placeholder="A brief introduction, genre, what you're looking for..." required></textarea>
-                
-                <div class="modal-actions" style="margin-top: 10px;">
-                    <button type="submit" class="btn-primary" id="pitchSubmitBtn">Submit Pitch</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
 <footer class="app-footer">
     <div class="footer-content">
         <div class="footer-copyright">
@@ -396,48 +279,15 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
         const menu = document.getElementById('mobileMenu');
         menu.classList.toggle('active');
     }
-
+    
+    /* FAQ Logic */
     function openFaqModal() { document.getElementById('faqModal').style.display = 'flex'; }
     function closeFaqModal() { document.getElementById('faqModal').style.display = 'none'; }
-    function openPitchModal() { document.getElementById('pitchModal').style.display = 'flex'; }
-    function closePitchModal() { document.getElementById('pitchModal').style.display = 'none'; }
-
-    // Threshold Logic for Song Count
-    function checkSongCount() {
-        const count = parseInt(document.getElementById('songCount').value);
-        const msg = document.getElementById('congratsMessage');
-        if (count >= 10) { msg.style.display = 'block'; } 
-        else { msg.style.display = 'none'; }
-    }
-
-    async function submitPitchForm(event) {
-        event.preventDefault(); 
-        const form = event.target;
-        const submitBtn = document.getElementById('pitchSubmitBtn');
-        submitBtn.innerText = 'Transmitting...';
-        submitBtn.disabled = true;
-
-        try {
-            const response = await fetch("https://formspree.io/f/xvzwbvwv", {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
-            if (response.ok) {
-                form.reset();
-                checkSongCount(); // reset the message
-                closePitchModal(); 
-                alert("Success! Your music pitch has been submitted to 221st Street Publishing.");
-            } else { alert("Oops! There was a problem submitting your pitch."); }
-        } catch (error) { alert("Oops! There was a network error."); } 
-        finally { submitBtn.innerText = 'Submit Pitch'; submitBtn.disabled = false; }
-    }
-
+    
+    // Closes the modal if the user clicks the dark background outside the box
     window.addEventListener('click', function(event) {
         const faqModal = document.getElementById('faqModal');
-        const pitchModal = document.getElementById('pitchModal');
-        if (faqModal && event.target === faqModal) { closeFaqModal(); }
-        if (pitchModal && event.target === pitchModal) { closePitchModal(); }
+        if (event.target === faqModal) { closeFaqModal(); }
     });
 </script>
 </body>
