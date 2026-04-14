@@ -35,7 +35,20 @@
     @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* SERVICES SPECIFIC CSS */
-    .services-hero { margin-top: 80px; padding: 60px 20px; text-align: center; background: linear-gradient(to bottom, rgba(18,18,18,0.8), rgba(18,18,18,1)), url('landing/016.png'); background-size: cover; background-position: center; border-bottom: 2px solid #333; }
+    .services-hero { 
+        margin-top: 80px; 
+        padding: 50px 20px; 
+        text-align: center; 
+        background: linear-gradient(to bottom, rgba(18,18,18,0.8), rgba(18,18,18,1)), url('landing/016.png'); 
+        background-size: cover; 
+        background-position: center; 
+        border-bottom: 2px solid #333; 
+        /* The missing magic from the templates page: */
+        min-height: 250px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+    }
     .services-hero h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 15px; }
     .services-hero p { font-size: 1.1rem; color: #ccc; max-width: 800px; margin: 0 auto; line-height: 1.6; }
 
@@ -71,6 +84,13 @@
         .brand-logo { max-width: 130px; margin: 0; } 
         .header-right { right: 10px; }
         .header-btn { font-size: 0.65em; padding: 6px 10px; white-space: nowrap; } 
+    }
+    /* Extra safeguard for narrow phone screens */
+    @media (max-width: 400px) {
+        .brand-logo { max-width: 105px; } 
+        .header-btn { font-size: 0.55em; padding: 5px 8px; } 
+        .mobile-menu-btn { left: 10px; font-size: 24px; }
+        .header-right { right: 5px; }
     }
     @media (max-width: 1000px) {
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
@@ -155,7 +175,7 @@
     <div class="info-card" style="margin-top: 30px; text-align: center; border-color: #333; background: linear-gradient(to bottom, #1a1a1a, #111);">
         <h3>Graphic Design & Templates</h3>
         <p style="max-width: 600px; margin: 0 auto 20px auto; font-size: 1.05rem;">Need graphics design? We can help with that too. We take an interest in your project and want it to look as good as you want it to.</p>
-        <a href="templates.html" class="header-btn highlight-btn" style="padding: 12px 24px; font-size: 1rem;">Photoshop Design Templates</a>
+        <a href="templates.html" class="header-btn highlight-btn" style="padding: 12px 24px; font-size: 1rem; white-space: normal; height: auto; display: inline-block; max-width: 100%;">Photoshop Design Templates</a>
     </div>
 
     <h2 class="section-title" style="margin-top: 40px;">Why Choose Professional Over DIY?</h2>

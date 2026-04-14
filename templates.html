@@ -79,6 +79,13 @@
         .header-right { right: 10px; }
         .header-btn { font-size: 0.65em; padding: 6px 10px; white-space: nowrap; } 
     }
+    /* Extra safeguard for narrow phone screens */
+    @media (max-width: 400px) {
+        .brand-logo { max-width: 105px; } 
+        .header-btn { font-size: 0.55em; padding: 5px 8px; } 
+        .mobile-menu-btn { left: 10px; font-size: 24px; }
+        .header-right { right: 5px; }
+    }
     @media (max-width: 1000px) {
         .footer-logo { position: static; transform: none; display: block; margin: 0 auto 15px auto; }
         .footer-content { flex-direction: column; text-align: center; gap: 10px; }
