@@ -568,6 +568,14 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
     let licenseCart = [];
 
     document.addEventListener("DOMContentLoaded", () => {
+        // --- NEW AUTO-OPEN LOGIC ---
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('action') === 'request') {
+            // Wait 300ms so the background catalog has a moment to render beautifully
+            setTimeout(() => {
+                openLicenseModal();
+            }, 300); 
+        }
         fetch('songs.json')
             .then(res => res.json())
             .then(data => {
