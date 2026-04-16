@@ -335,8 +335,8 @@
             <input type="hidden" name="_subject" value="NEW LICENSE REQUEST (Catalog)">
             
             <div id="step1" class="form-step active">
-                <label>Contact Name *</label>
-                <input type="text" name="Contact_Name" id="reqName" placeholder="Who should we contact?" required>
+                <label>Your Name *</label>
+                <input type="text" name="Contact_Name" id="reqName" placeholder="First name and last name, please." required>
                 
                 <label>Email Address *</label>
                 <input type="email" name="_replyto" id="reqEmail" placeholder="you@domain.com" required>
@@ -351,7 +351,7 @@
                 </div>
                 <div style="margin-top: 15px; margin-bottom: 25px; padding: 15px; background: rgba(124, 23, 22, 0.1); border: 1px solid #7C1716; border-radius: 8px;">
                     <label style="display: flex; align-items: flex-start; gap: 12px; text-transform: none; font-weight: normal; color: #fff; margin: 0; cursor: pointer;">
-                        <input type="checkbox" id="easyButtonCheck" name="Complex_Request" value="Yes" style="margin-top: 2px; accent-color: #7C1716; width: 18px; height: 18px;">
+                        <input type="checkbox" id="easyButtonCheck" name="Complex_Request" value="Yes" style="margin-top: 2px; accent-color: #7C1716; width: 18px; height: 18px;" onchange="toggleEasyButton()">
                         <span style="font-size: 0.95rem; line-height: 1.4;">
                             <strong>I have questions or would prefer to talk directly to a licensing coordinator.</strong><br>
                             <span style="color: #aaa; font-size: 0.85rem;">Please contact me.</span>
@@ -360,7 +360,7 @@
                 </div>
 
                 <div class="modal-actions" style="justify-content: flex-end;">
-                    <button type="button" class="btn-primary" onclick="nextStep(1)">Save & Continue &rarr;</button>
+                    <button type="button" class="btn-primary" id="step1NextBtn" onclick="nextStep(1)">Save & Continue &rarr;</button>
                 </div>
             </div>
 
@@ -715,6 +715,16 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
         submitBtn.innerText = 'I Agree & Submit';
     }
 
+    function toggleEasyButton() {
+        const isChecked = document.getElementById('easyButtonCheck').checked;
+        const btn = document.getElementById('step1NextBtn');
+        if (isChecked) {
+            btn.innerText = "Submit Request";
+        } else {
+            btn.innerHTML = "Save & Continue &rarr;";
+        }
+    }
+
     function nextStep(currentStep) {
         if (currentStep === 1) {
             const name = document.getElementById('reqName').value.trim();
@@ -727,15 +737,11 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
                 // Inform Kenny they skipped the cart
                 document.getElementById('hiddenCartData').value = "COMPLEX REQUEST: User skipped the catalog builder and requested a direct phone call.";
                 
-                // Jump straight to Step 4
-                document.getElementById('step1').classList.remove('active');
-                document.getElementById('step4').classList.add('active');
-                document.getElementById('step-indicator').innerText = '2'; // Visually Step 2 for them
-                document.getElementById('total-steps').innerText = '2';
-                saveFormData();
+                // Fire the form submission directly!
+                document.getElementById('licenseForm').requestSubmit();
                 return;
             } else {
-                updateCartUI(); // Restores normal cart logic if they unchecked it
+                updateCartUI();
             }
         }
         
