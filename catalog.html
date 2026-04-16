@@ -349,6 +349,15 @@
                     <label style="display: flex; align-items: center; gap: 5px; text-transform: none; font-weight: normal; color: #fff;"><input type="checkbox" name="Contact_Preference" value="Call"> Call</label>
                     <label style="display: flex; align-items: center; gap: 5px; text-transform: none; font-weight: normal; color: #fff;"><input type="checkbox" name="Contact_Preference" value="Text"> Text</label>
                 </div>
+                <div style="margin-top: 15px; margin-bottom: 25px; padding: 15px; background: rgba(124, 23, 22, 0.1); border: 1px solid #7C1716; border-radius: 8px;">
+                    <label style="display: flex; align-items: flex-start; gap: 12px; text-transform: none; font-weight: normal; color: #fff; margin: 0; cursor: pointer;">
+                        <input type="checkbox" id="easyButtonCheck" name="Complex_Request" value="Yes" style="margin-top: 2px; accent-color: #7C1716; width: 18px; height: 18px;">
+                        <span style="font-size: 0.95rem; line-height: 1.4;">
+                            <strong>I have questions or would prefer to talk directly to a licensing coordinator.</strong><br>
+                            <span style="color: #aaa; font-size: 0.85rem;">Please contact me.</span>
+                        </span>
+                    </label>
+                </div>
 
                 <div class="modal-actions" style="justify-content: flex-end;">
                     <button type="button" class="btn-primary" onclick="nextStep(1)">Save & Continue &rarr;</button>
@@ -628,6 +637,7 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
             reqPhone: document.getElementById('reqPhone').value,
             contactCall: document.querySelector('input[name="Contact_Preference"][value="Call"]').checked,
             contactText: document.querySelector('input[name="Contact_Preference"][value="Text"]').checked,
+            easyButtonCheck: document.getElementById('easyButtonCheck').checked,
             legalName: document.getElementById('legalName').value,
             sameNameCheck: document.getElementById('sameNameCheck').checked,
             performingName: document.getElementById('performingName').value,
@@ -656,6 +666,8 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
             
             const textCheck = document.querySelector('input[name="Contact_Preference"][value="Text"]');
             if(textCheck) textCheck.checked = formData.contactText || false;
+
+            document.getElementById('easyButtonCheck').checked = formData.easyButtonCheck || false;
             
             document.getElementById('legalName').value = formData.legalName || '';
             document.getElementById('sameNameCheck').checked = formData.sameNameCheck || false;
@@ -709,6 +721,22 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
             const email = document.getElementById('reqEmail').value.trim();
             const phone = document.getElementById('reqPhone').value.trim();
             if (!name || !email || !phone) { alert("Please enter your name, email, and phone number to continue."); return; }
+            
+            // --- EASY BUTTON LOGIC ---
+            if (document.getElementById('easyButtonCheck').checked) {
+                // Inform Kenny they skipped the cart
+                document.getElementById('hiddenCartData').value = "COMPLEX REQUEST: User skipped the catalog builder and requested a direct phone call.";
+                
+                // Jump straight to Step 4
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step4').classList.add('active');
+                document.getElementById('step-indicator').innerText = '2'; // Visually Step 2 for them
+                document.getElementById('total-steps').innerText = '2';
+                saveFormData();
+                return;
+            } else {
+                updateCartUI(); // Restores normal cart logic if they unchecked it
+            }
         }
         
         if (currentStep === 2) {
@@ -747,10 +775,21 @@ Platform by <a href="https://rayazul.com" target="_blank" style="color: inherit;
     function prevStep(currentStep) {
         let prev = currentStep - 1;
         
-        if (currentStep === 4 && !requiresLegalInfo()) {
-            prev = 2; 
-            document.getElementById('step-indicator').innerText = '2';
-            document.getElementById('total-steps').innerText = '4';
+        if (currentStep === 4) {
+            if (document.getElementById('easyButtonCheck').checked) {
+                // If they used the easy button, "back" takes them to Step 1
+                prev = 1;
+                document.getElementById('step-indicator').innerText = '1';
+                document.getElementById('total-steps').innerText = '4'; // Reset total steps visually
+            } else if (!requiresLegalInfo()) {
+                // Normal logic: If no legal info needed, "back" takes them to Step 2
+                prev = 2; 
+                document.getElementById('step-indicator').innerText = '2';
+                document.getElementById('total-steps').innerText = '4';
+            } else {
+                // Normal logic
+                document.getElementById('step-indicator').innerText = '3';
+            }
         } else {
             document.getElementById('step-indicator').innerText = prev;
         }
